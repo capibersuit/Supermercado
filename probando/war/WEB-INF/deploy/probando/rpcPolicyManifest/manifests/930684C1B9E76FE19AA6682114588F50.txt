@@ -1,0 +1,2 @@
+serviceClass: ar.chris.mecon.client.GreetingService
+path: 8743C61BF2E4F57B32169E1EDE144C05.gwt.rpc
