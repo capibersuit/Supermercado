@@ -6,16 +6,15 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Image;
+
 
 public class Pantalla extends Composite {
 	protected FlowPanel panel= new FlowPanel();
-	private final Image imagen_espera= new Image("imagenes/loading.gif");
-	private final HTML msj_espera= new HTML();
-	private FlowPanel panel_espera= null;
+//	private final Image imagen_espera= new Image("imagenes/loading.gif");
+//	private final HTML msj_espera= new HTML();
+//	private FlowPanel panel_espera= null;
 	
-	/** Constructor sin parámetros.
+	/** Constructor sin parï¿½metros.
 	 */
 	public Pantalla() {
 	 this.panel.setStyleName("PanelPrincipal");
@@ -24,7 +23,7 @@ public class Pantalla extends Composite {
 	
 
 	/** Termina de crear el proxy para comunicarse con el servidor.
-	 * @param endpoint El endpoint para la comunicación con el servidor.
+	 * @param endpoint El endpoint para la comunicaciï¿½n con el servidor.
 	 * @param pantalla El nombre de la pantalla (sin el prefijo "Pantalla").
 	 */
 	protected void inicializar(ServiceDefTarget endpoint, String pantalla) {
@@ -33,7 +32,7 @@ public class Pantalla extends Composite {
 		 		"proxies_pantallas/ProxyPantalla"+pantalla;
 		 endpoint.setServiceEntryPoint(moduleRelativeURL);
 	 } catch (Exception ex) {
-		 System.out.println("Excepción: " + ex.getMessage());
+		 System.out.println("Excepciï¿½n: " + ex.getMessage());
 	 }
 	}
 
@@ -51,6 +50,11 @@ public class Pantalla extends Composite {
 		}
 	 };
 	 s.execute();
+	}
+
+	public void agregar_producto(String nombre, String precio) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

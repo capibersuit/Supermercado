@@ -32,6 +32,12 @@ public class PantallaInicio extends Pantalla {
 				panel.clear();
 				History.newItem("PantallaListas");}
 		});
+		btn_productos.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				panel.clear();
+				History.newItem("PantallaProductos");}
+		});
+		
 	}
 	
 	
