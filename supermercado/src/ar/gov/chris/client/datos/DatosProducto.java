@@ -1,27 +1,13 @@
-package ar.gov.chris.server.clases;
+package ar.gov.chris.client.datos;
 
-public class Producto {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class DatosProducto implements IsSerializable {
 	
 	int id;
 	String nombre;
 	//String descripcion;
 	float precio;
-	
-	public Producto() {
-		
-	}
-	public Producto(int id, String nombre, float precio) {
-		
-		this.id = id;
-		this.nombre = nombre;
-		this.precio = precio;
-	}
-	public Producto(String nombre, float precio) {
-		
-		this.nombre = nombre;
-		this.precio = precio;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -40,11 +26,13 @@ public class Producto {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", precio="
+		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio="
 				+ precio + "]";
 	}
+	
+	
+	
+
 }

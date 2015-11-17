@@ -1,14 +1,17 @@
 package ar.gov.chris.client.pantalla;
 
-import ar.gov.chris.client.GreetingService;
-import ar.gov.chris.client.GreetingServiceAsync;
+//import ar.gov.chris.client.GreetingService;
+//import ar.gov.chris.client.GreetingServiceAsync;
+import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.WidgetAgregarProducto;
+import ar.gov.chris.client.widgets.MensajeAlerta;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 
@@ -42,8 +45,21 @@ public class PantallaProductos extends Pantalla {
 	
 	@Override
 	public void agregar_producto(String nombre, String precio) {
-		// TODO Auto-generated method stub
+		DatosProducto datos_prod= new DatosProducto();
+		datos_prod.setNombre(nombre);
+		datos_prod.setPrecio(Float.parseFloat(precio));
 		
+		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
+						"el producto: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+//				agregar_item_historial_cliente(datos_item);
+//				recargar_personas();
+			}
+			
+		});
 	}
 	
 	
