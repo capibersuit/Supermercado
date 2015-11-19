@@ -41,11 +41,17 @@ public abstract class PersistenteEnBD {
 	public PersistenteEnBD() {
 	}
 	
+//	public int grabar(ar.gov.chris.server.bd.ConexionBD con, 
+//			ar.gov.chris.server.bd.HashMapSQL lista_campos, Map<String, Object> campos_cambiados,
+//			String tabla, String tabla_secuencia, boolean nuevo, String condicion,
+//			int id, int id_servicio, String datos, Map<String, String> datos_id,
+//			boolean solo_si_no_existe, boolean loguear) throws ExcepcionBD {
+//		 
+	
 	public int grabar(ar.gov.chris.server.bd.ConexionBD con, 
-			ar.gov.chris.server.bd.HashMapSQL lista_campos, Map<String, Object> campos_cambiados,
-			String tabla, String tabla_secuencia, boolean nuevo, String condicion,
-			int id, int id_servicio, String datos, Map<String, String> datos_id,
-			boolean solo_si_no_existe, boolean loguear) throws ExcepcionBD {
+			ar.gov.chris.server.bd.HashMapSQL lista_campos, 
+			String tabla, String tabla_secuencia,  boolean nuevo,String condicion,
+			int id, boolean solo_si_no_existe ) throws ExcepcionBD {
 		 
 		 String query; 
 		 if (solo_si_no_existe) {
@@ -78,7 +84,7 @@ public abstract class PersistenteEnBD {
 		 }
 
 		 // Sentido.
-		 char sentido= (nuevo) ? 'A' : 'M';
+//		 char sentido= (nuevo) ? 'A' : 'M';
 		
 		 // Genero la novedad correspondiente.
 //		 if (id_servicio>0) {

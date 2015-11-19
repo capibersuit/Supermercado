@@ -2,6 +2,8 @@ package ar.gov.chris.client.pantalla;
 
 //import ar.gov.chris.client.GreetingService;
 //import ar.gov.chris.client.GreetingServiceAsync;
+import ar.gov.chris.client.GreetingService;
+import ar.gov.chris.client.GreetingServiceAsync;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
@@ -27,11 +29,15 @@ public class PantallaProductos extends Pantalla {
 
 	private ProxyPantallaProductosAsync proxy_prod;
 	
+	private final GreetingServiceAsync greetingService = GWT
+			.create(GreetingService.class);
+	
 	private WidgetAgregarProducto agregar_prod;
 	
 
 	public PantallaProductos() {
 		super();
+		inicializar();
 		pantalla_principal();
 	}
 
@@ -48,6 +54,24 @@ public class PantallaProductos extends Pantalla {
 		DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(nombre);
 		datos_prod.setPrecio(Float.parseFloat(precio));
+		
+		
+		//---------------------------------
+		
+//		greetingService.greetServer("hol",
+//				new AsyncCallback<String>() {
+//					public void onFailure(Throwable caught) {
+//						// Show the RPC error message to the user
+//						
+//					}
+//
+//					public void onSuccess(String result) {
+//						
+//					}
+//				});
+//	}
+		
+		//---------------------------------
 		
 		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {

@@ -1,8 +1,8 @@
 package ar.gov.chris.server.clases;
 
-public class Producto {
+public class Producto extends PersistenteEnBD {
 	
-	int id;
+//	int id;
 	String nombre;
 	//String descripcion;
 	float precio;
@@ -46,5 +46,10 @@ public class Producto {
 	public String toString() {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", precio="
 				+ precio + "]";
+	}
+	
+	public void grabar() {
+		
+		super.grabar(con, lista_campos, tabla, tabla_secuencia, nuevo, condicion, id, solo_si_no_existe)
 	}
 }

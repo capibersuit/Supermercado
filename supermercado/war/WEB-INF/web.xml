@@ -16,6 +16,18 @@
     <url-pattern>/supermercado/greet</url-pattern>
   </servlet-mapping>
   
+  
+  
+  <servlet>
+    <servlet-name>ProxyPantallaProductos</servlet-name>
+    <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaProductosImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ProxyPantallaProductos</servlet-name>
+    <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaProductos</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Supermercado.html</welcome-file>

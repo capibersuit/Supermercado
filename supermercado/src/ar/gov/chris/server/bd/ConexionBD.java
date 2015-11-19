@@ -312,7 +312,8 @@ public class ConexionBD {
 			boolean nuevo, int id, String nombre_atr_id, String condicion,
 			boolean es_select) {
 	 
-	 // Si lo quiero grabar con un id en particular, lo agrego a la lista de campos
+			
+//	  Si lo quiero grabar con un id en particular, lo agrego a la lista de campos
 	 if (id!=0 && nuevo)
 		 lista_campos.put(nombre_atr_id, id);
 	
