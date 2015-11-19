@@ -77,7 +77,7 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 	 */
 	public void onValueChange(ValueChangeEvent<String> event) {
 		String historyToken= event.getValue();
-		Window.setTitle("Casos soporte");
+		Window.setTitle("Sistema de control de listas de supermercado");
 	
 		
 	

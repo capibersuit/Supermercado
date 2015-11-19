@@ -3,9 +3,10 @@ package ar.gov.chris.shared;
 import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;
 
+import ar.gov.chris.server.excepciones.ExcepcionBug;
+
 //import ar.gov.mecon.genericos.autorizacion.VerificadorDePasswords;
 //import ar.gov.mecon.genericos.basicos.Sanitizador;
-import ar.gov.mecon.genericos.excepciones.ExcepcionBug;
 
 public class Sanitizador {
 	/** Caracteres permitidos en todo tipo de expresi�n.

@@ -45,13 +45,15 @@ public class WidgetAgregarProducto extends DialogBox {
 		botones.add(cancelar);
 		
 		panel= new FlowPanel();
-//		panel.add(cudap);
+		panel.add(nombre);
+		panel.add(precio);
+
 		panel.add(botones);
 		this.add(panel);
 	}
 
 	/** Agrega los listeners a los botones.
-	 * @param id_widget Índice para el debugger.
+	 * @param id_widget ndice para el debugger.
 	 */
 	private void agregar_listeners() {
 		agregar.addClickHandler(new ClickHandler(){

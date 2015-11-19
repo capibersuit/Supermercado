@@ -69,7 +69,7 @@ public class PantallaProductos extends Pantalla {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				
+				agregar_prod.show();
 			}
 		});
 	}
