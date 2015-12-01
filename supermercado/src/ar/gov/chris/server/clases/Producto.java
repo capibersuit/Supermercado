@@ -1,5 +1,9 @@
 package ar.gov.chris.server.clases;
 
+import ar.gov.chris.server.bd.ConexionBD;
+import ar.gov.chris.server.bd.HashMapSQL;
+import ar.gov.chris.server.excepciones.ExcepcionBD;
+
 public class Producto extends PersistenteEnBD {
 	
 //	int id;
@@ -48,8 +52,12 @@ public class Producto extends PersistenteEnBD {
 				+ precio + "]";
 	}
 	
-	public void grabar() {
+	public void grabar(ConexionBD con) throws ExcepcionBD {
 		
-		super.grabar(con, lista_campos, tabla, tabla_secuencia, nuevo, condicion, id, solo_si_no_existe)
+		 HashMapSQL lista_campos= new HashMapSQL();
+		 lista_campos.put("nombre", this.nombre);
+		 lista_campos.put("precio", this.precio);
+
+		super.grabar(con, lista_campos, "public.productos", "public.productos", true, "", id, false);
 	}
 }
