@@ -86,10 +86,10 @@ public class ConexionBD {
 	}
 
 	/**
-	 * Genera una conexiï¿½n contra una BD del tipo indicado en el parï¿½metro.
+	 * Genera una conexión contra una BD del tipo indicado en el parómetro.
 	 * 
-	 * @param tipo Tipo de conexiï¿½n deseada.
-	 * @throws ExcepcionConexionBD Si hay algï¿½n problema.
+	 * @param tipo Tipo de conexión deseada.
+	 * @throws ExcepcionConexionBD Si hay algún problema.
 	 */	
 	public ConexionBD(TipoConexion tipo) throws ExcepcionConexionBD {
 	 String driver= "";
@@ -97,9 +97,17 @@ public class ConexionBD {
 	 		path;
 	 tipo_conexion= tipo;
 	 
-	 // Adecï¿½o los parï¿½metros en base al tipo de BD.
+	 // Adecúo los parámetros en base al tipo de BD.
 	 if (tipo_conexion.equals(TipoConexion.LECTOESCRITURA)) {
 		 driver= "org.postgresql.Driver";
+		 driver= "org.postgresql.Driver";
+		 hostbd= "localhost";
+		 bd= "supermercado";
+		 url= "jdbc:postgresql://"+ hostbd + "/"+bd; 
+		 usr= "postgres";
+		 contrasena= "laquevenga"; 
+		 path_bd= "public"; 
+		 
 //		 hostbd= LectorConfiguracion.obtener_valor("bd_host");
 //		 bd= LectorConfiguracion.obtener_valor("bd_bd");
 //		 url= "jdbc:postgresql://"+ hostbd + "/"+bd+"?ssl";
@@ -109,22 +117,22 @@ public class ConexionBD {
 	 } else {
 		 if (tipo_conexion.equals(TipoConexion.SOLO_LECTURA)) {
 			 driver= "org.postgresql.Driver";
-//			 hostbd= LectorConfiguracion.obtener_valor("bd_host_lectura");
-//			 bd= LectorConfiguracion.obtener_valor("bd_bd_lectura");
-//			 url= "jdbc:postgresql://"+ hostbd + "/"+bd+"?ssl";
-//			 usr= LectorConfiguracion.obtener_valor("bd_usr_lectura");
-//			 contrasena= LectorConfiguracion.obtener_valor("bd_contrasena_lectura");
-//			 path_bd= LectorConfiguracion.obtener_valor("bd_path_lectura");
+			 hostbd= "localhost";
+			 bd= "supermercado";
+			 url= "jdbc:postgresql://"+ hostbd + "/"+bd; //+"?ssl";
+			 usr= "postgres";
+			 contrasena= "laquevenga";  //.obtener_valor("bd_contrasena_lectura");
+			 path_bd= "public"; // LectorConfiguracion.obtener_valor("bd_path_lectura");
 		 }
 	 }
-	 // Verifico que estï¿½n bien definidos los parï¿½metros.
+	 // Verifico que estén bien definidos los parámetros.
 	 if (hostbd==null || bd==null || usr==null || contrasena==null || path_bd==null) {
-		 System.out.println("Falta algï¿½n parï¿½metro para conectarse a la BD.\n" +
+		 System.out.println("Falta algún parámetro para conectarse a la BD.\n" +
 				 "host="+hostbd+"\nbd="+bd+"\nusr="+usr+"\n"+
 				 "contrasena="+(contrasena==null ? "null" : "no es null")+
 				 "\npath="+path_bd+"\n");
-		 throw new RuntimeException("Algï¿½n parï¿½metro de configuraciï¿½n de la BD no estï¿½ " +
-		 		"definido. Revisar en el archivo de configuraciï¿½n los parï¿½metros " +
+		 throw new RuntimeException("Algún parámetro de configuración de la BD no está " +
+		 		"definido. Revisar en el archivo de configuración los parámetros " +
 		 		"bd_host, bd_usr, bd_contrasena y bd_path.");
 	 }
 	 path= path_bd+", public";
@@ -133,7 +141,7 @@ public class ConexionBD {
 	 try {
 		 Class.forName(driver);
 	 } catch (ClassNotFoundException ex) {
-		 throw new ExcepcionBug("Conexiï¿½n SSO - driver: "+ex.getMessage());
+		 throw new ExcepcionBug("Conexión Supermercado - driver: "+ex.getMessage());
 	 }
 
 	 // Hago la conexiï¿½n.
