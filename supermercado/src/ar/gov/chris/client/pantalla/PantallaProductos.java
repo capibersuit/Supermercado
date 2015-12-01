@@ -75,7 +75,7 @@ public class PantallaProductos extends Pantalla {
 		
 		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("OcurriÃ³ un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
