@@ -1,4 +1,4 @@
--- Table: productos
+﻿-- Table: productos
 
 -- DROP TABLE productos;
 
@@ -23,5 +23,10 @@ CREATE TABLE listas
   fecha timestamp,
   CONSTRAINT id_pk_listas PRIMARY KEY (id )
 )
+
+--******************* HASTA ACA DEFINICIONES *****************************************
+
+
+SELECT	* FROM productos 
 
 SELECT NOW();

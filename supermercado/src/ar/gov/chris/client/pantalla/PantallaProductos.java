@@ -2,7 +2,7 @@ package ar.gov.chris.client.pantalla;
 
 //import ar.gov.chris.client.GreetingService;
 //import ar.gov.chris.client.GreetingServiceAsync;
-import ar.gov.chris.client.GreetingService;
+//import ar.gov.chris.client.GreetingService;
 import ar.gov.chris.client.GreetingServiceAsync;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
@@ -29,9 +29,9 @@ public class PantallaProductos extends Pantalla {
 
 	private ProxyPantallaProductosAsync proxy_prod;
 	
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
-	
+//	private final GreetingServiceAsync greetingService = GWT
+//			.create(GreetingService.class);
+//	
 	private WidgetAgregarProducto agregar_prod;
 	
 
