@@ -1,3 +1,0 @@
-# Module probando
-# RPC service class, partial path of RPC policy file
-ar.chris.mecon.client.GreetingService, 8743C61BF2E4F57B32169E1EDE144C05.gwt.rpc
