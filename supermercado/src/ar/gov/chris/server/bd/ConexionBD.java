@@ -345,7 +345,7 @@ public class ConexionBD {
 			 clase= objvalor.getClass().getName();
 			 if ((clase.compareTo("java.lang.String")==0) ||
 					 (clase.compareTo("java.lang.Character")==0) ||
-					 (clase.compareTo("ar.gov.mecon.genericos.basicos.Fecha")==0) ||
+					 (clase.compareTo("java.util.Date")==0) ||
 					 (clase.compareTo("ar.gov.mecon.genericos.basicos.MAC")==0)) {
 				 /* En Postgres 9.1 ahora las barras son, por default, tratadas como caracteres ordinarios,
 				  * por lo cual ya no es necesario escaparlas.*/
