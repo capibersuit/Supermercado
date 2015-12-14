@@ -30,7 +30,7 @@ public class PantallaInicio extends Pantalla {
 		btn_listas.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				panel.clear();
-				History.newItem("PantallaListas");}
+				History.newItem("PantallaListaDeCompras");}
 		});
 		btn_productos.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

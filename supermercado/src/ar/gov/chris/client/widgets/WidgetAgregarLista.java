@@ -1,6 +1,7 @@
 package ar.gov.chris.client.widgets;
 
 import ar.gov.chris.client.pantalla.Pantalla;
+import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.pantalla.PantallaListas;
 import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
@@ -20,17 +21,17 @@ public class WidgetAgregarLista extends DialogBox {
 	private Button cancelar;
 	private TextBox comentario;
 	private TextBox precio;
-	private PantallaListas parent;
+	private PantallaListaDeCompras parent;
 	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
 	 * un CUDAP.
 	 * 
-	 * @param parent La pantalla parent.
+	 * @param pantallaListaDeCompras La pantalla parent.
 	 * @param id_widget Id para el widget que se agrega.
 	 */
-	public WidgetAgregarLista(PantallaListas parent) {
+	public WidgetAgregarLista(PantallaListaDeCompras pantallaListaDeCompras) {
 		super(true);
-		this.parent= parent;
+		this.parent= pantallaListaDeCompras;
 		this.setText("Agregar Nueva Lista");
 		comentario= new TextBox();
 		

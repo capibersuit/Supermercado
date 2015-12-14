@@ -3,6 +3,7 @@ package ar.gov.chris.client;
 import java.util.HashMap;
 
 import ar.gov.chris.client.pantalla.PantallaInicio;
+import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.pantalla.PantallaListas;
 import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.shared.FieldVerifier;
@@ -43,7 +44,7 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 	
 	public static final String PANTALLA_VISTA_DE_COMPRAS= "PantallaVistavistaDeCompras";
 	public static final String PANTALLA_PRODUCTOS= "PantallaProductos";
-	public static final String PANTALLA_lISTAS= "PantallaListas";
+	public static final String PANTALLA_lISTAS= "PantallaListaDeCompras";
 	
 	static {
 		TITULOS.put(PANTALLA_INICIO, new HTML("Bienvenido al sistema de soporte del MECON"));
@@ -90,7 +91,7 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 		
 if (historyToken.equals(PANTALLA_lISTAS)) {
 			
-			panel_aplicacion.add(new PantallaListas());
+			panel_aplicacion.add(new PantallaListaDeCompras());
 }
 
 if (historyToken.equals(PANTALLA_PRODUCTOS)) {
