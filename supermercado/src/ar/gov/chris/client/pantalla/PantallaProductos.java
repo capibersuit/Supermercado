@@ -3,12 +3,15 @@ package ar.gov.chris.client.pantalla;
 //import ar.gov.chris.client.GreetingService;
 //import ar.gov.chris.client.GreetingServiceAsync;
 //import ar.gov.chris.client.GreetingService;
+import java.util.Set;
+
 import ar.gov.chris.client.GreetingServiceAsync;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.WidgetAgregarProducto;
 import ar.gov.chris.client.widgets.MensajeAlerta;
+import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,8 +34,10 @@ public class PantallaProductos extends Pantalla {
 	
 //	private final GreetingServiceAsync greetingService = GWT
 //			.create(GreetingService.class);
-//	
+    private Set<DatosProducto> datos_prod;
+
 	private WidgetAgregarProducto agregar_prod;
+	private WidgetMostrarProductos productos;
 	
 
 	public PantallaProductos() {
@@ -42,13 +47,39 @@ public class PantallaProductos extends Pantalla {
 	}
 
 	private void pantalla_principal() {
-		
-		btn_productos= new Button("Nuevo Producto");
-		panel.add(btn_productos);
-		agregar_prod= new WidgetAgregarProducto(this);
-		agregar_handlers();
+//		proxy_prod.buscar_productos();
+//		btn_productos= new Button("Nuevo Producto");
+//		panel.add(btn_productos);
+//		agregar_prod= new WidgetAgregarProducto(this);
+		obtener_datos_productos();
+//		agregar_handlers();
 	}
 	
+	private void obtener_datos_productos() {
+		proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
+						"los productos: " + caught.getMessage());
+			}
+			public void onSuccess(Set<DatosProducto> result) {
+				datos_prod= result;
+				armar_pantalla();			
+			}
+			
+		});
+				
+	}
+
+	protected void armar_pantalla() {
+		btn_productos= new Button("Nuevo Producto");
+		panel.add(btn_productos);
+		agregar_prod= new WidgetAgregarProducto(this);	
+		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos");
+		panel.add(productos);
+		agregar_handlers();
+
+	}
+
 	@Override
 	public void agregar_producto(String nombre, String precio) {
 		DatosProducto datos_prod= new DatosProducto();

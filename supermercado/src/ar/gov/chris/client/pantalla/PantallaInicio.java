@@ -1,6 +1,8 @@
 package ar.gov.chris.client.pantalla;
 
 
+import ar.gov.chris.client.widgets.MensajeAlerta;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
@@ -16,6 +18,10 @@ public class PantallaInicio extends Pantalla {
 		pantalla_principal();
 		// TODO Auto-generated constructor stub
 	}
+
+	public PantallaInicio(String msj) {
+		MensajeAlerta.mensaje_error(msj);	
+		}
 
 	private void pantalla_principal() {
 		

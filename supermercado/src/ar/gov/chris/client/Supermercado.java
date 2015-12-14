@@ -2,10 +2,12 @@ package ar.gov.chris.client;
 
 import java.util.HashMap;
 
+import ar.gov.chris.client.pantalla.Pantalla;
 import ar.gov.chris.client.pantalla.PantallaInicio;
 import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.pantalla.PantallaListas;
 import ar.gov.chris.client.pantalla.PantallaProductos;
+import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
 import ar.gov.chris.shared.FieldVerifier;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -98,6 +100,17 @@ if (historyToken.equals(PANTALLA_PRODUCTOS)) {
 	
 	panel_aplicacion.add(new PantallaProductos());
 }
+
+if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRAS)) {
+	String[] s = historyToken.split("-");
+	Pantalla pv= null;
+	if (s.length > 1) {
+		String id= s[1];
+		pv= new PantallaVistaDeCompra(id);
+		Window.setTitle("Vista de compra n°: " + id);
+	} else
+		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un número de compra.");
+	panel_aplicacion.add(pv);}
 
 		
 		
@@ -252,37 +265,7 @@ if (historyToken.equals(PANTALLA_PRODUCTOS)) {
 //			}
 //			menu.cambiar_titulo_contenido(titulo);
 //			menu.cambiar_contenido(pp);
-//		}
-//		if (historyToken.equals(PANTALLA_CASOS_SOPORTE_CAIDAS)) {
-//			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_CASOS_SOPORTE_CAIDAS));
-//			menu.cambiar_contenido(new PantallaCasosCaidas());
-//		}
-//		if (historyToken.equals(PANTALLA_REPORTES)) {
-//			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_REPORTES));
-//			menu.cambiar_contenido(new PantallaReporte());
-//		}
-//		if (historyToken.equals(PANTALLA_ESTADISTICAS)) {
-//			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_ESTADISTICAS));
-//			menu.cambiar_contenido(new PantallaEstadisticas());
-//		}
-//		
-//		//********************************************
-//		
-//		if (historyToken.equals(PANTALLA_ESTADISTICAS_PT)) {
-//			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_ESTADISTICAS_PT));
-//			menu.cambiar_contenido(new PantallaEstadisticasPT());
-//		}
-//		
-//		//***********************************************
-//		if (historyToken.equals(PANTALLA_ESTADISTICAS_T_RESOL)) {
-//			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_ESTADISTICAS_T_RESOL));
-//			menu.cambiar_contenido(new PantallaEstadisticasTResolucion());
-//		}
-//		if (historyToken.equals(PANTALLA_CONFIGURACION_ALARMAS)) {
-//			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_CONFIGURACION_ALARMAS));
-//			menu.cambiar_contenido(new PantallaConfiguracionAlarmas());
-//		}
-//	}
+
 	
 	
 	

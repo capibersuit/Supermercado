@@ -9,14 +9,23 @@ import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
 public class PantallaVistaDeCompra extends Pantalla {
 
 	private ProxyPantallaListasAsync proxy_listas;
+	private int id_compra;
 
 
 	public PantallaVistaDeCompra() {
-		super();
-		inicializar();
+//		super();
+//		inicializar();
 	}
 	
 	
+	public PantallaVistaDeCompra(String id) {
+		super();
+		inicializar();
+		id_compra= Integer.parseInt(id);
+		
+		}
+
+
 	/** Se crea el proxy_carga para comunicarse con el servidor.
 	 */
 	protected void inicializar(){
