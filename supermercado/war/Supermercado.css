@@ -32,3 +32,819 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+/**** LINK-tag style sheet estilos.css ****/
+body {
+	background-color: #FFF6EE;
+	color: black;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 20px 20px 20px 20px;
+}
+
+.TabBar {
+	color: #55331C;
+}
+
+.ConTamanioAuto {
+	height: auto;
+	width: auto;
+}
+
+.Subtitulo {
+	color: #55331C;
+	font-size: 110%;
+	width: 100%;
+	padding-left: 8;
+	padding-top: 2;
+	padding-bottom: 2;
+}
+
+.Subsubtitulo {
+	color: #55331C;
+	font-size: 102%;
+	width: 100%;
+	padding-left: 8;
+	padding-top: 2;
+	padding-bottom: 2;
+}
+
+.DatoDistinguido {
+	color: black;
+	font-weight: bold;
+}
+
+.ComplejidadBaja {
+	color: #3E3BFF;	
+	font-weight: bold;
+}
+
+.ComplejidadMedia {
+	color: #30B762;	
+	font-weight: bold;
+}
+
+.ComplejidadAlta {
+	color: #FF4524;	
+	font-weight: bold;
+}
+
+.ComplejidadProyecto {
+	color: Red;	
+	font-weight: bold;
+}
+
+.Disclaimer {
+	color: red;
+	font-size: 100%;
+	width: 100%;
+	border: 1px solid #FFD5AF;
+	padding-left: 8;
+	padding-top: 2;
+	padding-bottom: 2;
+}
+
+.ImageButton {
+	border: 1px outset #BF8660;
+	cursor: pointer;
+}
+
+.Pedido {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	padding: 2px;
+	border: 1px dotted #BF8660;/*FFD5AF;*/
+	background-color: white; /*#FFE8D9;*/
+}
+
+.Descripcion {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border: none;
+	background-color: white; /*#FFE8D9;*/
+	width: 100%;
+	height: 100%;
+}
+
+.WidgetPreviewCasosSoporte {
+	color: #55331C;
+	background-color: #FFE8D9;
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+	width: 100%;
+	height: 100%;
+}
+
+.WidgetPreviewCasosSoporte td {
+	padding: 3px;
+	border: 2px solid #FFD5AF;
+}
+
+.PanelPrincipal {
+	width: 100%;
+	color: #55331C;
+}
+
+.PanelExpandido {
+	width: 100%;
+	height: 100%;
+}
+
+.PanelExpandido td {
+	height: 100%;
+}
+
+.PanelExpandidoHorizontal {
+	width: 100%;
+}
+
+.PanelSinBordes {
+	border-style: none;
+}
+
+.PanelSinBordes td {
+	border-style: none;
+}
+
+.PanelSinBordesExpandido {
+	border-style: none;
+	width: 100%;
+}
+
+.PanelSinBordesExpandido td {
+	border-style: none;
+}
+
+.PanelConBordes {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+	background-color: #FFEEDF;
+	width: 100%;
+}
+
+.PanelConBordes td {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+}
+
+.PanelConBordesExternos {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+	background-color: #FFEEDF;
+	width: 100%;
+}
+
+.PanelConBordesExpandido {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+	background-color: #FFEEDF;
+	width: 100%;
+	height: 100%;
+}
+
+.PanelConBordesExpandido td {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+}
+
+.PanelSinPadding {
+	padding: 0px;
+}
+
+.PanelSinPadding td {
+	padding: 0px;
+}
+
+.PanelEspera {
+	text-align: center;
+	padding: 10px;
+	position: fixed;
+	top: 40%;
+	right: 35%;
+	background-color: #FFEEDF;
+	width: 300px;
+	border: 3px solid #FFD5AF;
+	border-collapse: collapse;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+}
+
+.HeaderEditor {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-align: center;
+}
+
+.HeaderTablas {
+	background: #FFD5AF;
+	color: #55331C;
+	border: 1px solid #FFD5AF;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-align: center;
+}
+
+.ItemEditorAcciones {
+	background-color: #FFEEDF;
+	width: 100%;
+	border: 1px solid #FFD5AF;
+	border-collapse: collapse;
+}
+
+.ItemEditorAcciones td {
+	align: left;
+	vertical-align: top;
+	width: 50%;
+}
+
+.ContenidoTablas {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: white; /*#FFE8D9;*/
+	padding: 3px;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+.ContenidoTablasLeft {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: white; /*#FFE8D9;*/
+	padding: 3px;
+	text-align: left;
+}
+
+.Dialogo {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+	background-color: #FFE8D9;
+	width: 100%;
+}
+
+.Dialogo td {
+	border: 2px solid #FFD5AF;
+	padding: 1px;
+}
+
+.Historial {
+	border: 2px solid #FFD5AF;
+	border-collapse: collapse;
+	background-color: #FFE8D9;
+	width: 100%;
+}
+
+.Historial td {
+	border: 2px solid #FFD5AF;
+	padding: 1px;
+	width: 100%;
+}
+
+.ItemHistorial {
+	width: 100%;
+	height: 80px;
+	padding: 2px;
+	border: none;
+}
+
+.ItemHistorial td {
+	border: none;
+}
+
+.HeaderItemHistorial {
+	color: #754627;
+	font-weight: bold;
+}
+
+.TrailerItemHistorial {
+	font-weight: bold;
+}
+
+.HeaderEvaluacionItemHistorial {
+	color: #754627;
+	font-weight: bold;
+}
+
+.MsjHeader {
+	color: #55331C;
+	font-weight: bold;
+}
+
+.EditorAcciones {
+	border: 2px solid #FFA160;
+	border-collapse: collapse;
+	background-color: #FFEEDF;
+	color: #55331C;
+	width: 100%;
+}
+
+.EditorAcciones td {
+	border-style: none;
+}
+
+.LabelDistinguido {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	color: #55331C;
+}
+
+.LabelComentario {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-style: italic;
+	font-size: 12px;
+}
+
+.LabelResaltado {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #FCD48E;/*#FFA160;*/
+}
+
+.LabelMensajeNoLeido {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	color: #55331C;
+	text-decoration: blink;
+}
+
+.LabelAccEnCurso {
+	color: #35A26B;
+}
+
+.LabelAccDevuelta {
+	color: #4E6ECC;
+}
+
+.LabelAccCancelada {
+	color: #8A8A8A;
+}
+
+.Submenu {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 90%;
+}
+
+.Version {
+	text-align: center;
+}
+
+a {
+	color: #55331C;
+}
+
+a:visited {
+	color: #47667F;
+}
+
+img {
+	border: none;
+}
+
+hr {
+	color: #47667F;
+	background-color: #47667F;
+}
+
+.gwt-FlexTable {
+	width: 100%;
+}
+
+.gwt-Button {
+	border: 1px outset #BF8660;
+	font-size: 12px;
+	padding-top: 1;
+	padding-bottom: 1;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-background-clip: border;
+	-moz-background-inline-policy: continuous;
+	-moz-background-origin: padding;
+	background: #FFD5AF none repeat scroll 0 0;
+	color: #55331C;
+}
+
+.gwt-Button[disabled] {
+	font-size: 12px;
+	padding-top: 1;
+	padding-bottom: 1;
+	border: 1px outset #FFD5AF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-background-clip: border;
+	-moz-background-inline-policy: continuous;
+	-moz-background-origin: padding;
+	background: #FFDDBF none repeat scroll 0 0;
+	color: #55331C;
+}
+
+.gwt-PushButton-up {
+	color: #55331C;
+	border: 1px outset #BF8660;
+	background-color: #FFD5AF;
+	cursor: pointer;
+}
+
+.gwt-PushButton-up-hovering {
+	color: #55331C;
+	border: 1px outset #BF8660;
+	background-color: #FFD5AF;
+	cursor: pointer;
+}
+
+.gwt-PushButton-down {
+	color: #55331C;
+	border: 1px inset #BF8660;
+	background-color: #FFD5AF;
+	cursor: pointer;
+}
+
+.gwt-PushButton-down-hovering {
+	color: #55331C;
+	border: 1px inset #BF8660;
+	background-color: #FFD5AF;
+	cursor: pointer;
+}
+
+.gwt-CheckBox {
+	font-size: 12px;
+}
+
+.gwt-DialogBox {
+	background-color: #FFEEDF;
+}
+
+.gwt-DialogBox .Caption {
+	background: url(bg_tit.png) repeat-x #FFEEDF;
+	padding: 2px;
+	margin: 0px;
+	text-align: center;
+	font-weight: bold;
+	color: #55331C;
+	cursor: default;
+}
+
+.gwt-ListBox {
+	border: 1px dotted #BF8660;
+}
+
+.gwt-Grid {
+	width: 100%;
+}
+
+.Menu {
+	width: 100%;
+}
+
+.gwt-MenuBar {
+	background-color: #FFEEDF;
+	cursor: default;
+}
+
+.gwt-MenuBar .gwt-MenuItem {
+	padding: 0px 4px 0px 4px;
+	font-size: 12px;
+	cursor: default;
+}
+
+.gwt-MenuBar .gwt-MenuItem-selected {
+	background-color: #FFD5AF;
+}
+
+.gwt-PasswordTextBox { /*width: 180px;*/
+	border: 1px dotted #BF8660;
+}
+
+.gwt-RadioButton {
+	font-size: 12px;
+}
+
+.gwt-TabBar {
+	background-color: white;
+	border-bottom: 1px solid #BF8660;
+}
+
+.gwt-TextArea {
+	border: 1px dotted #BF8660;
+	width: 100%;
+}
+
+.gwt-TextBox { /*width: 180px;*/
+	border: 1px dotted #BF8660;
+}
+
+.gwt-StackPanel .gwt-StackPanelItem {
+	border: 1px outset #BF8660;
+	background-color: #FFD5AF;
+	cursor: pointer;
+}
+
+.Calendario {
+	border: 2px solid #FFD5AF;
+	background-color: #FFEEDF;
+}
+
+.Calendario .navbar {
+	color: #55331C;
+	background: url(bg_tit.png) repeat-x #FFEEDF;
+	width: 100%;
+	vertical-align: middle;
+	border-bottom: 1px solid #FFD5AF;
+}
+
+.Calendario .navbar .gwt-Button {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.Calendario .table {
+	font: 10pt sans-serif;
+	text-align: center;
+}
+
+.Calendario .weekheader {
+	color: #55331C;
+	background: url(bg_tit.png) repeat-x #FFEEDF;
+}
+
+.Calendario .weekheader .days {
+	width: 3em;
+}
+
+.Calendario .cell {
+	cursor: pointer;
+}
+
+.Calendario .cell .gwt-HTML {
+	border: 1px solid #FFD5AF;
+}
+
+.Calendario .cell .gwt-HTML span {
+	width: 100%;
+	height: 100%;
+	line-height: 2em;
+}
+
+.Calendario .today .gwt-HTML {
+	color: white;
+	background-color: #F0995A;
+}
+
+.Calendario .day .gwt-HTML {
+	border: 1px solid #FFD5AF;
+}
+
+.gwt-Hyperlink {
+	font-size: 12px;
+}
+
+.Clickeable {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.gwt-DecoratorPanel {
+	border: 5px solid #FFD5AF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.gwt-DecoratorPanel .middleCenterInner {
+	height: 100%;
+	width: 100%;
+	vertical-align:top;
+}
+
+.gwt-DisclosurePanel {
+	width: 100%;
+}
+
+.gwt-DisclosurePanel .header {
+	border: 3px solid #FFD5AF;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFD5AF none repeat scroll 0 0;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	vertical-align: center;
+	width: 300;
+	height:100%;
+	text-decoration:none;
+}
+
+.gwt-DisclosurePanel .content {
+	width: 100%;
+}
+
+/**********************************************************************/
+.gwt-DialogBox .Caption {
+	background: url(bg_tit.png) repeat-x #FFEEDF;
+	padding: 4px 4px 4px 8px;
+	cursor: default;
+	border-bottom: 1px solid #bbbbbb;
+	border-top: 5px solid #FFD4AE;
+}
+
+.gwt-DialogBox .dialogContent {
+	
+}
+
+.gwt-DialogBox .dialogMiddleCenter {
+	padding: 3px;
+	background: #FFEEDF;
+}
+
+.gwt-DialogBox .dialogBottomCenter {
+	background: url(hborder.png) repeat-x 0px -4px;
+}
+
+.gwt-DialogBox .dialogMiddleLeft {
+	background: url(vborder.png) repeat-y;
+}
+
+.gwt-DialogBox .dialogMiddleRight {
+	background: url(vborder.png) repeat-y -4px 0px;
+}
+
+.gwt-DialogBox .dialogTopLeftInner {
+	width: 5px;
+	zoom: 1;
+}
+
+.gwt-DialogBox .dialogTopRightInner {
+	width: 8px;
+	zoom: 1;
+}
+
+.gwt-DialogBox .dialogBottomLeftInner {
+	width: 5px;
+	height: 8px;
+	zoom: 1;
+}
+
+.gwt-DialogBox .dialogBottomRightInner {
+	width: 5px;
+	height: 8px;
+	zoom: 1;
+}
+
+.gwt-DialogBox .dialogTopLeft {
+	background: url(corner.png) no-repeat -13px 0px;
+}
+
+.gwt-DialogBox .dialogTopRight {
+	background: url(corner.png) no-repeat -18px 0px;
+}
+
+.gwt-DialogBox .dialogBottomLeft {
+	background: url(corner.png) no-repeat 0px -15px;
+}
+
+.gwt-DialogBox .dialogBottomRight {
+	background: url(corner.png) no-repeat -5px -15px;
+}
+
+html>body .gwt-DialogBox {
+	
+}
+
+.gwt-DialogBox .dialogTopLeftInner {
+	width: 5px;
+	overflow: hidden;
+}
+
+.gwt-DialogBox .dialogTopRightInner {
+	width: 8px;
+	overflow: hidden;
+}
+
+.gwt-DialogBox .dialogBottomLeftInner {
+	width: 5px;
+	height: 8px;
+	overflow: hidden;
+}
+
+.gwt-DialogBox .dialogBottomRightInner {
+	width: 8px;
+	height: 8px;
+	overflow: hidden;
+}
+
+/* --------- Estilo del TabLayoutPanel (EditorAccionesCasoSoporte) --------- */
+/* the panel itself */
+.gwt-TabLayoutPanel {
+	height: 100%;
+}
+./* the tab bar element */
+gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
+    }
+/* an individual tab */
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
+	border: 3px solid #FFDDBF;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFDDBF none repeat scroll 0 0;
+	padding-left:5px;
+	padding-right:5px;
+	color: #55331C;
+	cursor: pointer;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected
+{
+    border: 3px solid #FFD5AF;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFD5AF none repeat scroll 0 0;
+	padding-left:5px;
+	padding-right:5px;
+	font-weight: bold;
+	color: #55331C;
+	cursor: pointer;
+}
+
+/* an element nested in each tab (useful for styling) */
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabInner {
+} 
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
+	border: 3px solid #FFD5AF;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+/* --------- Estilo del Menu Lateral --------- */
+	
+.ContenedorPrincipal {
+}
+
+.Titulo {
+	color: #55331C;
+	background: #FFD5AF none repeat scroll 0 0;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 150%;
+}
+
+.Pantalla {
+	padding: 10px;
+}
+
+.TabBar {
+	padding-top:15px;	
+	padding-left:5px;
+}
+
+.tabSeleccionado {
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	padding-left:5px;
+	padding-right:5px;
+	font-size:90%;
+	border: 3px solid #FFD5AF;
+	background:#FFD5AF none repeat scroll 0 0;
+	
+}
+
+.tabNoSeleccionado {
+	border: 3px solid transparent;
+	cursor: default;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.Contenido {
+	border: 5px solid #FFD5AF;
+}
+
+.Contenido .middleCenterInner {   
+	vertical-align: top;
+} 
