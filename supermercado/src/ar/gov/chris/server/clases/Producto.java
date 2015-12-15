@@ -1,8 +1,12 @@
 package ar.gov.chris.server.clases;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.HashMapSQL;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
+import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 
 public class Producto extends PersistenteEnBD {
 	
@@ -25,6 +29,31 @@ public class Producto extends PersistenteEnBD {
 		this.nombre = nombre;
 		this.precio = precio;
 	}
+	
+	public Producto(ConexionBD con, int id) throws ExcepcionBD, ExcepcionNoExiste {
+		 String query= "SELECT * FROM productos WHERE id=" + id;
+		 this.cargar_producto(con, query, "Producto con id " + id);
+		}
+	
+	public Producto(ConexionBD con, String nombre) throws ExcepcionBD, ExcepcionNoExiste {
+		 String query= "SELECT * FROM productos WHERE nombre= '" + nombre + "'";
+		 this.cargar_producto(con, query, "Producto con nombre " + nombre);
+		}
+	
+		private void cargar_producto(ConexionBD con, String query, String texto_error) 
+				throws ExcepcionBD, ExcepcionNoExiste {
+		 try {
+			 ResultSet rs= con.select(query);
+			 if (rs.next()) {
+				 this.nombre= rs.getString("nombre");
+				 this.precio= rs.getFloat("precio");
+				 super.cargar_persistente_sin_baja_fisica(rs);
+			 } else throw new ExcepcionNoExiste(texto_error);
+		 } catch(SQLException ex) {
+				throw new ExcepcionBD(ex);
+		 }
+
+		}
 
 	public int getId() {
 		return id;
