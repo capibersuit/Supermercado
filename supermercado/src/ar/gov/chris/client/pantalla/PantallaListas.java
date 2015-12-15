@@ -35,7 +35,7 @@ public class PantallaListas extends Pantalla {
 		btn_agregar_lista= new Button("Nueva Lista");
 		panel.add(btn_agregar_lista);
 		
-		agregar_lista= new WidgetAgregarLista(this);
+//		agregar_lista= new WidgetAgregarLista(this);
 		agregar_handlers();
 	}
 	
@@ -46,7 +46,7 @@ public class PantallaListas extends Pantalla {
 	
 		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurriï¿½ un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {

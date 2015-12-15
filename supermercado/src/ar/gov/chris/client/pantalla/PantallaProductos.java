@@ -58,7 +58,7 @@ public class PantallaProductos extends Pantalla {
 	private void obtener_datos_productos() {
 		proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
+				MensajeAlerta.mensaje_error("Ocurriï¿½ un error al intentar buscar " +
 						"los productos: " + caught.getMessage());
 			}
 			public void onSuccess(Set<DatosProducto> result) {
@@ -85,28 +85,10 @@ public class PantallaProductos extends Pantalla {
 		DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(nombre);
 		datos_prod.setPrecio(Float.parseFloat(precio));
-		
-		
-		//---------------------------------
-		
-//		greetingService.greetServer("hol",
-//				new AsyncCallback<String>() {
-//					public void onFailure(Throwable caught) {
-//						// Show the RPC error message to the user
-//						
-//					}
-//
-//					public void onSuccess(String result) {
-//						
-//					}
-//				});
-//	}
-		
-		//---------------------------------
-		
+			
 		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurriï¿½ un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {

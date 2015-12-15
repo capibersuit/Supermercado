@@ -16,10 +16,10 @@ public class WidgetMostrarProductos extends Composite {
 	private Label titulo_label;
 	private int next_row;
 	
-	/** Crea un {@link WidgetMostrarLineas} a partir de los parámetros.
+	/** Crea un {@link WidgetMostrarLineas} a partir de los parï¿½metros.
 	 * 
-	 * @param lista Lista de líneas a mostrar.
-	 * @param titulo Título del widget.
+	 * @param lista Lista de lï¿½neas a mostrar.
+	 * @param titulo Tï¿½tulo del widget.
 	 */
 	public WidgetMostrarProductos(final Set<DatosProducto> lista, 
 			String titulo) {
@@ -30,14 +30,14 @@ public class WidgetMostrarProductos extends Composite {
 
 		Label nombre_prod_label= new Label("Producto");
 		Label precio_label= new Label("Precio");
-//		Label marca_label= new Label("Marca");
+		Label cant_label= new Label("Cantidad");
 //		Label modelo_label= new Label("Modelo");
 //		Label nro_serie_label= new Label("Nro de serie");
 //		Label opciones_label= new Label("Opciones");
 		
 		lista_prod.setWidget(0, 0, nombre_prod_label);
 		lista_prod.setWidget(0, 1, precio_label);
-//		lista_lineas.setWidget(0, 2, marca_label);
+		lista_prod.setWidget(0, 2, cant_label);
 //		lista_lineas.setWidget(0, 3, modelo_label);
 //		lista_lineas.setWidget(0, 4, nro_serie_label);
 //		lista_lineas.setWidget(0, 5, opciones_label);
@@ -45,9 +45,10 @@ public class WidgetMostrarProductos extends Composite {
 		next_row= 1; 
 
 		for (DatosProducto prod : lista) {
-//			CheckBox check_quitar= new CheckBox("Quitar línea");
+//			CheckBox check_quitar= new CheckBox("Quitar lï¿½nea");
 			lista_prod.setText(next_row, 0, prod.getNombre());
 			lista_prod.setText(next_row, 1, String.valueOf(prod.getPrecio()));
+			lista_prod.setText(next_row, 2, ((prod.getCantidad()!=0) ? String.valueOf(prod.getCantidad()) : "NA"));
 //		lista_lineas.setText(next_row, 2, prod.obtener_marca());
 //		lista_lineas.setText(next_row, 3, prod.obtener_modelo());
 //		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());

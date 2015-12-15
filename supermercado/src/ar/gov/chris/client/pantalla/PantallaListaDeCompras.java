@@ -1,10 +1,15 @@
 package ar.gov.chris.client.pantalla;
 
+import java.util.Set;
+
 import ar.gov.chris.client.datos.DatosLista;
+import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetAgregarLista;
+import ar.gov.chris.client.widgets.WidgetMostrarListas;
+import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -22,6 +27,9 @@ public class PantallaListaDeCompras extends Pantalla {
 
 	
 	private WidgetAgregarLista agregar_lista;
+	private WidgetMostrarListas listas;
+
+	protected Set<DatosLista> datos_lista;
 	
 
 	public PantallaListaDeCompras() {
@@ -32,11 +40,12 @@ public class PantallaListaDeCompras extends Pantalla {
 
 	private void pantalla_principal() {
 		
-		btn_agregar_lista= new Button("Nueva Lista");
-		panel.add(btn_agregar_lista);
-		
-		agregar_lista= new WidgetAgregarLista(this);
-		agregar_handlers();
+//		btn_agregar_lista= new Button("Nueva Lista");
+//		panel.add(btn_agregar_lista);
+//		
+//		agregar_lista= new WidgetAgregarLista(this);
+//		agregar_handlers();
+		obtener_datos_listas();
 	}
 	
 	
@@ -46,7 +55,7 @@ public class PantallaListaDeCompras extends Pantalla {
 	
 		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurriï¿½ un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
@@ -57,8 +66,33 @@ public class PantallaListaDeCompras extends Pantalla {
 		});
 	}
 	
+	private void obtener_datos_listas() {
+		proxy_listas.buscar_listas(new AsyncCallback<Set<DatosLista>>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("OcurriÃ³ un error al intentar buscar " +
+						"las listas de compras: " + caught.getMessage());
+			}
+			public void onSuccess(Set<DatosLista> result) {
+				datos_lista= result;
+				armar_pantalla();			
+			}
+			
+		});
+				
+	}
 	
 	
+	
+	protected void armar_pantalla() {
+		btn_agregar_lista= new Button("Nueva Lista");
+		panel.add(btn_agregar_lista);
+		
+		agregar_lista= new WidgetAgregarLista(this);
+		listas= new WidgetMostrarListas(datos_lista, "Listas de compras");
+		panel.add(listas);
+		agregar_handlers();		
+	}
+
 	private void agregar_handlers() {
 		btn_agregar_lista.addClickHandler(new ClickHandler() {
 			
