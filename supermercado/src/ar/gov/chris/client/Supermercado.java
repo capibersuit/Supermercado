@@ -44,13 +44,13 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 	public static final String PANTALLA_INICIO= "PantallaInicio";
 
 	
-	public static final String PANTALLA_VISTA_DE_COMPRAS= "PantallaVistavistaDeCompras";
+	public static final String PANTALLA_VISTA_DE_COMPRA= "PantallaVistaDeCompra";
 	public static final String PANTALLA_PRODUCTOS= "PantallaProductos";
 	public static final String PANTALLA_lISTAS= "PantallaListaDeCompras";
 	
 	static {
 		TITULOS.put(PANTALLA_INICIO, new HTML("Bienvenido al sistema de soporte del MECON"));
-		TITULOS.put(PANTALLA_VISTA_DE_COMPRAS, new HTML("Vista de compra"));
+		TITULOS.put(PANTALLA_VISTA_DE_COMPRA, new HTML("Vista de compra"));
 		TITULOS.put(PANTALLA_PRODUCTOS, new HTML("Productos"));
 		TITULOS.put(PANTALLA_lISTAS, new HTML("Listas"));
 
@@ -101,15 +101,15 @@ if (historyToken.equals(PANTALLA_PRODUCTOS)) {
 	panel_aplicacion.add(new PantallaProductos());
 }
 
-if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRAS)) {
+if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRA)) {
 	String[] s = historyToken.split("-");
 	Pantalla pv= null;
 	if (s.length > 1) {
 		String id= s[1];
 		pv= new PantallaVistaDeCompra(id);
-		Window.setTitle("Vista de compra n°: " + id);
+		Window.setTitle("Vista de compra nï¿½: " + id);
 	} else
-		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un número de compra.");
+		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un nï¿½mero de compra.");
 	panel_aplicacion.add(pv);}
 
 		
