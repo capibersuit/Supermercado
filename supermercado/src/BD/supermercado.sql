@@ -24,9 +24,23 @@ CREATE TABLE listas
   CONSTRAINT id_pk_listas PRIMARY KEY (id )
 )
 
+CREATE TABLE rel_listas_productos
+(
+  id serial NOT NULL,
+  id_compra Integer,
+  id_prod Integer,
+  cant Integer,
+  precio double precision,
+  CONSTRAINT id_pk_rel_listas_productos PRIMARY KEY (id)
+)
+
 --******************* HASTA ACA DEFINICIONES *****************************************
 
 
 SELECT	* FROM productos 
 
+SELECT	* FROM rel_listas_productos
 SELECT NOW();
+
+
+SELECT * FROM productos WHERE nombre= 'azucar'
