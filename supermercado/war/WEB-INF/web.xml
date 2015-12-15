@@ -37,6 +37,7 @@
     <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaListas</url-pattern>
   </servlet-mapping>
   
+  <!-- 
   <servlet>
     <servlet-name>ProxyPantallaListas2</servlet-name>
     <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaListas2Impl</servlet-class>
@@ -47,6 +48,7 @@
     <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaListas2</url-pattern>
   </servlet-mapping>
   
+  -->
   
   <!-- Default page to serve -->
   <welcome-file-list>
