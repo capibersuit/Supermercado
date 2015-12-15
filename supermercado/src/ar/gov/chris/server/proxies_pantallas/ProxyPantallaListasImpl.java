@@ -1,11 +1,16 @@
 package ar.gov.chris.server.proxies_pantallas;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
 import ar.gov.chris.client.datos.DatosLista;
+import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.server.bd.ConexionBD;
@@ -54,6 +59,36 @@ ProxyPantallaListas {
 			this.cerrar_transaccion(con, commit);
 		}
 				
+	}
+
+	@Override
+	public Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD{
+		Set <DatosLista> datos_conj= new HashSet<DatosLista>();
+		ConexionBD con= this.obtener_transaccion();
+
+		
+		try {
+			ResultSet rs= con.select("SELECT * FROM listas");
+			
+			while (rs.next()) {
+				DatosLista datos= new DatosLista();
+
+				datos.setComentario(rs.getString("comentario"));
+				datos.setFecha(rs.getDate("fecha"));
+				datos_conj.add(datos);
+			}
+			
+		} catch (ExcepcionBD e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		return datos_conj;
 	}
 }
 
