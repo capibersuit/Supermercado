@@ -83,26 +83,6 @@ public abstract class PersistenteEnBD {
 			id= con.obtener_id(tabla_secuencia, nombre_atributo_id , stmt);
 		 }
 
-		 // Sentido.
-//		 char sentido= (nuevo) ? 'A' : 'M';
-		
-		 // Genero la novedad correspondiente.
-//		 if (id_servicio>0) {
-//			 // Le agrego el id al campo de datos.
-//			 StringBuffer datos_novedad= new StringBuffer();
-//			 datos_novedad.append(id);
-//			 datos_novedad.append(' ');
-//			 datos_novedad.append(datos);
-//
-//			 ManejadorDeNovedades.registrar(con, id_servicio, sentido,
-//					datos_novedad.toString(), datos_id);
-//		 }
-//
-//		 // Logueo.
-//		 if (loguear)
-//			 Logueador.registrar(con, cs, tabla, id, sentido, campos_cambiados,
-//					 datos_id);
-				
 		 return id;
 		}
 	
