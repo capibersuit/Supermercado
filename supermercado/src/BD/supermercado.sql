@@ -39,7 +39,10 @@ CREATE TABLE rel_listas_productos
 
 SELECT	* FROM productos 
 
+SELECT	* FROM listas
+
 SELECT	* FROM rel_listas_productos
+
 SELECT NOW();
 
 
