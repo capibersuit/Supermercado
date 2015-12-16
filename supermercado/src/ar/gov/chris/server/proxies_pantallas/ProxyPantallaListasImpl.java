@@ -72,7 +72,7 @@ ProxyPantallaListas {
 			
 			while (rs.next()) {
 				DatosLista datos= new DatosLista();
-
+				datos.setId(rs.getInt("id"));
 				datos.setComentario(rs.getString("comentario"));
 				datos.setFecha(rs.getDate("fecha"));
 				datos_conj.add(datos);
