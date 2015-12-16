@@ -47,6 +47,7 @@ public class PantallaProductos extends Pantalla {
 	}
 
 	private void pantalla_principal() {
+		panel.clear();
 //		proxy_prod.buscar_productos();
 //		btn_productos= new Button("Nuevo Producto");
 //		panel.add(btn_productos);

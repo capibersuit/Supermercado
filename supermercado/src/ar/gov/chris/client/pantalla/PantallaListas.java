@@ -31,7 +31,7 @@ public class PantallaListas extends Pantalla {
 	}
 
 	private void pantalla_principal() {
-		
+
 		btn_agregar_lista= new Button("Nueva Lista");
 		panel.add(btn_agregar_lista);
 		

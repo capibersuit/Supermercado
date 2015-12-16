@@ -57,14 +57,18 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 	
 	protected void pantalla_principal() {
-		
+		panel.clear();
+
 		cant_prod= new ListBox();
 		
 		for(int i=0; i < 13; i++) {
 			
 			Integer intObj = new Integer(i+1);
 //			cant_prod.setItemText(i, "noSePAraQueSirve");
-			cant_prod.addItem(Integer.toString(intObj));
+			String numero= Integer.toString(intObj);
+			int a = 2*3;
+			a++;
+			cant_prod.addItem(numero);
 		}
 	 proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>() {
 		 
@@ -135,8 +139,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 	private void agregrar_prod_en_lista() {
 		DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(sb_productos.getText());
-		
-		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant_prod.getSelectedIndex(),new AsyncCallback<Void>(){
+		int cant= cant_prod.getSelectedIndex()+1;
+		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar agregar " +
 						"el producto en la lista: " + caught.getMessage());
