@@ -18,7 +18,6 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
-
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.OraculoConComodin;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
@@ -47,6 +46,16 @@ public class PantallaVistaDeCompra extends Pantalla {
 	}
 	
 	
+	public int getId_compra() {
+		return id_compra;
+	}
+
+
+	public void setId_compra(int id_compra) {
+		this.id_compra = id_compra;
+	}
+
+
 	public PantallaVistaDeCompra(String id) {
 		super();
 		inicializar();
@@ -104,7 +113,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   h.add(cant_prod);
 //		   hp_cat.add(vp_categ);
 		   btn_agregar_prod= new Button("Agregar producto");
-		   prod= new WidgetMostrarProductos(lista_prod, "Productos");
+		   prod= new WidgetMostrarProductos(lista_prod, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
 		   panel.add(h);
 		   panel.add(btn_agregar_prod);
 		   panel.add(prod);
@@ -165,5 +174,20 @@ public class PantallaVistaDeCompra extends Pantalla {
 		this.proxy_prod= (ProxyPantallaProductosAsync)
 		GWT.create(ProxyPantallaProductos.class);
 		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
+	}
+
+
+	public void borra_producto_de_lista(String nombre, int id_compra) {
+		proxy_prod.borra_producto_de_lista(nombre, id_compra, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+						"el producto de la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+//				agregar_item_historial_cliente(datos_item);
+//				recargar_personas();
+			}
+			
+		});			
 	}
 }

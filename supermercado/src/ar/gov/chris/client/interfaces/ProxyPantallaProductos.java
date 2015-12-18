@@ -19,4 +19,8 @@ public interface ProxyPantallaProductos extends RemoteService {
 	Set<DatosProducto> buscar_productos_lista(int id_lista)
 			throws GWT_ExcepcionBD;
 
+	void borrar_producto(String nombre) throws GWT_ExcepcionBD;
+
+	void borra_producto_de_lista(String nombre, int id_compra) throws GWT_ExcepcionBD;
+
 }

@@ -19,4 +19,9 @@ public interface ProxyPantallaProductosAsync {
 	void buscar_productos_lista(int id_lista,
 			AsyncCallback<Set<DatosProducto>> callback);
 
+	void borrar_producto(String nombre, AsyncCallback<Void> asyncCallback);
+
+	void borra_producto_de_lista(String nombre, int id_compra,
+			AsyncCallback<Void> asyncCallback);
+
 }

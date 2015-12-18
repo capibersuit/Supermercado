@@ -75,7 +75,7 @@ public class PantallaProductos extends Pantalla {
 		btn_productos= new Button("Nuevo Producto");
 		panel.add(btn_productos);
 		agregar_prod= new WidgetAgregarProducto(this);	
-		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos");
+		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this);
 		panel.add(productos);
 		agregar_handlers();
 
@@ -100,7 +100,20 @@ public class PantallaProductos extends Pantalla {
 		});
 	}
 	
-	
+	public void borrar_producto(String nombre) {
+		
+		proxy_prod.borrar_producto(nombre, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+						"el producto: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+//				agregar_item_historial_cliente(datos_item);
+//				recargar_personas();
+			}
+			
+		});		
+	}
 	
 	private void agregar_handlers() {
 		btn_productos.addClickHandler(new ClickHandler() {
@@ -119,6 +132,8 @@ public class PantallaProductos extends Pantalla {
 		GWT.create(ProxyPantallaProductos.class);
 		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
 	}
+
+	
 	
 	
 	}

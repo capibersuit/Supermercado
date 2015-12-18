@@ -56,6 +56,50 @@ ProxyPantallaProductos {
 		
 		
 	}
+	
+	@Override
+	public void borrar_producto(String nombre) throws GWT_ExcepcionBD {
+		
+		ConexionBD con= this.obtener_transaccion();
+		boolean commit= false;
+
+		try {
+			
+			
+			Producto prod= new Producto(con, nombre);
+			prod.borrar(con);
+			commit= true;
+		
+		} catch (ExcepcionBD e) {
+			e.printStackTrace();
+		} catch (ExcepcionNoExiste e) {
+			e.printStackTrace();
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}		
+	}
+	
+	@Override
+	public void borra_producto_de_lista(String nombre, int id_compra) throws GWT_ExcepcionBD {
+		ConexionBD con= this.obtener_transaccion();
+		boolean commit= false;	
+		
+		
+			try {
+				Producto prod= new Producto(con, nombre);
+				
+				con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + "AND id_prod = "+ prod.getId());
+			} catch (ExcepcionBD e) {
+				e.printStackTrace();
+			} catch (ExcepcionNoExiste e) {
+				e.printStackTrace();
+			}finally {
+				this.cerrar_transaccion(con, commit);
+			}
+		
+
+	}
+
 
 
 	@Override
@@ -150,5 +194,10 @@ ProxyPantallaProductos {
 		
 		
 	}
+
+
+
+
+	
 
 }
