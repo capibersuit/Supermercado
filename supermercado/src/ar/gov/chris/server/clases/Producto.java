@@ -89,4 +89,9 @@ public class Producto extends PersistenteEnBD {
 
 		super.grabar(con, lista_campos, "public.productos", "public.productos", true, "", id, false);
 	}
+	
+	public void borrar(ConexionBD con) throws ExcepcionBD {
+		con.ejecutar_sql("DELETE FROM productos WHERE id = "+ this.id);
+		
+	}
 }
