@@ -85,23 +85,27 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 		
 	
 		if (historyToken.equals(PANTALLA_INICIO)) {
-			
+			panel_aplicacion.clear();
 			panel_aplicacion.add(new PantallaInicio());
 //			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_INICIO));
 //			menu.cambiar_contenido(new PantallaInicio());
 		}
 		
 if (historyToken.equals(PANTALLA_lISTAS)) {
-			
+	panel_aplicacion.clear();
+
 			panel_aplicacion.add(new PantallaListaDeCompras());
 }
 
 if (historyToken.equals(PANTALLA_PRODUCTOS)) {
-	
+	panel_aplicacion.clear();
+
 	panel_aplicacion.add(new PantallaProductos());
 }
 
 if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRA)) {
+	panel_aplicacion.clear();
+
 	String[] s = historyToken.split("-");
 	Pantalla pv= null;
 	if (s.length > 1) {
