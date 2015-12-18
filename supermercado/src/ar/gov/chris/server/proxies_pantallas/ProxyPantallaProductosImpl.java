@@ -88,7 +88,10 @@ ProxyPantallaProductos {
 			try {
 				Producto prod= new Producto(con, nombre);
 				
-				con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + "AND id_prod = "+ prod.getId());
+				con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + " AND id_prod = "+ prod.getId());
+				
+				commit= true;
+				
 			} catch (ExcepcionBD e) {
 				e.printStackTrace();
 			} catch (ExcepcionNoExiste e) {
