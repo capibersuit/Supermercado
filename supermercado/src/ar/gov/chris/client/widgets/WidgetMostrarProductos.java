@@ -24,7 +24,7 @@ public class WidgetMostrarProductos extends Composite {
 	private int next_col=0;
 	private Pantalla parent;
 	
-	private DatosProducto prod_actual;
+//	private DatosProducto prod_actual;
 
 	
 	private PushButton btn_borrar;
@@ -37,7 +37,7 @@ public class WidgetMostrarProductos extends Composite {
 	 * @param titulo T�tulo del widget.
 	 */
 	public WidgetMostrarProductos(final Set<DatosProducto> lista, 
-			String titulo, int num_compra, Pantalla parent) {
+			String titulo, int num_compra, final Pantalla parent) {
 		
 		this.parent= parent;
 		principal= new FlowPanel();
@@ -56,9 +56,10 @@ public class WidgetMostrarProductos extends Composite {
 		next_col++;
 		lista_prod.setWidget(0, next_col, precio_label);
 		next_col++;
-		lista_prod.setWidget(0, next_col, cant_label);
-		next_col++;
+		
 		if(titulo.equalsIgnoreCase("Vista de compra")) {
+			lista_prod.setWidget(0, next_col, cant_label);
+			next_col++;
 			lista_prod.setWidget(0, next_col, total_label);
 			next_col++;
 		}
@@ -71,26 +72,35 @@ public class WidgetMostrarProductos extends Composite {
 		
 		next_row= 1; 
 
-		for (DatosProducto prod : lista) {
+		for (final DatosProducto prod : lista) {
 			next_col=0;
 			
 			btn_borrar= new PushButton("Borrar");
+			
+			btn_borrar.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod);
+				confirmar_borrado.show();
+			}
+			});
 
-			prod_actual= prod;
-			agregar_handler();
+//			prod_actual= prod;
+//			agregar_handler();
 
 			
 			lista_prod.setText(next_row, next_col, prod.getNombre());
 			next_col++;
 			lista_prod.setText(next_row, next_col, String.valueOf(prod.getPrecio()));
 			next_col++;
-			lista_prod.setText(next_row, next_col, ((prod.getCantidad()!=0) ? String.valueOf(prod.getCantidad()) : "NA"));
-			next_col++;
 			if(titulo.equalsIgnoreCase("Vista de compra")) {
-				
-			float precio_total= prod.getPrecio() * prod.getCantidad();
-			lista_prod.setText(next_row, next_col, String.valueOf(precio_total));
-			next_col++;
+				lista_prod.setText(next_row, next_col, ((prod.getCantidad()!=0) ? String.valueOf(prod.getCantidad()) : "NA"));
+				next_col++;
+									
+				float precio_total= prod.getPrecio() * prod.getCantidad();
+				lista_prod.setText(next_row, next_col, String.valueOf(precio_total));
+				next_col++;
 			}
 			lista_prod.setWidget(next_row, next_col, btn_borrar);
 			
@@ -111,14 +121,14 @@ public class WidgetMostrarProductos extends Composite {
 		initWidget(principal);
 	}
 	
-	void agregar_handler() {
-		btn_borrar.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				confirmar_borrado= new WidgetConfirmar(parent, prod_actual);
-				confirmar_borrado.show();
-			}
-			});
-	    }
+//	void agregar_handler() {
+//		btn_borrar.addClickHandler(new ClickHandler() {
+//			
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				confirmar_borrado= new WidgetConfirmar(parent, prod_actual);
+//				confirmar_borrado.show();
+//			}
+//			});
+//	    }
 }
