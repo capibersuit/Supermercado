@@ -51,12 +51,20 @@ public class WidgetMostrarListas extends Composite {
 
 		next_row= 1; 
 
-		for (DatosLista list : lista) {
+		for (final DatosLista list : lista) {
 			
-			this.lista= list;
+//			this.lista= list;
 			
 			btn_ir = new PushButton("Ver lista");
-			agregar_handler();
+			btn_ir.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					History.newItem("PantallaVistaDeCompra-"+ list.getId());
+					History.fireCurrentHistoryState();;
+				}
+				});
+//			agregar_handler();
 
 //			CheckBox check_quitar= new CheckBox("Quitar l�nea");
 			listas.setText(next_row, 0, list.getComentario());
@@ -83,14 +91,14 @@ public class WidgetMostrarListas extends Composite {
 		initWidget(principal);
 	}
 	
-	void agregar_handler() {
-	btn_ir.addClickHandler(new ClickHandler() {
-		
-		@Override
-		public void onClick(ClickEvent event) {
-			History.newItem("PantallaVistaDeCompra-"+ lista.getId());
-			History.fireCurrentHistoryState();;
-		}
-		});
-    }
+//	void agregar_handler() {
+//	btn_ir.addClickHandler(new ClickHandler() {
+//		
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			History.newItem("PantallaVistaDeCompra-"+ lista.getId());
+//			History.fireCurrentHistoryState();;
+//		}
+//		});
+//    }
 }
