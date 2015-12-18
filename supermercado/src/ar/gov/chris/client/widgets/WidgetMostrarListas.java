@@ -38,7 +38,7 @@ public class WidgetMostrarListas extends Composite {
 		titulo_label.addStyleName("LabelDistinguido");
 //		btn_ir = new PushButton(new Image("C:\Users\STUART\Downloads\boton-ir.png"));
 		Image imagen= new Image("/boton-ir.png");
-		btn_ir = new PushButton("Ver lista");
+//		btn_ir = new PushButton("Ver lista");
 //		btn_ir = new PushButton(new Image("/supermercado/src/ar/gov/chris/client/widgets/boton-ir.png"));
 
 		Label comentario_label= new Label("Comentario");
@@ -54,6 +54,9 @@ public class WidgetMostrarListas extends Composite {
 		for (DatosLista list : lista) {
 			
 			this.lista= list;
+			
+			btn_ir = new PushButton("Ver lista");
+			agregar_handler();
 
 //			CheckBox check_quitar= new CheckBox("Quitar l�nea");
 			listas.setText(next_row, 0, list.getComentario());
@@ -73,7 +76,7 @@ public class WidgetMostrarListas extends Composite {
 		listas.setStyleName("PanelConBordesExpandido");
 		listas.getRowFormatter().setStyleName(0, "HeaderTablas");
 			
-		agregar_handler();
+//		agregar_handler();
 		
 		principal.add(titulo_label);
 		principal.add(listas);
@@ -88,6 +91,6 @@ public class WidgetMostrarListas extends Composite {
 			History.newItem("PantallaVistaDeCompra-"+ lista.getId());
 			History.fireCurrentHistoryState();;
 		}
-	});
-}
+		});
+    }
 }
