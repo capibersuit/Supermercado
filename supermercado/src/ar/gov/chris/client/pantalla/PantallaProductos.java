@@ -16,6 +16,7 @@ import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -28,6 +29,7 @@ public class PantallaProductos extends Pantalla {
 //	private final GreetingServiceAsync greetingService = GWT
 //			.create(GreetingService.class);
 	
+	private Button btn_ir_a_listas;
 	private Button btn_productos;
 
 	private ProxyPantallaProductosAsync proxy_prod;
@@ -73,6 +75,9 @@ public class PantallaProductos extends Pantalla {
 
 	protected void armar_pantalla() {
 		btn_productos= new Button("Nuevo Producto");
+		btn_ir_a_listas= new Button("Ir a listas");
+		panel.add(btn_ir_a_listas);
+
 		panel.add(btn_productos);
 		agregar_prod= new WidgetAgregarProducto(this);	
 		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this);
@@ -104,7 +109,7 @@ public class PantallaProductos extends Pantalla {
 		
 		proxy_prod.borrar_producto(nombre, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+				MensajeAlerta.mensaje_error("Ocurriï¿½ un error al intentar borrar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
@@ -121,6 +126,15 @@ public class PantallaProductos extends Pantalla {
 			@Override
 			public void onClick(ClickEvent event) {
 				agregar_prod.show();
+			}
+		});
+		
+		btn_ir_a_listas.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				History.newItem("PantallaListaDeCompras");
+				History.fireCurrentHistoryState();
 			}
 		});
 	}

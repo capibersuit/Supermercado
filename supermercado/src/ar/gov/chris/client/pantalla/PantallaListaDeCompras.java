@@ -14,6 +14,7 @@ import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -22,6 +23,8 @@ public class PantallaListaDeCompras extends Pantalla {
 	
 	
 	private Button btn_agregar_lista;
+	private Button btn_ir_a_prod;
+
 
 	private ProxyPantallaListasAsync proxy_listas;
 
@@ -85,6 +88,8 @@ public class PantallaListaDeCompras extends Pantalla {
 	
 	protected void armar_pantalla() {
 		btn_agregar_lista= new Button("Nueva Lista");
+		btn_ir_a_prod= new Button("Ir a productos");
+		panel.add(btn_ir_a_prod);
 		panel.add(btn_agregar_lista);
 		
 		agregar_lista= new WidgetAgregarLista(this);
@@ -99,6 +104,15 @@ public class PantallaListaDeCompras extends Pantalla {
 			@Override
 			public void onClick(ClickEvent event) {
 				agregar_lista.show();
+			}
+		});
+		
+		btn_ir_a_prod.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				History.newItem("PantallaProductos");
+				History.fireCurrentHistoryState();
 			}
 		});
 	}

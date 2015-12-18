@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -33,6 +34,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 	private ProxyPantallaProductosAsync proxy_prod;
 
 	private int id_compra;
+	private Button btn_ir_a_inicio;
 	private Button btn_agregar_prod;
 	
 	private OraculoConComodin oraculo_productos= new OraculoConComodin();
@@ -103,8 +105,9 @@ public class PantallaVistaDeCompra extends Pantalla {
 		 
 		 public void onSuccess(Set<DatosProducto> lista_prod) {
 		  
-		
-		sb_productos.setWidth("300px");
+		   btn_ir_a_inicio= new Button("Ir a Inicio");
+		   panel.add(btn_ir_a_inicio);
+		   sb_productos.setWidth("300px");
 		   HorizontalPanel h = new HorizontalPanel();
 		   VerticalPanel vp_prod= new VerticalPanel();
 		   vp_prod.add(sb_productos);
@@ -143,6 +146,15 @@ public class PantallaVistaDeCompra extends Pantalla {
 				  btn_agregar_prod.click();
 			 }
 		 });
+	    
+	    btn_ir_a_inicio.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				History.newItem("PantallaInicio");
+				History.fireCurrentHistoryState();
+			}
+		});
 	}
 	
 	private void agregrar_prod_en_lista() {
@@ -180,7 +192,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 	public void borra_producto_de_lista(String nombre, int id_compra) {
 		proxy_prod.borra_producto_de_lista(nombre, id_compra, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+				MensajeAlerta.mensaje_error("Ocurriï¿½ un error al intentar borrar " +
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
