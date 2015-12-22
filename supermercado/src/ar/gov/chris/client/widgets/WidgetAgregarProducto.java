@@ -25,6 +25,8 @@ public class WidgetAgregarProducto extends DialogBox {
 	
 	private boolean es_update;
 	
+	private DatosProducto datos_prod;
+	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
 	 *  o modificar un producto.
 	 * 
@@ -35,6 +37,8 @@ public class WidgetAgregarProducto extends DialogBox {
 		super(true);
 		this.parent= parent;
 		this.es_update= prod != null;
+		if(es_update)
+			datos_prod= prod;
 		nombre= new TextBox();
 		precio= new TextBox();
 		agregar= new Button("Agregar");
@@ -70,16 +74,22 @@ public class WidgetAgregarProducto extends DialogBox {
 		agregar.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent arg0) {
 				if(parent instanceof PantallaProductos) {
-					if(es_update)
-						((PantallaProductos)parent).actualizar_producto(nombre.getText(), precio.getText());
-					else
+					if(es_update) {
+						datos_prod.setNombre(nombre.getText());
+						datos_prod.setPrecio(Float.parseFloat(precio.getText()));
+						((PantallaProductos)parent).actualizar_producto(datos_prod);
+						
+					} else
 					    ((PantallaProductos)parent).agregar_producto(nombre.getText(), precio.getText());
 				
 				} else {
 					if(parent instanceof PantallaVistaDeCompra)
-						if(es_update)
-							((PantallaVistaDeCompra)parent).actualizar_producto(nombre.getText(), precio.getText());
-						else
+						if(es_update) {
+							datos_prod.setNombre(nombre.getText());
+							datos_prod.setPrecio(Float.parseFloat(precio.getText()));
+							((PantallaVistaDeCompra)parent).actualizar_producto(datos_prod);
+							
+						} else
 							((PantallaVistaDeCompra)parent).agregar_producto(nombre.getText(), precio.getText());
 	
 				}
