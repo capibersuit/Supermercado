@@ -63,7 +63,7 @@ public class PantallaProductos extends Pantalla {
 	private void obtener_datos_productos() {
 		proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurri� un error al intentar buscar " +
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
 						"los productos: " + caught.getMessage());
 			}
 			public void onSuccess(Set<DatosProducto> result) {
@@ -96,7 +96,7 @@ public class PantallaProductos extends Pantalla {
 			
 		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurri� un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
@@ -108,14 +108,14 @@ public class PantallaProductos extends Pantalla {
 		});
 	}
 	
-	public void actualizar_producto(String nombre, String precio) {
-		DatosProducto datos_prod= new DatosProducto();
-		datos_prod.setNombre(nombre);
-		datos_prod.setPrecio(Float.parseFloat(precio));
+	public void actualizar_producto(DatosProducto datos_prod) {
+//		DatosProducto datos_prod= new DatosProducto();
+//		datos_prod.setNombre(nombre);
+//		datos_prod.setPrecio(Float.parseFloat(precio));
 			
 		proxy_prod.actualizar_producto(datos_prod, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurri� un error al intentar actualizar " +
+				MensajeAlerta.mensaje_error("Ocurri� un error al intentar actualizar " +
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
@@ -135,6 +135,7 @@ public class PantallaProductos extends Pantalla {
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
+				Window.Location.reload();
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
