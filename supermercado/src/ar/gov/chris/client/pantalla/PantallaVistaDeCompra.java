@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -75,10 +76,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		for(int i=0; i < 13; i++) {
 			
 			Integer intObj = new Integer(i+1);
-//			cant_prod.setItemText(i, "noSePAraQueSirve");
 			String numero= Integer.toString(intObj);
-			int a = 2*3;
-			a++;
 			cant_prod.addItem(numero);
 		}
 	 proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>() {
@@ -87,7 +85,6 @@ public class PantallaVistaDeCompra extends Pantalla {
 		  for (DatosProducto p : lista_prod) {
 			  
 			  oraculo_productos.add(p.getNombre());
-//			  lb_cat_totales.addItem(cat);
 		  }
 		  mostrar_pantalla();
 		 }
@@ -95,8 +92,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		 
 		 public void onFailure(Throwable caught) {
 			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
-//		  error.setText(caught.getMessage());
-//		  principal.add(error);
+
 		 }
 	 });
 	}
@@ -127,8 +123,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		 public void onFailure(Throwable caught) {
 			 
 			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
-//			  error.setText(caught.getMessage());
-//			  principal.add(error);
+
 			 }
 		});
 	}
@@ -166,12 +161,14 @@ public class PantallaVistaDeCompra extends Pantalla {
 		int cant= cant_prod.getSelectedIndex()+1;
 		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurri� un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
 						"el producto en la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
 				
-				MensajeAlerta.mensaje_info("Prducto agregago correctamente");
+				Window.Location.reload();
+				
+//				MensajeAlerta.mensaje_info("Prducto agregago correctamente");
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
@@ -199,6 +196,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
+				Window.Location.reload();
+
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
@@ -207,7 +206,17 @@ public class PantallaVistaDeCompra extends Pantalla {
 	}
 
 
-	public void actualizar_producto(String text, String text2) {
-		actualizar_producto(text, text2);
+	public void actualizar_producto(DatosProducto datos_prod) {
+
+		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+						"el producto de la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				Window.Location.reload();
+			}
+			
+		});			
 	}
 }
