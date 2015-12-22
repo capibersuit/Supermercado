@@ -1,10 +1,10 @@
 package ar.gov.chris.client.widgets;
 
+import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.pantalla.Pantalla;
 import ar.gov.chris.client.pantalla.PantallaListas;
 import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
-
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -23,22 +23,33 @@ public class WidgetAgregarProducto extends DialogBox {
 	private TextBox precio;
 	private Pantalla parent;
 	
+	private boolean es_update;
+	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
-	 * un CUDAP.
+	 *  o modificar un producto.
 	 * 
 	 * @param parent La pantalla parent.
 	 * @param id_widget Id para el widget que se agrega.
 	 */
-	public WidgetAgregarProducto(Pantalla parent) {
+	public WidgetAgregarProducto(Pantalla parent, DatosProducto prod) {
 		super(true);
 		this.parent= parent;
-		this.setText("Agregar Nuevo Producto");
+		this.es_update= prod != null;
 		nombre= new TextBox();
 		precio= new TextBox();
-//		DisplayTituloWidget cudap= new DisplayTituloWidget("CUDAP: ", box_cudap);
-		
 		agregar= new Button("Agregar");
 		cancelar= new Button("Cancelar");
+		if(es_update) {
+			this.setText("Actualizar Producto");
+			nombre.setText(prod.getNombre());
+			precio.setText(String.valueOf((prod.getPrecio())));
+			agregar.setText("Actualizar");
+		} else
+			this.setText("Agregar Nuevo Producto");
+		
+//		DisplayTituloWidget cudap= new DisplayTituloWidget("CUDAP: ", box_cudap);
+		
+		
 		agregar_listeners();
 		HorizontalPanel botones= new HorizontalPanel();
 		botones.add(agregar);
@@ -58,10 +69,21 @@ public class WidgetAgregarProducto extends DialogBox {
 	private void agregar_listeners() {
 		agregar.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent arg0) {
-				if(parent instanceof PantallaProductos)
-					((PantallaProductos)parent).agregar_producto(nombre.getText(), precio.getText());
-				else if(parent instanceof PantallaVistaDeCompra)
-					((PantallaVistaDeCompra)parent).agregar_producto(nombre.getText(), precio.getText());
+				if(parent instanceof PantallaProductos) {
+					if(es_update)
+						((PantallaProductos)parent).actualizar_producto(nombre.getText(), precio.getText());
+					else
+					    ((PantallaProductos)parent).agregar_producto(nombre.getText(), precio.getText());
+				
+				} else {
+					if(parent instanceof PantallaVistaDeCompra)
+						if(es_update)
+							((PantallaVistaDeCompra)parent).actualizar_producto(nombre.getText(), precio.getText());
+						else
+							((PantallaVistaDeCompra)parent).agregar_producto(nombre.getText(), precio.getText());
+	
+				}
+					
 				hide();
 			}
 		});

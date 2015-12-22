@@ -24,4 +24,10 @@ public interface ProxyPantallaProductosAsync {
 	void borra_producto_de_lista(String nombre, int id_compra,
 			AsyncCallback<Void> asyncCallback);
 
+	void actualizar_producto(DatosProducto datos_prod,
+			AsyncCallback<Void> asyncCallback);
+
+	void actualizar_producto_a_lista(DatosProducto datos_prod,
+			String id_compra, AsyncCallback<Void> callback);
+
 }

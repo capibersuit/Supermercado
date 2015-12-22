@@ -9,6 +9,7 @@ import ar.gov.chris.client.GreetingServiceAsync;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
+import ar.gov.chris.client.util.JavaScript;
 import ar.gov.chris.client.widgets.WidgetAgregarProducto;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetMostrarProductos;
@@ -17,6 +18,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
@@ -79,7 +81,7 @@ public class PantallaProductos extends Pantalla {
 		panel.add(btn_ir_a_listas);
 
 		panel.add(btn_productos);
-		agregar_prod= new WidgetAgregarProducto(this);	
+		agregar_prod= new WidgetAgregarProducto(this, null);	
 		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this);
 		panel.add(productos);
 		agregar_handlers();
@@ -98,11 +100,31 @@ public class PantallaProductos extends Pantalla {
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
+				Window.Location.reload();
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
 			
 		});
+	}
+	
+	public void actualizar_producto(String nombre, String precio) {
+		DatosProducto datos_prod= new DatosProducto();
+		datos_prod.setNombre(nombre);
+		datos_prod.setPrecio(Float.parseFloat(precio));
+			
+		proxy_prod.actualizar_producto(datos_prod, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar actualizar " +
+						"el producto: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				Window.Location.reload();
+//				agregar_item_historial_cliente(datos_item);
+//				recargar_personas();
+			}
+			
+		});		
 	}
 	
 	public void borrar_producto(String nombre) {
@@ -146,6 +168,8 @@ public class PantallaProductos extends Pantalla {
 		GWT.create(ProxyPantallaProductos.class);
 		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
 	}
+
+	
 
 	
 	

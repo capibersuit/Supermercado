@@ -28,7 +28,10 @@ public class WidgetMostrarProductos extends Composite {
 
 	
 	private PushButton btn_borrar;
+	private PushButton btn_actualizar;
+
 	private WidgetConfirmar confirmar_borrado;
+	private WidgetAgregarProducto actualizar_prod;
 
 	
 	/** Crea un {@link WidgetMostrarLineas} a partir de los par�metros.
@@ -50,7 +53,7 @@ public class WidgetMostrarProductos extends Composite {
 		Label cant_label= new Label("Cantidad");
 		Label total_label= new Label("Precio total");
 		Label borrar_label= new Label("Borrar");
-//		Label opciones_label= new Label("Opciones");
+		Label actualizar_label= new Label("Actualizar");
 		
 		lista_prod.setWidget(0, next_col, nombre_prod_label);
 		next_col++;
@@ -64,11 +67,12 @@ public class WidgetMostrarProductos extends Composite {
 			next_col++;
 		}
 		lista_prod.setWidget(0, next_col, borrar_label);
-		if(!titulo.equalsIgnoreCase("Vista de compra")) {
+		
+//		if(!titulo.equalsIgnoreCase("Vista de compra")) {
 			lista_prod.setWidget(0, next_col, borrar_label);
-//			next_col++;
-		}
-//		lista_lineas.setWidget(0, 5, opciones_label);
+			next_col++;
+//		}
+		lista_prod.setWidget(0, next_col, actualizar_label);
 		
 		next_row= 1; 
 
@@ -76,13 +80,22 @@ public class WidgetMostrarProductos extends Composite {
 			next_col=0;
 			
 			btn_borrar= new PushButton("Borrar");
-			
+			btn_actualizar= new PushButton("Actualizar");
 			btn_borrar.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod);
 				confirmar_borrado.show();
+			}
+			});
+			
+			btn_actualizar.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				actualizar_prod= new WidgetAgregarProducto(parent, prod);
+				actualizar_prod.show();
 			}
 			});
 
@@ -103,7 +116,10 @@ public class WidgetMostrarProductos extends Composite {
 				next_col++;
 			}
 			lista_prod.setWidget(next_row, next_col, btn_borrar);
-			
+			next_col++;
+
+			lista_prod.setWidget(next_row, next_col, btn_actualizar);
+
 //		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());
 //		if (lista.size() > 1) {
 //			check_quitar.setFormValue(linea.obtener_nro_cuenta() + " " +

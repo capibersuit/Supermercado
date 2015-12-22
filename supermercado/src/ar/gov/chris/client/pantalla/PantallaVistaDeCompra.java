@@ -94,6 +94,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 							
 		 
 		 public void onFailure(Throwable caught) {
+			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
 //		  error.setText(caught.getMessage());
 //		  principal.add(error);
 		 }
@@ -124,6 +125,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   agregar_handlers();
 	}
 		 public void onFailure(Throwable caught) {
+			 
+			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
 //			  error.setText(caught.getMessage());
 //			  principal.add(error);
 			 }
@@ -201,5 +204,10 @@ public class PantallaVistaDeCompra extends Pantalla {
 			}
 			
 		});			
+	}
+
+
+	public void actualizar_producto(String text, String text2) {
+		actualizar_producto(text, text2);
 	}
 }

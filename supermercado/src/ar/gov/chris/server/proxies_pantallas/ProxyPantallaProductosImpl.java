@@ -12,7 +12,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
+import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
@@ -136,10 +138,11 @@ ProxyPantallaProductos {
 	}
 	
 	@Override
-	public Set<DatosProducto> buscar_productos_lista(int id_lista) throws GWT_ExcepcionBD{
+	public Set<DatosProducto> buscar_productos_lista(int id_lista) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 
+//		Lista l = new Lista(comentario, fecha);
 		
 		try {
 			ResultSet rs= con.select("SELECT * FROM rel_listas_productos where id_compra = " + id_lista);
@@ -163,8 +166,7 @@ ProxyPantallaProductos {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExcepcionNoExiste e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GWT_ExcepcionNoExiste(e);
 		} 
 
 		
@@ -184,6 +186,38 @@ ProxyPantallaProductos {
 			
 			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, precio) VALUES (" +
 			id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() + ")");
+			
+			commit= true;
+
+		} catch (ExcepcionBD e) {
+			e.printStackTrace();
+		}catch (ExcepcionNoExiste e) {
+			e.printStackTrace();
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}
+		
+		
+	}
+
+
+	@Override
+	public void actualizar_producto(DatosProducto datos_prod) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void actualizar_producto_a_lista(DatosProducto datos_prod, String id_compra) throws GWT_ExcepcionBD {
+		boolean commit= false;
+		ConexionBD con = this.obtener_transaccion();
+
+		try {
+			Producto prod= new Producto(con, datos_prod.getNombre());
+			int id_prod= prod.getId();
+			
+			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ prod.getPrecio() +" id_compra = " +
+			id_compra+" AND id_prod= " + prod.getId() + ")");
 			
 			commit= true;
 
