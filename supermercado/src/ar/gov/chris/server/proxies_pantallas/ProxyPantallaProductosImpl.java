@@ -2,6 +2,7 @@ package ar.gov.chris.server.proxies_pantallas;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -111,14 +112,16 @@ ProxyPantallaProductos {
 	public Set<DatosProducto> buscar_productos() throws GWT_ExcepcionBD{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
+		boolean commit= true;	
 
 		
 		try {
-			ResultSet rs= con.select("SELECT * FROM productos");
+			ResultSet rs= con.select("SELECT * FROM productos ORDER BY nombre");
 			
 			while (rs.next()) {
 				DatosProducto datos= new DatosProducto();
 
+				datos.setId(rs.getInt("id"));
 				datos.setNombre(rs.getString("nombre"));
 				datos.setPrecio(rs.getFloat("precio"));
 				datos_conj.add(datos);
@@ -130,7 +133,9 @@ ProxyPantallaProductos {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}
 
 		
 		
@@ -141,6 +146,9 @@ ProxyPantallaProductos {
 	public Set<DatosProducto> buscar_productos_lista(int id_lista) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
+		
+		boolean commit= true;	
+
 
 //		Lista l = new Lista(comentario, fecha);
 		
@@ -152,7 +160,7 @@ ProxyPantallaProductos {
 				Producto p = new Producto(con, rs.getInt("id_prod"));
 				DatosProducto datos= new DatosProducto();
 				
-				
+				datos.setId(rs.getInt("id_prod"));
 				datos.setNombre(p.getNombre());
 				datos.setPrecio(rs.getFloat("precio"));
 				datos.setCantidad(rs.getInt("cant"));
@@ -167,7 +175,9 @@ ProxyPantallaProductos {
 			e.printStackTrace();
 		} catch (ExcepcionNoExiste e) {
 			throw new GWT_ExcepcionNoExiste(e);
-		} 
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}
 
 		
 		
@@ -202,9 +212,26 @@ ProxyPantallaProductos {
 
 
 	@Override
-	public void actualizar_producto(DatosProducto datos_prod) {
-		// TODO Auto-generated method stub
-		
+	public void actualizar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD {
+		boolean commit= false;
+		ConexionBD con = this.obtener_transaccion();
+
+		try {
+			Producto prod= new Producto(con, datos_prod.getId());
+			int id_prod= prod.getId();
+			String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() +", nombre= '"+ datos_prod.getNombre() + "' WHERE id = " + id_prod;
+//			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
+//			+ prod.getNombre() + " WHERE id = " + id_prod);
+			con.ejecutar_update(query);
+			commit= true;
+
+		} catch (ExcepcionBD e) {
+			e.printStackTrace();
+		}catch (ExcepcionNoExiste e) {
+			e.printStackTrace();
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}		
 	}
 	
 	@Override
@@ -213,11 +240,13 @@ ProxyPantallaProductos {
 		ConexionBD con = this.obtener_transaccion();
 
 		try {
-			Producto prod= new Producto(con, datos_prod.getNombre());
-			int id_prod= prod.getId();
+			Producto prod= new Producto(con, datos_prod.getId());
+//			int id_prod= prod.getId();
 			
-			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ prod.getPrecio() +" id_compra = " +
-			id_compra+" AND id_prod= " + prod.getId() + ")");
+			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ datos_prod.getPrecio() 
+					+" WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId());
+			
+			verificar_si_cambiar_precio_global(con, datos_prod, id_compra);
 			
 			commit= true;
 
@@ -230,6 +259,32 @@ ProxyPantallaProductos {
 		}
 		
 		
+	}
+
+
+	private void verificar_si_cambiar_precio_global(ConexionBD con,
+			DatosProducto datos_prod, String id_compra) throws ExcepcionBD {
+			
+		Date fecha = null;
+		Date fecha2 = null;
+		ResultSet rs= con.select("select fecha from listas where id =" + id_compra);
+		ResultSet rs2= con.select("select max(fecha) from listas");
+		try {
+			
+			if(rs.next()) 
+			 fecha= rs.getDate("fecha");
+			if(rs2.next()) 
+			 fecha2= rs2.getDate("max");
+			
+			if(!fecha2.after(fecha)) {
+				String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() + " WHERE id = " + datos_prod.getId();
+
+				con.ejecutar_update(query);
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 
