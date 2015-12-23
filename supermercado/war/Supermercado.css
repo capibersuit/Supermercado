@@ -847,4 +847,77 @@ gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
 
 .Contenido .middleCenterInner {   
 	vertical-align: top;
-} 
+}
+
+.gwt-SuggestBox { 
+   color: green;
+}
+.gwt-SuggestBoxPopup .item-selected { 
+   color: blue;
+   font-size: 300%; 
+}
+
+/* ---------creo que lo que sigue no lo uso por ahora --------- */
+
+
+.gwt-SuggestBoxPopup { 
+   border: thin 10px solid green; 
+   width: 200px;
+}
+.gwt-SuggestBoxPopup.item { 
+   color: red; 
+}
+.gwt-SuggestBoxPopup .suggestPopupTopLeft { 
+   border: thin 10px solid green; 
+}
+.gwt-SuggestBoxPopup .suggestPopupTopLeftInner { 
+   border: thin 10px solid green; 
+}
+.gwt-SuggestBoxPopup .suggestPopupTopCenter { 
+   border: thin 10px solid green; 
+}
+.gwt-SuggestBoxPopup .suggestPopupTopCenterInner { 
+   border: thin 10px solid green; 
+}
+.gwt-SuggestBoxPopup .suggestPopupTopRight {
+   border: thin 10px solid green; 
+}
+.gwt-SuggestBoxPopup .suggestPopupTopRightInner {
+   border: thin 10px solid green; 
+}
+.gwt-SuggestBoxPopup .suggestPopupMiddleLeft { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupMiddleLeftInner { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupMiddleCenter { 
+   border: thin 10px solid green; width:200px;
+}
+.gwt-SuggestBoxPopup .suggestPopupMiddleCenterInner { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupMiddleRight { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupMiddleRightInner { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupBottomLeft {
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupBottomLeftInner { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupBottomCenter {
+   border: thin 10px solid green;
+ }
+.gwt-SuggestBoxPopup .suggestPopupBottomCenterInner { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupBottomRight { 
+   border: thin 10px solid green;
+}
+.gwt-SuggestBoxPopup .suggestPopupBottomRightInner { 
+   border: thin 10px solid green;
+}
