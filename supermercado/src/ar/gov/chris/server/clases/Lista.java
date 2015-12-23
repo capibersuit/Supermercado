@@ -1,10 +1,13 @@
 package ar.gov.chris.server.clases;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.HashMapSQL;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
+import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 
 public class Lista extends PersistenteEnBD {
 	
@@ -37,6 +40,32 @@ public class Lista extends PersistenteEnBD {
 	public String toString() {
 		return "Lista [comentario=" + comentario + ", fecha=" + fecha + "]";
 	}
+	
+	public Lista(ConexionBD con, int id) throws ExcepcionBD, ExcepcionNoExiste {
+		 String query= "SELECT * FROM listas WHERE id=" + id;
+		 this.cargar_lista(con, query, "Lista con id " + id);
+		}
+	
+	public Lista(ConexionBD con, String nombre) throws ExcepcionBD, ExcepcionNoExiste {
+		 String query= "SELECT * FROM listas WHERE comentario= '" + comentario + "'";
+		 this.cargar_lista(con, query, "Lista con comentario " + comentario);
+		}
+	
+		private void cargar_lista(ConexionBD con, String query, String texto_error) 
+				throws ExcepcionBD, ExcepcionNoExiste {
+		 try {
+			 ResultSet rs= con.select(query);
+			 if (rs.next()) {
+				 this.comentario= rs.getString("comentario");
+				 this.fecha= rs.getDate("fecha");
+				 super.cargar_persistente_sin_baja_fisica(rs);
+			 } else throw new ExcepcionNoExiste(texto_error);
+		 } catch(SQLException ex) {
+				throw new ExcepcionBD(ex);
+		 }
+
+		}
+
 	
 	public void grabar(ConexionBD con) throws ExcepcionBD {
 		
