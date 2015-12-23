@@ -114,5 +114,49 @@ ProxyPantallaListas {
 				this.cerrar_transaccion(con, commit);
 			}
 	}
+
+	@Override
+	public void borrar_lista(int id_compra) throws GWT_ExcepcionBD {
+		ConexionBD con= this.obtener_transaccion();
+		boolean commit= false;
+
+		try {
+			
+			
+			Lista l= new Lista(con, id_compra);
+			l.borrar(con);
+			commit= true;
+		
+		} catch (ExcepcionBD e) {
+			e.printStackTrace();
+		} catch (ExcepcionNoExiste e) {
+			e.printStackTrace();
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}			
+	}
+
+	@Override
+	public void actualizar_lista(DatosLista datos_lista) throws GWT_ExcepcionBD {
+		boolean commit= false;
+		ConexionBD con = this.obtener_transaccion();
+
+		try {
+			Lista lista= new Lista(con, datos_lista.getId());
+			int id_lista= lista.getId();
+			String query= "UPDATE listas SET comentario= '"+ datos_lista.getComentario() +"', fecha= '"+ datos_lista.getFecha() + "' WHERE id = " + id_lista;
+//			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
+//			+ prod.getNombre() + " WHERE id = " + id_prod);
+			con.ejecutar_update(query);
+			commit= true;
+
+		} catch (ExcepcionBD e) {
+			e.printStackTrace();
+		}catch (ExcepcionNoExiste e) {
+			e.printStackTrace();
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}				
+	}
 }
 
