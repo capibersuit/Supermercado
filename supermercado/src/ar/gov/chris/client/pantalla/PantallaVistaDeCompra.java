@@ -63,11 +63,31 @@ public class PantallaVistaDeCompra extends Pantalla {
 		super();
 		inicializar();
 		id_compra= Integer.parseInt(id);
-		pantalla_principal();
-		
+		existe_lista(id_compra);
+			
 		}
 
 	
+	private void existe_lista(int id_compra) {
+		proxy_listas.existe_lista(id_compra, new AsyncCallback<Void> (){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				pantalla_principal();
+				
+					
+				
+			}
+			
+		});
+	}
+
+
 	protected void pantalla_principal() {
 		panel.clear();
 
