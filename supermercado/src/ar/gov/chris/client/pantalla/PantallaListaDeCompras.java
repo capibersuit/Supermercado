@@ -3,13 +3,11 @@ package ar.gov.chris.client.pantalla;
 import java.util.Set;
 
 import ar.gov.chris.client.datos.DatosLista;
-import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetAgregarLista;
 import ar.gov.chris.client.widgets.WidgetMostrarListas;
-import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -95,8 +93,8 @@ public class PantallaListaDeCompras extends Pantalla {
 		panel.add(btn_ir_a_prod);
 		panel.add(btn_agregar_lista);
 		
-		agregar_lista= new WidgetAgregarLista(this);
-		listas= new WidgetMostrarListas(datos_lista, "Listas de compras");
+		agregar_lista= new WidgetAgregarLista(this, null);
+		listas= new WidgetMostrarListas(datos_lista, "Listas de compras", this);
 		panel.add(listas);
 		agregar_handlers();		
 	}
@@ -126,6 +124,34 @@ public class PantallaListaDeCompras extends Pantalla {
 		this.proxy_listas= (ProxyPantallaListasAsync)
 		GWT.create(ProxyPantallaListas.class);
 		super.inicializar((ServiceDefTarget) this.proxy_listas, "Listas");
+	}
+
+	public void borrar_lista(int id) {
+		proxy_listas.borrar_lista(id, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+						"la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				Window.Location.reload();
+
+			}
+			
+		});			
+	}
+
+	public void actualizar_producto(DatosLista datos_lista) {
+		proxy_listas.actualizar_lista(datos_lista, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurri� un error al intentar actualizar " +
+						"la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				Window.Location.reload();
+
+			}
+			
+		});				
 	}
 	
 	
