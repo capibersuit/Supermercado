@@ -19,6 +19,13 @@ public class Lista extends PersistenteEnBD {
 		this.comentario = comentario;
 		this.fecha = fecha;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getComentario() {
 		return comentario;
@@ -75,5 +82,12 @@ public class Lista extends PersistenteEnBD {
 
 		super.grabar(con, lista_campos, "public.listas", "public.listas", true, "", id, false);
 	}
+
+	public void borrar(ConexionBD con) throws ExcepcionBD {
+		con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = "+ this.id);		
+		con.ejecutar_sql("DELETE FROM listas WHERE id = "+ this.id);		
+	}
+	
+	
 
 }
