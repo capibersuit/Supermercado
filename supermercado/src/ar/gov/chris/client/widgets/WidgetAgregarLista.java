@@ -5,12 +5,19 @@ import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.pantalla.PantallaListas;
 import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
+import ar.gov.chris.client.util.JavaScript;
 
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -66,7 +73,47 @@ public class WidgetAgregarLista extends DialogBox {
 				hide();
 			}
 		});
+		comentario.addKeyPressHandler(new KeyPressHandler() {
+			 @Override
+			 public void onKeyPress(KeyPressEvent event) {
+			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
+				  agregar.click();
+			 }
+		 });
 	}
 
+//	public FocusWidget getComentarioCombo() {
+//		// TODO Auto-generated method stub
+//		return comentario;
+//	}
 
+	/**
+	 * Muestra el popup en el centro de la pantalla.
+	 */
+	@Override
+	public void show() {
+	 super.show();
+	 int left= (Window.getClientWidth() - getOffsetWidth()) / 2 +
+	 		JavaScript.getBodyScrollLeft();
+     int top= (Window.getClientHeight() - getOffsetHeight()) / 2 +
+     		JavaScript.getBodyScrollTop();
+     setPopupPosition(left, top);
+     dar_foco(comentario);
+    }
+	
+	/** Le da foco a un componente (tiene que ser un FocusWidget).
+	 * 
+	 * @param widget El componente que va a recibir el foco.
+	 */
+	static public void dar_foco(final FocusWidget widget) {
+	 ScheduledCommand s= new ScheduledCommand() {
+		
+		@Override
+		public void execute() {
+			widget.setFocus(true);
+			
+		}
+	 };
+	 s.execute();
+	}
 }
