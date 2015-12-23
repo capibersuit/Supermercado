@@ -116,6 +116,14 @@ public class WidgetAgregarProducto extends DialogBox {
 				  agregar.click();
 			 }
 		 });
+		
+		precio.addKeyPressHandler(new KeyPressHandler() {
+			 @Override
+			 public void onKeyPress(KeyPressEvent event) {
+			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
+				  agregar.click();
+			 }
+		 });
 	}
 	
 	/**
@@ -129,8 +137,15 @@ public class WidgetAgregarProducto extends DialogBox {
      int top= (Window.getClientHeight() - getOffsetHeight()) / 2 +
      		JavaScript.getBodyScrollTop();
      setPopupPosition(left, top);
+     if(parent instanceof PantallaProductos) {
+     nombre.selectAll();
      dar_foco(nombre);
-    }
+     }
+     if(parent instanceof PantallaVistaDeCompra) {
+    	 precio.selectAll();
+         dar_foco(precio);
+         }
+      }
 	
 	/** Le da foco a un componente (tiene que ser un FocusWidget).
 	 * 
