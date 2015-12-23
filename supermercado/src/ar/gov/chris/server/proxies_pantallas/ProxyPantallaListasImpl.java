@@ -10,14 +10,14 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
 import ar.gov.chris.client.datos.DatosLista;
-import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
 import ar.gov.chris.server.clases.Lista;
-import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
+import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 
 @SuppressWarnings("serial")
 public class ProxyPantallaListasImpl extends ProxyPantallaCHRISImpl implements
@@ -65,7 +65,7 @@ ProxyPantallaListas {
 	public Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD{
 		Set <DatosLista> datos_conj= new HashSet<DatosLista>();
 		ConexionBD con= this.obtener_transaccion();
-
+		Boolean commit= false;
 		
 		try {
 			ResultSet rs= con.select("SELECT * FROM listas");
@@ -77,6 +77,7 @@ ProxyPantallaListas {
 				datos.setFecha(rs.getDate("fecha"));
 				datos_conj.add(datos);
 			}
+			commit= true;
 			
 		} catch (ExcepcionBD e) {
 			// TODO Auto-generated catch block
@@ -84,11 +85,34 @@ ProxyPantallaListas {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			this.cerrar_transaccion(con, commit);
 		}
 
 		
 		
 		return datos_conj;
+	}
+
+	@Override
+	public void existe_lista(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+		ConexionBD con;
+//		Boolean existe= null;
+		Boolean commit= false;
+		con = this.obtener_transaccion();
+
+		try {
+			Lista l = new Lista(con, id_compra);
+//			existe= true;
+//			existe= l  != null;
+
+		} catch (ExcepcionBD e) {
+				throw new GWT_ExcepcionBD(e);
+		} catch (ExcepcionNoExiste e) {
+			throw new GWT_ExcepcionNoExiste(e);
+			} finally {
+				this.cerrar_transaccion(con, commit);
+			}
 	}
 }
 
