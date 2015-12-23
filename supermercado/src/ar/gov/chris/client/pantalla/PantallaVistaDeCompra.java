@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+import ar.gov.chris.client.Supermercado;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.OraculoConComodin;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
@@ -62,8 +63,14 @@ public class PantallaVistaDeCompra extends Pantalla {
 	public PantallaVistaDeCompra(String id) {
 		super();
 		inicializar();
+		try {
 		id_compra= Integer.parseInt(id);
 		existe_lista(id_compra);
+		} catch (NumberFormatException e){
+			MensajeAlerta.mensaje_error("Error: id de compra mal formado");
+			History.newItem(Supermercado.PANTALLA_INICIO);
+		}
+		
 			
 		}
 
@@ -73,7 +80,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());				
+				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());	
+				History.newItem(Supermercado.PANTALLA_INICIO);
 			}
 
 			@Override
@@ -129,9 +137,9 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   VerticalPanel vp_prod= new VerticalPanel();
 		   vp_prod.add(sb_productos);
 		   vp_prod.add(new Label("[Usar * para ver todos]"));
+//		   sb_productos.setFocus(true);
 		   h.add(vp_prod);
 		   h.add(cant_prod);
-//		   hp_cat.add(vp_categ);
 		   btn_agregar_prod= new Button("Agregar producto");
 		   prod= new WidgetMostrarProductos(lista_prod, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
 		   panel.add(h);
@@ -164,12 +172,13 @@ public class PantallaVistaDeCompra extends Pantalla {
 				  btn_agregar_prod.click();
 			 }
 		 });
+	    sb_productos.setFocus(true);
 	    
 	    btn_ir_a_inicio.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				History.newItem("PantallaInicio");
+				History.newItem(Supermercado.PANTALLA_INICIO);
 				History.fireCurrentHistoryState();
 			}
 		});
@@ -238,5 +247,22 @@ public class PantallaVistaDeCompra extends Pantalla {
 			}
 			
 		});			
+	}
+
+	
+
+
+	public void borrar_lista(int id_compra) {
+		proxy_listas.borrar_lista(id_compra, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+						"el producto de la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				Window.Location.reload();
+			}
+			
+		});
+		
 	}
 }
