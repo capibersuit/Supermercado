@@ -4,6 +4,7 @@ import java.util.Set;
 
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.pantalla.Pantalla;
+import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -81,12 +82,27 @@ public class WidgetMostrarProductos extends Composite {
 			
 			btn_borrar= new PushButton("Borrar");
 			btn_actualizar= new PushButton("Actualizar");
+			
+			final ClickHandler handler = new ClickHandler(){
+				public void onClick(ClickEvent arg0) {
+					if(parent instanceof PantallaProductos)
+						((PantallaProductos)parent).borrar_producto(prod.getNombre());
+					else if(parent instanceof PantallaVistaDeCompra)
+						((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod.getNombre(), ((PantallaVistaDeCompra)parent).getId_compra());
+//					hide();
+				}
+			};
+			
 			btn_borrar.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod);
+//				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod, "Está seguro que quiere borrar el producto", );
+//				confirmar_borrado.show();
+				//****
+				confirmar_borrado= new WidgetConfirmar(parent, "Está seguro que quiere borrar el producto", handler);
 				confirmar_borrado.show();
+				//****
 			}
 			});
 			
