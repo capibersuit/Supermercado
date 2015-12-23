@@ -14,4 +14,9 @@ public interface ProxyPantallaListasAsync {
 	void buscar_listas(AsyncCallback<Set<DatosLista>> asyncCallback);
 
 	void existe_lista(int id_compra, AsyncCallback<Void> asyncCallback);
+
+	void borrar_lista(int id_compra, AsyncCallback<Void> asyncCallback);
+
+	void actualizar_lista(DatosLista datos_lista,
+			AsyncCallback<Void> asyncCallback);
 }
