@@ -141,8 +141,18 @@ body {
 }
 
 .PanelPrincipal {
-	width: 100%;
+	/*width: 100%;
 	color: #55331C;
+	align: rigth;
+	vertical-align: top;
+	background-color: #55331C;*/
+	position:relative;	
+	width:100%;
+    height:100%;
+    background-color:#FFF31C;
+    left:100px;
+    /*top:10px;*/
+	
 }
 
 .PanelExpandido {
@@ -243,7 +253,7 @@ body {
 	color: #55331C;
 	border: 1px solid #FFD5AF;
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 32px;
 	text-align: center;
 }
 
@@ -262,7 +272,7 @@ body {
 
 .ContenidoTablas {
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 32px;
 	background-color: white; /*#FFE8D9;*/
 	padding: 3px;
 	text-align: center;
@@ -347,7 +357,7 @@ body {
 .LabelDistinguido {
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 32px;
 	color: #55331C;
 }
 
@@ -417,7 +427,7 @@ hr {
 
 .gwt-Button {
 	border: 1px outset #BF8660;
-	font-size: 12px;
+	font-size: 22px;
 	padding-top: 1;
 	padding-bottom: 1;
 	-moz-border-radius: 5px;
@@ -427,6 +437,8 @@ hr {
 	-moz-background-origin: padding;
 	background: #FFD5AF none repeat scroll 0 0;
 	color: #55331C;
+	width: 150px;
+	height: 80px; 
 }
 
 .gwt-Button[disabled] {
