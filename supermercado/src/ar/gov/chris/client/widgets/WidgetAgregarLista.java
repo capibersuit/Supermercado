@@ -62,6 +62,7 @@ public class WidgetAgregarLista extends DialogBox {
 			comentario.setText(datos_lista.getComentario());
 //			precio.setText(String.valueOf((prod.getPrecio())));
 			fecha.setText(datos_lista.getFecha().toString());
+			fecha.setEnabled(false);
 			agregar.setText("Actualizar");
 		} else
 			this.setText("Agregar Nueva Lista");
