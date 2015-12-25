@@ -47,3 +47,9 @@ SELECT NOW();
 
 
 SELECT * FROM productos WHERE nombre= 'azucar'
+
+
+
+SELECT * FROM pg_stat_activity
+
+DELETE FROM rel_listas_productos WHERE id_compra= 44 or id_prod=6 or id_prod=12
