@@ -15,6 +15,10 @@ WITH (
 ALTER TABLE productos
   OWNER TO postgres;
 
+ alter table productos
+ add constraint uunique_productos
+ unique (nombre);
+
 
 CREATE TABLE listas
 (
@@ -38,6 +42,9 @@ CREATE TABLE rel_listas_productos
 
 
 SELECT	* FROM productos 
+
+SELECT	* FROM productos order by id;
+
 
 SELECT	* FROM listas
 
