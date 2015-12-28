@@ -87,6 +87,8 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 		if (historyToken.equals(PANTALLA_INICIO)) {
 			panel_aplicacion.clear();
 			panel_aplicacion.add(new PantallaInicio());
+			Window.setTitle("Sistema de control de listas de supermercado");
+
 //			menu.cambiar_titulo_contenido(TITULOS.get(PANTALLA_INICIO));
 //			menu.cambiar_contenido(new PantallaInicio());
 		}
@@ -95,12 +97,16 @@ if (historyToken.equals(PANTALLA_lISTAS)) {
 	panel_aplicacion.clear();
 
 			panel_aplicacion.add(new PantallaListaDeCompras());
+			Window.setTitle("Vista de listas de compras");
+
 }
 
 if (historyToken.equals(PANTALLA_PRODUCTOS)) {
 	panel_aplicacion.clear();
 
 	panel_aplicacion.add(new PantallaProductos());
+	Window.setTitle("Vista de productos");
+
 }
 
 if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRA)) {
@@ -111,9 +117,9 @@ if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRA)) {
 	if (s.length > 1) {
 		String id= s[1];
 		pv= new PantallaVistaDeCompra(id);
-		Window.setTitle("Vista de compra nï¿½: " + id);
+		Window.setTitle("Vista de compra nro: " + id);
 	} else
-		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un nï¿½mero de compra.");
+		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un número de compra.");
 	panel_aplicacion.add(pv);}
 
 		
