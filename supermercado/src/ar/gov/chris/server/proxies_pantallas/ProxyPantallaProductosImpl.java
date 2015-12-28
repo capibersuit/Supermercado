@@ -48,7 +48,7 @@ ProxyPantallaProductos {
 			
 			
 			Producto prod= new Producto(datos_prod.getNombre(), datos_prod.getPrecio());
-			prod.grabar(con);
+			prod.grabar(con, true);
 			commit= true;
 		
 		} catch (ExcepcionBD e) {
