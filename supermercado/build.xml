@@ -1,69 +1,170 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="supermercado">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="D:/Descargas Disco D/eclipse-standard-kepler-SR2-win32-x86_64/eclipse"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
-    <path id="GWT SDK [GWT - 2.6.0].libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.gwt.eclipse.sdkbundle_2.6.0/gwt-2.6.0/gwt-user.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.gwt.eclipse.sdkbundle_2.6.0/gwt-2.6.0/gwt-dev.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.gwt.eclipse.sdkbundle_2.6.0/gwt-2.6.0/validation-api-1.0.0.GA-sources.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.gwt.eclipse.sdkbundle_2.6.0/gwt-2.6.0/validation-api-1.0.0.GA.jar"/>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+    
+<project basedir="." name="supermercado">
+	
+	
+	<property name="gwt.home" value="/home/christian-pc1052136/Descargas/gwt-2.6.0" />
+	<!-- <property name="gwt.home" value="${env.GWT_2_1_0_HOME}" /> -->
+
+	<property name="pmd.home" value="${env.PMD_HOME}" />
+	<property name="chs.home" value="${env.CHS_HOME}" />	
+	<property name="tomcat.home" value="${env.CATALINA_HOME}"/>
+	<property name="template.webxml" value="${basedir}/paquetizacion/web-template.xml" />
+	<property name="dist_dir" value="${basedir}/paquetizacion/dist" />
+	<property name="src_dir" value="${basedir}/src" />
+	<property name="docs_dest_dir" value="${basedir}/docs"/>
+	<property name="web-inf_dir" value="${basedir}/war/WEB-INF"/>
+	<property name="bin_dir" value="${web-inf_dir}/classes" />
+	<property name="lib_dir" value="${web-inf_dir}/lib" />
+	<property name="gwt.compilador.output_dir" value="${basedir}/war"/>
+	<property name="gwt.clase_principal" value="ar.gov.chris.Supermercado" />
+	
+	<property name="path_sup" value="ar/gov/chris/" />
+	<property name="report_dir" value="${bin_dir}/report"/>
+	<property name="src_pmd_directorio" value="${src_dir}/${path_sup}/server/proxies_pantallas"/>
+	
+	<!-- Me fijo si está seteada la variable de entorno. -->
+    <available file="${gwt.home}" property="gwt.home.present"/>
+	
+	<target name="init">
+		<mkdir dir="${dist_dir}"/>	
+		<tstamp/>
+	</target>
+	
+	<target name="env.check" unless="gwt.home.present">
+		<fail message="Asegúrese que GWT_2_1_0_HOME esté seteada apuntando al directorio de instalación de GWT."/>
+    </target>
+
+	<!-- Armo el classpath con las bibliotecas necesarias para compilar -->
+	<path id="project.classpath">
+   		<pathelement path="${src_dir}" />
+		<!-- El jar dev de GWT -->
+		<fileset dir="${gwt.home}">
+			<include name="**/gwt-dev.jar" />
+		</fileset>
+		<!-- Los jars propios de la aplicación, entre los cuales está el gwt-user.jar modificado -->
+		<fileset dir="${lib_dir}">
+            <include name="**/*.jar" />
+        </fileset>
     </path>
-    <path id="supermercado.classpath">
-        <pathelement location="war/WEB-INF/classes"/>
-        <pathelement location="test-classes"/>
-        <path refid="GWT SDK [GWT - 2.6.0].libraryclasspath"/>
-    </path>
-    <target name="init">
-        <mkdir dir="war/WEB-INF/classes"/>
-        <mkdir dir="test-classes"/>
-        <copy includeemptydirs="false" todir="war/WEB-INF/classes">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="test-classes">
-            <fileset dir="test">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
+	
+	<!-- Creo un classpath que invoque a los *.jar necesarios para ejecutar las operaciones
+	requeridas.
+	-->
+	<path id="report.classpath">
+		<pathelement path="${src_dir}" />
+		<pathelement path="${bin_dir}" />
+		<pathelement path="${servlet.jar}"/>
+
+		<!-- El jar dev de PMD. -->
+		<fileset dir="${pmd.home}/lib">
+	        	<include name="*.jar" />
+	        </fileset>
+		<!-- Los jars propios de la aplicación, entre los cuales está el gwt-user.jar modificado -->
+		<fileset dir="${lib_dir}">
+	    		<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="checkstyletask.properties"
+		  classpath="${chs.home}/checkstyle-5.6-all.jar"/>
+	
+	 <!-- Este target genera el WAR para desarrollo o producción (según corresponda). Sólo
+	            depende de gwt.compile. Las clases del servidor se asume ya se encuentran
+	                compiladas en ${bin_dir} -->
+    <target name="war">
+            <echo message="--> Empaquetando para ${arch_config}."/>
+            <echo message="--> Generando web.xml con la configuración para ${arch_config}"/>
+    	 <!--   <loadproperties srcFile="paquetizacion/${arch_config}.deploy"/>
+            <filter filtersfile="paquetizacion/${arch_config}.deploy"/> -->
+            <tstamp/>
+    	
+    	<!--<delete file="${web-inf_dir}/web.xml" failonerror="false"/>
+             <copy filtering="true" file="${template.webxml}" tofile="${web-inf_dir}/web.xml"/> -->
+    	
+            <mkdir dir="${dist_dir}"/>
+            <zip destfile="${dist_dir}/${ant.project.name}.war" basedir="war"/>
+            <echo message="--> Empaquetado para ${arch_config}."/>
     </target>
-    <target name="clean">
-        <delete dir="war/WEB-INF/classes"/>
-        <delete dir="test-classes"/>
+
+	
+	<target name="warsdesa">
+		<antcall target="war">
+			<param name="arch_config" value="desarrollo" />
+		</antcall>
+	</target>
+
+	<target name="wars">
+		<echo message="!!! IMPORTANTE: ¿Recordó deshabilitar gwt.user.debug en CasosSoporte.gwt.xml?"/>
+		<antcall target="war">
+			<param name="arch_config" value="produccion" />
+		</antcall>
+	</target>
+	
+		
+	
+	<!-- Alias de wars -->
+	<target name="build" depends="init,clean,compile,wars">
+	</target>
+	
+	<!-- Alias de warsdesa -->
+	<target name="builddesa" depends="init,clean,compile,warsdesa">
+	</target>
+
+  <!-- Copia los jars necesarios de GWT. -->
+    <target name="libs" description="Copy libs to WEB-INF/lib">
+        <mkdir dir="${lib_dir}" />
+        <copy todir="${lib_dir}" file="${gwt.home}/gwt-servlet.jar" />
+            <copy todir="${lib_dir}" file="${gwt.home}/gwt-user.jar"/>
+        <!-- Add any additional server libs that need to be copied -->
     </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="war/WEB-INF/classes" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <classpath refid="supermercado.classpath"/>
-        </javac>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="test-classes" includeantruntime="false" source="${source}" target="${target}">
-            <src path="test"/>
-            <classpath refid="supermercado.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
+
+  <target name="javac" depends="libs" description="Compile java source">
+      <mkdir dir="${bin_dir}"/>
+      <javac srcdir="${src_dir}" includes="**" encoding="utf-8"
+          destdir="${bin_dir}"
+          source="1.5" target="1.5" nowarn="true"
+          debug="true" debuglevel="lines,vars,source" includeantruntime="true">
+        <classpath refid="project.classpath"/>
+      </javac>
+      <copy todir="${bin_dir}">
+        <fileset dir="${src_dir}" excludes="**/*.java,**/*.sql,BD/,pendientes.txt"/>
+      </copy>
+  </target>
+
+  <!-- Se compila con GWTCompiler -->
+  <target name="compile" depends="env.check,javac" description="GWT compile to JavaScript">
+      <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+        <classpath>
+          <pathelement location="${src_dir}"/>
+          <path refid="project.classpath"/>
+        </classpath>
+        <!-- Agregar jvmarg -Xss16M o similar si se ve un StackOverflowError -->
+        <jvmarg value="-Xmx1024M"/>
+        <!-- Argumentos adicionales como -style PRETTY o -logLevel DEBUG -->
+        <arg value="${gwt.clase_principal}"/>
+      </java>
+  </target>
+
+  <target name="hosted" depends="builddesa" description="Ejecutando hosted mode">
+      <java jvm="${env.JAVA_HOME_32}/bin/java" failonerror="true" fork="true"
+      	classname="com.google.gwt.dev.HostedMode">
+        <classpath>
+          <pathelement location="src"/>
+          <path refid="project.classpath"/>
+        </classpath>
+        <jvmarg value="-Xmx512M"/>
+        <arg value="-startupUrl"/>
+        <arg value="Supermercado.html"/>
+        <!-- Argumentos adicionales como -style PRETTY o -logLevel DEBUG -->
+        <arg value="${gwt.clase_principal}"/>
+      </java>
+  </target>
+
+  <target name="clean" description="Cleans this project">
+      <delete dir="${bin_dir}" failonerror="false" />
+      <delete dir="war" failonerror="false" />
+  </target>
+   
+	
 </project>
