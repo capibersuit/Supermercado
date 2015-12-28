@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ar.gov.chris.server.bd.ConexionBD;
+import ar.gov.chris.server.bd.HashMapSQL;
 import ar.gov.chris.server.excepciones.*;
 
 public abstract class PersistenteEnBD {
@@ -48,9 +49,8 @@ public abstract class PersistenteEnBD {
 //			boolean solo_si_no_existe, boolean loguear) throws ExcepcionBD {
 //		 
 	
-	public int grabar(ar.gov.chris.server.bd.ConexionBD con, 
-			ar.gov.chris.server.bd.HashMapSQL lista_campos, 
-			String tabla, String tabla_secuencia,  boolean nuevo,String condicion,
+	public int grabar(ConexionBD con, HashMapSQL lista_campos, String tabla,
+			String tabla_secuencia,  boolean nuevo, String condicion,
 			int id, boolean solo_si_no_existe ) throws ExcepcionBD {
 		 
 		 String query; 
