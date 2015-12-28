@@ -1,0 +1,64 @@
+cubo albahaca y ajo   ;0.0
+cubo albahaca y ajo   ;0.0
+cubo panceta   ;0.0
+cubo panceta   ;0.0
+aparato raid liquido   ;0.0
+fideo tallarin don vicente   ;0.0
+harpic negro   ;0.0
+vim lavandina   ;0.0
+lisoform liquido   ;0.0
+agua 2L (x7)   ;82.0
+agua 2L (x3)   ;0.0
+coca 1.5L (x6)   ;99.9
+pomelo paso 2.25L (x2)   ;0.0
+pomelo cuning 2.25L (x2)   ;30.8
+ala 3L repuesto   ;104.99
+ala 3L repuesto   ;104.99
+atun (x2)   ;73.78
+fideo tirabuzon matarazo   ;14.49
+cerealitas arroz   ;0.0
+arroz doble carolina   ;0.0
+cafe dolca repuesto 170gr   ;49.99
+cafe dolca repuesto 170gr   ;49.99
+azúcar ledesma   ;9.7
+azúcar ledesma   ;9.7
+azúcar dominó   ;7.7
+azúcar dominó   ;7.7
+yerba 1kg   ;0.0
+mate cocido cruz de malta   ;17.99
+rollo de cocina   ;17.49
+palmito gendlemant 400 g   ;65.99
+vivere frutilla concent 1L   ;58.49
+vivere frutilla concent 1L   ;58.49
+prelavado ecovi   ;20.3
+jabón tocador (x6)   ;38.64
+jabon liquido   ;18.32
+ayudin baño   ;0.0
+queso rallado spalen 120gr   ;22.1
+queso rallado spalen 120gr   ;22.1
+levite x2   ;0.0
+fajitas (x3)   ;41.07
+leche 1L (x5)   ;48.5
+leche en pol entera LA SE(x4)   ;60.0
+salsa pomarola   ;0.0
+salsa portuguesa   ;0.0
+salsa fileto   ;0.0
+salsa pizza   ;0.0
+jamón   ;19.94
+queso cremon   ;50.09
+queso cremoso lag 570gr   ;36.92
+salchichas vienissima (x12)   ;27.98
+mayo oliva 250cc   ;12.45
+flan sere   ;12.3
+crrealitas (x9)   ;0.0
+gall sonrisa 336gr   ;23.55
+gall merengada  279gr   ;24.49
+pan pancho sin marca   ;12.8
+pan hamburguesa   ;10.85
+cong hamburguesa (x12)   ;122.99
+cong brocoli   ;42.99
+cong wok pollo   ;72.99
+cong pollo queso 4 U   ;61.99
+cong empanadas   ;0.0
+papa pay   ;13.89
+papa frita jamon serrano   ;36.39

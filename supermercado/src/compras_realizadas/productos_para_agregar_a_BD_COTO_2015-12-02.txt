@@ -1,0 +1,57 @@
+agua 2L (x6)   ;71.4
+agua 2L (x2)   ;0.0
+aceite gira cocinero 900   ;0.0
+aceite lyra mezcla 1.5L   ;72.99
+coca 1.5L (x6)   ;99.9
+coca 1.5L (x2)   ;0.0
+aquarius 2.25L (x4)   ;68.0
+pomelo paso 2.25L (x3)   ;70.5
+pomelo cuning 2.25L (x3)   ;46.2
+ala 3L repuesto   ;104.99
+vivere frutilla concent 1L   ;58.49
+jabon liquido   ;18.32
+jabón tocador (x3)   ;21.71
+mr. musculo oxypower   ;0.0
+glade canasta   ;0.0
+glade aerosol   ;16.99
+escarbadientes   ;0.0
+lentejas   ;0.0
+cafe dolca repuesto 170gr   ;49.99
+azúcar ledesma   ;9.7
+azúcar dominó   ;7.7
+fideo avemaria   ;14.99
+fideo tallarin   ;0.0
+fideo tirabuzon   ;0.0
+fideo capeletini   ;0.0
+cerealitas (x6)   ;76.98
+cerealitas arroz   ;0.0
+cerealitas arroz   ;0.0
+fajitas (x3)   ;41.07
+gall merengada  279gr   ;24.49
+gall sonrisa 336gr   ;23.55
+gall polvorita 80 gr (x3)   ;9.87
+pan lactal negro chico   ;28.49
+pan pancho sin marca   ;12.8
+pan hamburguesa   ;10.85
+atun (x2)   ;73.78
+ananá en lata   ;0.0
+durazno en lata   ;0.0
+jugo citrix   ;0.0
+queso cremon   ;50.09
+queso cremoso lag 466gr   ;29.82
+queso rallado spalen 120gr   ;22.1
+jamón   ;19.94
+salchichas vienissima (x12)   ;27.98
+leche 1L (x5)   ;48.5
+yogur   ;0.0
+cong hamburguesa (x4)   ;0.0
+cong brocoli   ;42.99
+cong pollo queso 4 U   ;61.99
+cong pollo queso 4 U   ;61.99
+cong soja cala 330g   ;32.99
+cong soja J&Q   ;0.0
+chomp chocolate   ;52.0
+papa frita crema&cebolla   ;26.29
+papa pay   ;13.89
+twistos crackers   ;16.99
+twistos jamon   ;0.0
