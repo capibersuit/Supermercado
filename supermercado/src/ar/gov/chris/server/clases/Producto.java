@@ -1,12 +1,16 @@
 package ar.gov.chris.server.clases;
 
+
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.HashMapSQL;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
+import ar.gov.chris.server.excepciones.ExcepcionBug;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
+import ar.gov.chris.server.excepciones.ExcepcionYaExiste;
 
 public class Producto extends PersistenteEnBD {
 	
@@ -81,13 +85,25 @@ public class Producto extends PersistenteEnBD {
 				+ precio + "]";
 	}
 	
-	public void grabar(ConexionBD con) throws ExcepcionBD {
+	public void grabar(ConexionBD con, boolean solo_sino_existe) throws ExcepcionBD, ExcepcionYaExiste {
+		 if (this.nombre==null /*|| (this.precio) == 0*/)
+			throw new ExcepcionBug("No se puede grabar un producto sin su nombre");
 		
 		 HashMapSQL lista_campos= new HashMapSQL();
 		 lista_campos.put("nombre", this.nombre);
 		 lista_campos.put("precio", this.precio);
 
-		super.grabar(con, lista_campos, "public.productos", "public.productos", true, "", id, false);
+		 try {
+		 this.id=super.grabar(con, lista_campos, "public.productos", "public.productos", true, "", id, false);
+		 } catch (ExcepcionBD ex) {
+			// Manejo el caso donde no se pudo grabar porque la clave está repetida.
+				if (ex.es_clave_duplicada()) {
+					throw new ExcepcionYaExiste("Ya existe un producto con nombre '"+this.nombre+
+			 				"'", false);
+				} else {
+					 throw ex;
+				}
+		 }
 	}
 	
 	public void borrar(ConexionBD con) throws ExcepcionBD {
