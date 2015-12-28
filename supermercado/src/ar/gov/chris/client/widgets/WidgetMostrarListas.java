@@ -53,9 +53,9 @@ public class WidgetMostrarListas extends Composite {
 
 		Label comentario_label= new Label("Comentario");
 		Label fecha_label= new Label("Fecha");
-		Label id_lista_label= new Label("Id lista");
-		Label borrar_label= new Label("Borrar");
-		Label actualizar_label= new Label("Actualizar");
+		Label id_lista_label= new Label("Ir");
+		Label borrar_label= new Label("B");
+		Label actualizar_label= new Label("A");
 
 		listas.setWidget(0, 0, comentario_label);
 		listas.setWidget(0, 1, fecha_label);
@@ -69,7 +69,7 @@ public class WidgetMostrarListas extends Composite {
 			
 //			this.lista= list;
 			
-			btn_ir = new PushButton("Ver lista");
+			btn_ir = new PushButton(new Image("/imagenes/boton-ir.jpg"));
 			btn_ir.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -79,8 +79,8 @@ public class WidgetMostrarListas extends Composite {
 				}
 				});
 			
-			btn_borrar= new PushButton("Borrar");
-			btn_actualizar= new PushButton("Actualizar");
+			btn_borrar= new PushButton(new Image("/imagenes/boton-eliminar.jpg"));
+			btn_actualizar= new PushButton(new Image("/imagenes/boton-actualizar.jpg"));
 			
 			final ClickHandler handler = new ClickHandler(){
 				public void onClick(ClickEvent arg0) {
