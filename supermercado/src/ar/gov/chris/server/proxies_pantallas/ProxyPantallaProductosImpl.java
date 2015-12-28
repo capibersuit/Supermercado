@@ -14,11 +14,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionYaExiste;
+
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
 import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
+import ar.gov.chris.server.excepciones.ExcepcionYaExiste;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
 
@@ -39,7 +42,7 @@ ProxyPantallaProductos {
 	}
 
 	
-	public void agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD{
+	public void agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD, GWT_ExcepcionYaExiste{
 		
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;
@@ -52,7 +55,9 @@ ProxyPantallaProductos {
 			commit= true;
 		
 		} catch (ExcepcionBD e) {
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+		} catch (ExcepcionYaExiste e) {
+			throw new GWT_ExcepcionYaExiste(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}

@@ -5,12 +5,13 @@ import java.util.Set;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionYaExiste;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
 public interface ProxyPantallaProductos extends RemoteService {
 
-	void agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD;
+	void agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste, GWT_ExcepcionYaExiste;
 
 	Set<DatosProducto> buscar_productos() throws GWT_ExcepcionBD;
 
