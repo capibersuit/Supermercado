@@ -209,10 +209,6 @@ public class PantallaVistaDeCompra extends Pantalla {
 	}
 
 
-	/** Devuelve un html con el contenido de la vista de un caso soporte en el cual 
-	 * haya datos de líneas móviles.
-	 * @return Ídem.
-	 */
 	private String armar_html() {
 		
 		StringBuffer html_datos_pantalla= new StringBuffer();
