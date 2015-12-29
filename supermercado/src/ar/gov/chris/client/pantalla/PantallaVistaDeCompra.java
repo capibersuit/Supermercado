@@ -29,6 +29,7 @@ import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetMostrarProductos;
+import ar.gov.chris.client.util.JavaScript;
 
 public class PantallaVistaDeCompra extends Pantalla {
 
@@ -43,6 +44,10 @@ public class PantallaVistaDeCompra extends Pantalla {
 	private SuggestBox sb_productos= new SuggestBox(oraculo_productos);
 	private ListBox cant_prod;
 	private WidgetMostrarProductos prod;
+	
+	private Set<DatosProducto> lista_productos;
+	protected Button boton_imprimir= new Button("Imprimir");
+
 
 	public PantallaVistaDeCompra() {
 //		super();
@@ -130,6 +135,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 		 
 		 public void onSuccess(Set<DatosProducto> lista_prod) {
 		  
+		   lista_productos= lista_prod;
+			 
 		   btn_ir_a_inicio= new Button("Ir a Inicio");
 		   panel.add(btn_ir_a_inicio);
 		   sb_productos.setWidth("300px");
@@ -143,6 +150,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   btn_agregar_prod= new Button("Agregar producto");
 		   prod= new WidgetMostrarProductos(lista_prod, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
 		   panel.add(h);
+		   panel.add(boton_imprimir);
+
 		   panel.add(btn_agregar_prod);
 		   panel.add(prod);
 
@@ -182,8 +191,93 @@ public class PantallaVistaDeCompra extends Pantalla {
 				History.fireCurrentHistoryState();
 			}
 		});
+	    
+	    boton_imprimir.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
+				imprimir_datos_en_pantalla();	
+			}
+		});
 	}
 	
+	/** Contruye el html con los datos del caso y los muestra en una ventana nueva.
+	 */
+	private void imprimir_datos_en_pantalla() {
+		
+		String datos_a_imprimir= armar_html();
+		JavaScript.print_html(datos_a_imprimir, "Datos lista de compra", "datos_listas", 
+				"menubar=yes,location=no,resizable=yes,scrollbars=yes,status=yes");
+	}
+
+
+	/** Devuelve un html con el contenido de la vista de un caso soporte en el cual 
+	 * haya datos de líneas móviles.
+	 * @return Ídem.
+	 */
+	private String armar_html() {
+		
+		StringBuffer html_datos_pantalla= new StringBuffer();
+		String encabezado="";
+		String caso_y_fecha= "";	
+		String ficista_asignado= "";	
+		String datos_solicitud= "";	
+		String descripcion= "";	
+		String observaciones= "";	
+		String productos= "";
+		String recibi_conforme= "";	
+
+		//Armo el encabezado.
+		encabezado="<table border=1 cellpadding=\"30\" width =100%>" +
+				"<tr><td align=\"center\"><font size=\"+1\"</font>Impresión de lista de supermercado</td></tr></table>";
+						
+//		caso_y_fecha= dibujar_caso_y_fecha();
+//		ficista_asignado= dibujar_ficista_responsable();
+//		datos_solicitud= dibujar_datos_solicitud();
+//		descripcion= dibujar_descripcion();
+//		observaciones= dibujar_observaciones();
+		productos= dibujar_productos();
+//		recibi_conforme= dibujar_conforme();
+			
+		html_datos_pantalla.append(encabezado);
+		html_datos_pantalla.append("<br>");
+
+		
+		html_datos_pantalla.append("<strong>DETALLE DE COMPRA</strong>");
+		html_datos_pantalla.append(productos);	
+		html_datos_pantalla.append("<br><br><br>");
+		
+		return html_datos_pantalla.toString();
+	}
+	
+	private String dibujar_productos() {
+		String equipos_y_accesorios= "";
+		equipos_y_accesorios+= "<table border=1 width =100%>";
+
+		equipos_y_accesorios+= "<tr>";
+		equipos_y_accesorios+= "<td>" + "Producto" + "</td>\n";
+		equipos_y_accesorios+= "<td>" + "Precio" + "</td>";
+		equipos_y_accesorios+= "<td>" + "Cantidad" + "</td>";
+
+		equipos_y_accesorios+= "</tr>";
+
+		Set<DatosProducto> prods= lista_productos;
+		for (DatosProducto prod: prods) {
+			equipos_y_accesorios+=  "<tr>";
+			equipos_y_accesorios+= "<td align=\"center\">" +
+					prod.getNombre() + "</td>\n";
+			
+			equipos_y_accesorios+= "<td align=\"center\">";
+			equipos_y_accesorios+= prod.getPrecio() + "</td>";
+			
+			equipos_y_accesorios+= "<td align=\"center\">";
+			equipos_y_accesorios+= prod.getCantidad() + "</td>";
+
+			equipos_y_accesorios+=  "</tr>";
+		}
+		equipos_y_accesorios+= "</table>";
+		return equipos_y_accesorios;
+	}
+
+
 	private void agregrar_prod_en_lista() {
 		DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(sb_productos.getText());
