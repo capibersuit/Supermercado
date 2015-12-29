@@ -163,7 +163,7 @@
 
   <target name="clean" description="Cleans this project">
       <delete dir="${bin_dir}" failonerror="false" />
-      <delete dir="war" failonerror="false" />
+      <delete dir="war/supermercado" failonerror="false" />
   </target>
    
 	
