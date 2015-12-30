@@ -28,6 +28,9 @@ CREATE TABLE listas
   CONSTRAINT id_pk_listas PRIMARY KEY (id )
 )
 
+ALTER TABLE listas ADD ver_marcados boolean
+
+
 CREATE TABLE rel_listas_productos
 (
   id serial NOT NULL,
@@ -37,6 +40,13 @@ CREATE TABLE rel_listas_productos
   precio double precision,
   CONSTRAINT id_pk_rel_listas_productos PRIMARY KEY (id)
 )
+
+ALTER TABLE rel_listas_productos ADD esta_marcada boolean
+
+alter table rel_listas_productos
+ add constraint FK_rel_listas_productos
+  foreign key (id_prod)
+  references productos(id);
 
 --******************* HASTA ACA DEFINICIONES *****************************************
 
@@ -60,3 +70,10 @@ SELECT * FROM productos WHERE nombre= 'azucar'
 SELECT * FROM pg_stat_activity
 
 DELETE FROM rel_listas_productos WHERE id_compra= 44 or id_prod=6 or id_prod=12
+
+
+UPDATE rel_listas_productos
+   SET esta_marcada= true, precio=99
+ WHERE id_compra=15 and id_prod=98
+
+select * from rel_listas_productos
