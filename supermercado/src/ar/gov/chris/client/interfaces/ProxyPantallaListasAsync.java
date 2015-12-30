@@ -19,4 +19,9 @@ public interface ProxyPantallaListasAsync {
 
 	void actualizar_lista(DatosLista datos_lista,
 			AsyncCallback<Void> asyncCallback);
+
+	void mostrar_ocultar_prod_en_lista(int id_compra,
+			AsyncCallback<Void> asyncCallback);
+
+	void lista_esta_visible(int id_compra, AsyncCallback<Integer> asyncCallback);
 }

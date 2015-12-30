@@ -20,4 +20,8 @@ public interface ProxyPantallaListas extends RemoteService {
 
 	void actualizar_lista(DatosLista datos_lista) throws GWT_ExcepcionBD;
 
+	void mostrar_ocultar_prod_en_lista(int id_compra);
+
+	int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
+
 }

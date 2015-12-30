@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
 import ar.gov.chris.client.Supermercado;
+import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.OraculoConComodin;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
@@ -37,6 +38,9 @@ public class PantallaVistaDeCompra extends Pantalla {
 	private ProxyPantallaProductosAsync proxy_prod;
 
 	private int id_compra;
+	private boolean ver_marcados;
+	private Button btn_ver_marcados;
+
 	private Button btn_ir_a_inicio;
 	private Button btn_agregar_prod;
 	
@@ -54,17 +58,6 @@ public class PantallaVistaDeCompra extends Pantalla {
 //		inicializar();
 	}
 	
-	
-	public int getId_compra() {
-		return id_compra;
-	}
-
-
-	public void setId_compra(int id_compra) {
-		this.id_compra = id_compra;
-	}
-
-
 	public PantallaVistaDeCompra(String id) {
 		super();
 		inicializar();
@@ -80,7 +73,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		}
 
 	
-	private void existe_lista(int id_compra) {
+	private void existe_lista(final int id_compra) {
 		proxy_listas.existe_lista(id_compra, new AsyncCallback<Void> (){
 
 			@Override
@@ -91,7 +84,23 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 			@Override
 			public void onSuccess(Void result) {
-				pantalla_principal();
+				
+				proxy_listas.lista_esta_visible(id_compra, new AsyncCallback<Integer> (){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						MensajeAlerta.mensaje_error("Error: " + caught.getMessage());	
+						History.newItem(Supermercado.PANTALLA_INICIO);
+					}
+
+					@Override
+					public void onSuccess(Integer result) {
+						ver_marcados= result==1;
+						pantalla_principal();
+						
+					}
+					
+				});
 				
 					
 				
@@ -147,10 +156,13 @@ public class PantallaVistaDeCompra extends Pantalla {
 //		   sb_productos.setFocus(true);
 		   h.add(vp_prod);
 		   h.add(cant_prod);
+		   btn_ver_marcados= new Button("Ver/Ocultar marcados");
+
 		   btn_agregar_prod= new Button("Agregar producto");
 		   prod= new WidgetMostrarProductos(lista_prod, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
 		   panel.add(h);
 		   panel.add(boton_imprimir);
+		   panel.add(btn_ver_marcados);
 
 		   panel.add(btn_agregar_prod);
 		   panel.add(prod);
@@ -166,6 +178,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 	}
 	
 	private void agregar_handlers() {
+		
 		btn_agregar_prod.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
@@ -197,8 +210,39 @@ public class PantallaVistaDeCompra extends Pantalla {
 				imprimir_datos_en_pantalla();	
 			}
 		});
+	    
+	    btn_ver_marcados.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {
+				
+				mostrar_ocultar_prod_en_lista(!ver_marcados);
+				}
+		});
 	}
 	
+	protected void mostrar_ocultar_prod_en_lista(boolean ver_marcados) {
+		{
+			
+			DatosLista datos_lista= new DatosLista();
+			datos_lista.setId(id_compra);
+			datos_lista.setVer_marcados(ver_marcados);
+			
+			proxy_listas.actualizar_lista(datos_lista, new AsyncCallback<Void>(){
+				public void onFailure(Throwable caught) {
+					MensajeAlerta.mensaje_error("Ocurrió un error al intentar mostrar u ocultar " +
+							"los productos en la lista: " + caught.getMessage());
+				}
+				public void onSuccess(Void result) {
+					
+					Window.Location.reload();
+
+				}
+				
+			});
+					
+		}		
+	}
+
 	/** Contruye el html con los datos del caso y los muestra en una ventana nueva.
 	 */
 	private void imprimir_datos_en_pantalla() {
@@ -213,23 +257,13 @@ public class PantallaVistaDeCompra extends Pantalla {
 		
 		StringBuffer html_datos_pantalla= new StringBuffer();
 		String encabezado="";
-		String caso_y_fecha= "";	
-		String ficista_asignado= "";	
-		String datos_solicitud= "";	
-		String descripcion= "";	
-		String observaciones= "";	
+		
 		String productos= "";
-		String recibi_conforme= "";	
 
 		//Armo el encabezado.
 		encabezado="<table border=1 cellpadding=\"30\" width =100%>" +
 				"<tr><td align=\"center\"><font size=\"+1\"</font>Impresión de lista de supermercado</td></tr></table>";
-						
-//		caso_y_fecha= dibujar_caso_y_fecha();
-//		ficista_asignado= dibujar_ficista_responsable();
-//		datos_solicitud= dibujar_datos_solicitud();
-//		descripcion= dibujar_descripcion();
-//		observaciones= dibujar_observaciones();
+
 		productos= dibujar_productos();
 //		recibi_conforme= dibujar_conforme();
 			
@@ -354,5 +388,23 @@ public class PantallaVistaDeCompra extends Pantalla {
 			
 		});
 		
+	}
+	
+	public int getId_compra() {
+		return id_compra;
+	}
+
+
+	public void setId_compra(int id_compra) {
+		this.id_compra = id_compra;
+	}
+	
+	public boolean isVer_marcados() {
+		return ver_marcados;
+	}
+
+
+	public void setVer_marcados(boolean ver_marcados) {
+		this.ver_marcados = ver_marcados;
 	}
 }

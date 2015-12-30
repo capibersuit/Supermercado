@@ -48,6 +48,8 @@ public class WidgetMostrarProductos extends Composite {
 
 	private PushButton btn_borrar;
 	private PushButton btn_actualizar;
+	private PushButton btn_marcar;
+
 
 	private WidgetConfirmar confirmar_borrado;
 	private WidgetAgregarProducto actualizar_prod;
@@ -89,7 +91,8 @@ public class WidgetMostrarProductos extends Composite {
 		Label total_label= new Label("Precio total");
 		Label borrar_label= new Label("Borrar");
 		Label actualizar_label= new Label("Actualizar");
-
+		Label marcar_label= new Label("Marcar");
+		
 		lista_prod.setWidget(0, next_col, nombre_prod_label);
 		next_col++;
 		lista_prod.setWidget(0, next_col, precio_label);
@@ -108,7 +111,11 @@ public class WidgetMostrarProductos extends Composite {
 		next_col++;
 		//		}
 		lista_prod.setWidget(0, next_col, actualizar_label);
+		next_col++;
 		
+		lista_prod.setWidget(0, next_col, marcar_label);
+
+
 //		lista_prod.setStyleName(style);
 
 		next_row= 1; 
@@ -123,6 +130,8 @@ public class WidgetMostrarProductos extends Composite {
 
 			btn_borrar= new PushButton("Borrar");
 			btn_actualizar= new PushButton("Actualizar");
+			btn_marcar= new PushButton("Marcar");
+
 
 			final ClickHandler handler = new ClickHandler(){
 				public void onClick(ClickEvent arg0) {
@@ -156,10 +165,29 @@ public class WidgetMostrarProductos extends Composite {
 				}
 			});
 
+			
+			final int row_a_marcar= next_row;
+			
+			ClickHandler handler_marcar= new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
+					boolean marcada= prod.isEsta_marcada();
+					prod.setEsta_marcada(!marcada);
+					((PantallaVistaDeCompra)parent).actualizar_producto(prod);
+					
+					
+				}
+			};
+
+			btn_marcar.addClickHandler(handler_marcar);
+			
 			//			prod_actual= prod;
 			//			agregar_handler();
 
 
+			
 			lista_prod.setText(next_row, next_col, prod.getNombre());
 			next_col++;
 			
@@ -180,6 +208,10 @@ public class WidgetMostrarProductos extends Composite {
 			next_col++;
 
 			lista_prod.setWidget(next_row, next_col, btn_actualizar);
+			next_col++;
+			
+			lista_prod.setWidget(next_row, next_col, btn_marcar);
+
 
 			//		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());
 			//		if (lista.size() > 1) {
@@ -187,7 +219,15 @@ public class WidgetMostrarProductos extends Composite {
 			//					linea.obtener_descripcion_categoria_accesorio() + " (" +linea.obtener_id() + ")");
 			//			lista_lineas.setWidget(next_row, 5, check_quitar);
 			//		}
-			lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
+			
+			if(prod.isEsta_marcada()) {
+				if(((PantallaVistaDeCompra)parent).isVer_marcados())
+					lista_prod.getRowFormatter().setStyleName(next_row, "ComplejidadMedia");
+				else
+					lista_prod.getRowFormatter().setVisible(next_row, false);
+			} else {
+				lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
+			}
 			next_row++;
 		}
 		

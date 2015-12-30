@@ -79,7 +79,7 @@ ProxyPantallaProductos {
 			commit= true;
 		
 		} catch (ExcepcionBD e) {
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
 		} finally {
@@ -101,7 +101,7 @@ ProxyPantallaProductos {
 				commit= true;
 				
 			} catch (ExcepcionBD e) {
-				e.printStackTrace();
+				throw new GWT_ExcepcionBD(e);
 			} catch (ExcepcionNoExiste e) {
 				e.printStackTrace();
 			}finally {
@@ -133,8 +133,8 @@ ProxyPantallaProductos {
 			}
 			
 		} catch (ExcepcionBD e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,12 +169,12 @@ ProxyPantallaProductos {
 				datos.setNombre(p.getNombre());
 				datos.setPrecio(rs.getFloat("precio"));
 				datos.setCantidad(rs.getInt("cant"));
+				datos.setEsta_marcada(rs.getBoolean("esta_marcada"));
 				datos_conj.add(datos);
 			}
 			
 		} catch (ExcepcionBD e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,13 +199,13 @@ ProxyPantallaProductos {
 			Producto prod= new Producto(con, datos_prod.getNombre());
 			int id_prod= prod.getId();
 			
-			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, precio) VALUES (" +
-			id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() + ")");
+			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, precio, esta_marcada) VALUES (" +
+			id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() +"," +datos_prod.isEsta_marcada() + ")");
 			
 			commit= true;
 
 		} catch (ExcepcionBD e) {
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		}catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
 		} finally {
@@ -231,7 +231,7 @@ ProxyPantallaProductos {
 			commit= true;
 
 		} catch (ExcepcionBD e) {
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		}catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
 		} finally {
@@ -248,7 +248,7 @@ ProxyPantallaProductos {
 			Producto prod= new Producto(con, datos_prod.getId());
 //			int id_prod= prod.getId();
 			
-			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ datos_prod.getPrecio() 
+			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ datos_prod.getPrecio() +", esta_marcada= " + datos_prod.isEsta_marcada()
 					+" WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId());
 			
 			verificar_si_cambiar_precio_global(con, datos_prod, id_compra);
@@ -256,7 +256,7 @@ ProxyPantallaProductos {
 			commit= true;
 
 		} catch (ExcepcionBD e) {
-			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		}catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
 		} finally {

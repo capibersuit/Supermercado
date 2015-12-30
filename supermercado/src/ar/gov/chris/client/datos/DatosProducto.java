@@ -9,7 +9,14 @@ public class DatosProducto implements IsSerializable {
 	//String descripcion;
 	float precio;
 	int cantidad;
+	boolean esta_marcada;
 	
+	public boolean isEsta_marcada() {
+		return esta_marcada;
+	}
+	public void setEsta_marcada(boolean esta_marcada) {
+		this.esta_marcada = esta_marcada;
+	}
 	public int getCantidad() {
 		return cantidad;
 	}

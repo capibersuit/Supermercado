@@ -75,6 +75,7 @@ ProxyPantallaListas {
 				datos.setId(rs.getInt("id"));
 				datos.setComentario(rs.getString("comentario"));
 				datos.setFecha(rs.getDate("fecha"));
+				datos.setVer_marcados(rs.getBoolean("ver_marcados"));
 				datos_conj.add(datos);
 			}
 			commit= true;
@@ -105,7 +106,7 @@ ProxyPantallaListas {
 			Lista l = new Lista(con, id_compra);
 //			existe= true;
 //			existe= l  != null;
-
+			commit = true;
 		} catch (ExcepcionBD e) {
 				throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionNoExiste e) {
@@ -144,7 +145,16 @@ ProxyPantallaListas {
 		try {
 			Lista lista= new Lista(con, datos_lista.getId());
 			int id_lista= lista.getId();
-			String query= "UPDATE listas SET comentario= '"+ datos_lista.getComentario() +"', fecha= '"+ datos_lista.getFecha() + "' WHERE id = " + id_lista;
+			String comen= datos_lista.getComentario();
+			Date fech= datos_lista.getFecha();
+			Boolean ver_marcad= datos_lista.isVer_marcados();
+			
+			String query= "UPDATE listas SET ";
+			if(comen != null && fech != null)
+				query+=	"comentario= '"+ comen + "', fecha= '"+ fech +"',";
+			query+=	" ver_marcados = "+ ver_marcad + 
+					" WHERE id = " + id_lista;
+			
 //			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
 //			+ prod.getNombre() + " WHERE id = " + id_prod);
 			con.ejecutar_update(query);
@@ -157,6 +167,34 @@ ProxyPantallaListas {
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}				
+	}
+
+	@Override
+	public void mostrar_ocultar_prod_en_lista(int id_compra) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+		ConexionBD con;
+		Lista l;
+		Boolean commit= false;
+		con = this.obtener_transaccion();
+
+		try {
+			l = new Lista(con, id_compra);
+//			existe= true;
+//			existe= l  != null;
+			commit = true;
+		} catch (ExcepcionBD e) {
+				throw new GWT_ExcepcionBD(e);
+		} catch (ExcepcionNoExiste e) {
+			throw new GWT_ExcepcionNoExiste(e);
+			} finally {
+				this.cerrar_transaccion(con, commit);
+			}		
+		return l.isVer_marcados() ? 1 : 0;
 	}
 }
 

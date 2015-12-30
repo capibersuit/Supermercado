@@ -13,7 +13,8 @@ public class Lista extends PersistenteEnBD {
 	
 	String comentario;
 	Date fecha;
-	
+	private boolean ver_marcados;
+
 	public Lista(String comentario, Date fecha) {
 		super();
 		this.comentario = comentario;
@@ -42,6 +43,13 @@ public class Lista extends PersistenteEnBD {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	
+	public boolean isVer_marcados() {
+		return ver_marcados;
+	}
+	public void setVer_marcados(boolean ver_marcados) {
+		this.ver_marcados = ver_marcados;
+	}
 
 	@Override
 	public String toString() {
@@ -65,6 +73,7 @@ public class Lista extends PersistenteEnBD {
 			 if (rs.next()) {
 				 this.comentario= rs.getString("comentario");
 				 this.fecha= rs.getDate("fecha");
+				 this.ver_marcados= rs.getBoolean("ver_marcados");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
 		 } catch(SQLException ex) {

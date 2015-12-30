@@ -9,6 +9,15 @@ public class DatosLista implements IsSerializable {
 	int id;
 	String comentario;
 	Date fecha;
+	private boolean ver_marcados;
+
+	
+	public boolean isVer_marcados() {
+		return ver_marcados;
+	}
+	public void setVer_marcados(boolean ver_marcados) {
+		this.ver_marcados = ver_marcados;
+	}
 	
 	public int getId() {
 		return id;
