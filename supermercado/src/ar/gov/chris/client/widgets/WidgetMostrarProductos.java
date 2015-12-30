@@ -84,6 +84,8 @@ public class WidgetMostrarProductos extends Composite {
 		desc_tarj_label= new Label("Desc Tarj");
 		desc_tarj_label.addStyleName("LabelDistinguido");
 		
+		total_final_label.addStyleName("LabelDistinguido");
+		
 
 		Label nombre_prod_label= new Label("Producto");
 		Label precio_label= new Label("Precio");
@@ -113,7 +115,9 @@ public class WidgetMostrarProductos extends Composite {
 		lista_prod.setWidget(0, next_col, actualizar_label);
 		next_col++;
 		
-		lista_prod.setWidget(0, next_col, marcar_label);
+		if(titulo.equalsIgnoreCase("Vista de compra")) 
+
+			lista_prod.setWidget(0, next_col, marcar_label);
 
 
 //		lista_prod.setStyleName(style);
@@ -210,7 +214,8 @@ public class WidgetMostrarProductos extends Composite {
 			lista_prod.setWidget(next_row, next_col, btn_actualizar);
 			next_col++;
 			
-			lista_prod.setWidget(next_row, next_col, btn_marcar);
+			if(titulo.equalsIgnoreCase("Vista de compra"))
+				lista_prod.setWidget(next_row, next_col, btn_marcar);
 
 
 			//		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());
@@ -269,6 +274,9 @@ public class WidgetMostrarProductos extends Composite {
 			float tot_aux= (total_compra-desc_coto_float);
 			total_final= tot_aux;
 			total_final= total_final - (tot_aux/100*20);
+			
+//			total_final
+			
 			lista_prod.setWidget(next_row, 2, total_final_label);
 			lista_prod.setText(next_row, 3, String.valueOf(total_final));
 
