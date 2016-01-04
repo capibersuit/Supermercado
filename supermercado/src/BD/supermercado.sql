@@ -48,6 +48,11 @@ alter table rel_listas_productos
   foreign key (id_prod)
   references productos(id);
 
+alter table rel_listas_productos
+ add constraint FK_rel_listas
+  foreign key (id_compra)
+  references listas(id);
+
 --******************* HASTA ACA DEFINICIONES *****************************************
 
 
@@ -69,7 +74,11 @@ SELECT * FROM productos WHERE nombre= 'azucar'
 
 SELECT * FROM pg_stat_activity
 
-DELETE FROM rel_listas_productos WHERE id_compra= 44 or id_prod=6 or id_prod=12
+DELETE FROM rel_listas_productos 
+WHERE 
+--id_compra= 44 or 
+id_prod=4
+ or id_prod=12
 
 
 UPDATE rel_listas_productos
@@ -77,3 +86,11 @@ UPDATE rel_listas_productos
  WHERE id_compra=15 and id_prod=98
 
 select * from rel_listas_productos
+
+
+SELECT * FROM rel_listas_productos 
+
+where id_compra = 3
+
+
+select * from productos where nombre = 'coca cola'
