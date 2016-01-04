@@ -3,6 +3,7 @@ package ar.gov.chris.client.pantalla;
 //import ar.gov.chris.client.GreetingService;
 //import ar.gov.chris.client.GreetingServiceAsync;
 //import ar.gov.chris.client.GreetingService;
+import java.util.LinkedList;
 import java.util.Set;
 
 import ar.gov.chris.client.GreetingServiceAsync;
@@ -38,7 +39,7 @@ public class PantallaProductos extends Pantalla {
 	
 //	private final GreetingServiceAsync greetingService = GWT
 //			.create(GreetingService.class);
-    private Set<DatosProducto> datos_prod;
+    private LinkedList<DatosProducto> datos_prod;
 
 	private WidgetAgregarProducto agregar_prod;
 	private WidgetMostrarProductos productos;
@@ -67,7 +68,7 @@ public class PantallaProductos extends Pantalla {
 						"los productos: " + caught.getMessage());
 			}
 			public void onSuccess(Set<DatosProducto> result) {
-				datos_prod= result;
+				datos_prod= ordenar_productos(result);
 				armar_pantalla();			
 			}
 			

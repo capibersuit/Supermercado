@@ -1,5 +1,8 @@
 package ar.gov.chris.client.pantalla;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
 import ar.gov.chris.client.Supermercado;
+import ar.gov.chris.client.clases.NombreProdComparator;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.OraculoConComodin;
@@ -49,7 +53,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 	private ListBox cant_prod;
 	private WidgetMostrarProductos prod;
 	
-	private Set<DatosProducto> lista_productos;
+	private LinkedList<DatosProducto> lista_productos;
 	protected Button boton_imprimir= new Button("Imprimir");
 
 
@@ -144,7 +148,11 @@ public class PantallaVistaDeCompra extends Pantalla {
 		 
 		 public void onSuccess(Set<DatosProducto> lista_prod) {
 		  
-		   lista_productos= lista_prod;
+			 
+//			 Collections.sort(lista_prod);
+		   lista_productos= ordenar_productos(lista_prod);
+		   
+		   
 			 
 		   btn_ir_a_inicio= new Button("Ir a Inicio");
 		   panel.add(btn_ir_a_inicio);
@@ -159,7 +167,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   btn_ver_marcados= new Button("Ver/Ocultar marcados");
 
 		   btn_agregar_prod= new Button("Agregar producto");
-		   prod= new WidgetMostrarProductos(lista_prod, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
+		   prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
 		   panel.add(h);
 		   panel.add(boton_imprimir);
 		   panel.add(btn_ver_marcados);
@@ -229,7 +237,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 			
 			proxy_listas.actualizar_lista(datos_lista, new AsyncCallback<Void>(){
 				public void onFailure(Throwable caught) {
-					MensajeAlerta.mensaje_error("Ocurrió un error al intentar mostrar u ocultar " +
+					MensajeAlerta.mensaje_error("Ocurrio un error al intentar mostrar u ocultar " +
 							"los productos en la lista: " + caught.getMessage());
 				}
 				public void onSuccess(Void result) {
@@ -262,7 +270,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 		//Armo el encabezado.
 		encabezado="<table border=1 cellpadding=\"30\" width =100%>" +
-				"<tr><td align=\"center\"><font size=\"+1\"</font>Impresión de lista de supermercado</td></tr></table>";
+				"<tr><td align=\"center\"><font size=\"+1\"</font>Impresion de lista de supermercado</td></tr></table>";
 
 		productos= dibujar_productos();
 //		recibi_conforme= dibujar_conforme();
@@ -289,7 +297,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 		equipos_y_accesorios+= "</tr>";
 
-		Set<DatosProducto> prods= lista_productos;
+		LinkedList<DatosProducto> prods= lista_productos;
 		for (DatosProducto prod: prods) {
 			equipos_y_accesorios+=  "<tr>";
 			equipos_y_accesorios+= "<td align=\"center\">" +
@@ -314,7 +322,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 		int cant= cant_prod.getSelectedIndex()+1;
 		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
 						"el producto en la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
@@ -363,11 +371,11 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
-				Window.Location.reload();
+//				Window.Location.reload();
 			}
 			
 		});			
@@ -379,7 +387,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 	public void borrar_lista(int id_compra) {
 		proxy_listas.borrar_lista(id_compra, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrió un error al intentar borrar " +
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {

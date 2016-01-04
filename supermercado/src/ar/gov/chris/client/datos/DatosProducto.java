@@ -2,7 +2,7 @@ package ar.gov.chris.client.datos;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class DatosProducto implements IsSerializable {
+public class DatosProducto implements IsSerializable /*, Comparable<DatosProducto> */{
 	
 	int id;
 	String nombre;
@@ -46,6 +46,12 @@ public class DatosProducto implements IsSerializable {
 		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio="
 				+ precio + "]";
 	}
+	
+//	@Override
+//	public int compareTo(DatosProducto datos) {
+////		//puedo hacer esto porque String implementa Comparable
+//	    return nombre.compareTo(datos.getNombre());
+//	}
 	
 	
 	

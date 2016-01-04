@@ -1,5 +1,13 @@
 package ar.gov.chris.client.pantalla;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
+
+import ar.gov.chris.client.clases.NombreProdComparator;
+import ar.gov.chris.client.datos.DatosProducto;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -50,6 +58,18 @@ public class Pantalla extends Composite {
 		}
 	 };
 	 s.execute();
+	}
+	
+	protected LinkedList<DatosProducto> ordenar_productos(Set<DatosProducto> lista_prod) {
+		LinkedList<DatosProducto> lista_para_ordenar= new LinkedList<DatosProducto>();
+		//Obtengo todos los datos de las productos y los agrego a una lista.
+		for (Iterator<DatosProducto> iter = lista_prod.iterator(); iter.hasNext();) {
+			DatosProducto prods = iter.next();
+			lista_para_ordenar.add(prods);
+		}	
+		//Ordeno por nombre del producto la lista con los datos de los productos que obtuve.
+		Collections.sort(lista_para_ordenar, new NombreProdComparator());
+		return lista_para_ordenar;
 	}
 
 	public void agregar_producto(String nombre, String precio) {
