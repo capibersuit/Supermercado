@@ -95,7 +95,7 @@ public class WidgetMostrarProductos extends Composite {
 		desc_coto_label= new Label();
 		desc_coto_label.addStyleName("LabelDistinguido");
 		
-		desc_tarj_literal_label= new Label("Desc Tarj 20");
+		desc_tarj_literal_label= new Label("Desc Tarj 20%");
 		desc_tarj_literal_label.addStyleName("LabelDistinguido");
 		desc_tarj_label= new Label();
 		desc_tarj_label.addStyleName("LabelDistinguido");
@@ -138,15 +138,7 @@ public class WidgetMostrarProductos extends Composite {
 
 			lista_prod.setWidget(0, next_col, marcar_label);
 
-
-//		lista_prod.setStyleName(style);
-
 		next_row= 1; 
-
-//		
-//		float subtotal=0;
-//		float total=0;
-
 		
 		for (final DatosProducto prod : lista_productos) {
 			next_col=0;
@@ -173,7 +165,7 @@ public class WidgetMostrarProductos extends Composite {
 					//				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod, "Esta seguro que quiere borrar el producto", );
 					//				confirmar_borrado.show();
 					//****
-					confirmar_borrado= new WidgetConfirmar(parent, "Está seguro que quiere borrar el producto", handler);
+					confirmar_borrado= new WidgetConfirmar(parent, "Esta seguro que quiere borrar el producto", handler);
 					confirmar_borrado.show();
 					//****
 				}
@@ -198,7 +190,7 @@ public class WidgetMostrarProductos extends Composite {
 					boolean marcada= prod.isEsta_marcada();
 
 					if(marcada)
-						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadBaja");
+						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ContenidoTablas");
 					else
 						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
 					prod.setEsta_marcada(!marcada);
