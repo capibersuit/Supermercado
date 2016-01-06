@@ -18,6 +18,7 @@ import ar.gov.chris.server.bd.PoolDeConexiones;
 import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
+import ar.gov.chris.shared.Sanitizador;
 
 @SuppressWarnings("serial")
 public class ProxyPantallaListasImpl extends ProxyPantallaCHRISImpl implements
@@ -83,11 +84,11 @@ ProxyPantallaListas {
 			commit= true;
 			
 		} catch (ExcepcionBD e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
@@ -132,8 +133,12 @@ ProxyPantallaListas {
 		
 		} catch (ExcepcionBD e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+
 		} catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}			
@@ -147,14 +152,17 @@ ProxyPantallaListas {
 		try {
 			Lista lista= new Lista(con, datos_lista.getId());
 			int id_lista= lista.getId();
-			String comen= datos_lista.getComentario();
+			String comen= Sanitizador.sanitizar(datos_lista.getComentario());
 			Date fech= datos_lista.getFecha();
 			Boolean ver_marcad= datos_lista.isVer_marcados();
+			float pagado= datos_lista.getPagado();
+			float desc_coto= datos_lista.getDesc_coto();
+
 			
 			String query= "UPDATE listas SET ";
 			if(comen != null && fech != null)
 				query+=	"comentario= '"+ comen + "', fecha= '"+ fech +"',";
-			query+=	" ver_marcados = "+ ver_marcad + 
+			query+=	" ver_marcados = "+ ver_marcad + ", pagado = "+ pagado + ", desc_coto = "+ desc_coto +
 					" WHERE id = " + id_lista;
 			
 //			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
@@ -164,8 +172,12 @@ ProxyPantallaListas {
 
 		} catch (ExcepcionBD e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+
 		}catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}				
@@ -197,6 +209,28 @@ ProxyPantallaListas {
 				this.cerrar_transaccion(con, commit);
 			}		
 		return l.isVer_marcados() ? 1 : 0;
+	}
+
+	@Override
+	public float buscar_desc_coto(int id_compra)throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+		ConexionBD con;
+		Lista l;
+		Boolean commit= false;
+		con = this.obtener_transaccion();
+
+		try {
+			l = new Lista(con, id_compra);
+//			existe= true;
+//			existe= l  != null;
+			commit = true;
+		} catch (ExcepcionBD e) {
+				throw new GWT_ExcepcionBD(e);
+		} catch (ExcepcionNoExiste e) {
+			throw new GWT_ExcepcionNoExiste(e);
+			} finally {
+				this.cerrar_transaccion(con, commit);
+			}		
+		return l.getDesc_coto();
 	}
 }
 

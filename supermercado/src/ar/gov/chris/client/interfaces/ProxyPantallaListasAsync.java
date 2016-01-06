@@ -24,4 +24,6 @@ public interface ProxyPantallaListasAsync {
 			AsyncCallback<Void> asyncCallback);
 
 	void lista_esta_visible(int id_compra, AsyncCallback<Integer> asyncCallback);
+
+	void buscar_desc_coto(int id_compra, AsyncCallback<Float> asyncCallback);
 }

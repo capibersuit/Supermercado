@@ -12,10 +12,20 @@ import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 public class Lista extends PersistenteEnBD {
 	
 	String comentario;
+	
+	public float getDesc_coto() {
+		return desc_coto;
+	}
+
+	public void setDesc_coto(float desc_coto) {
+		this.desc_coto = desc_coto;
+	}
+
 	Date fecha;
 	private boolean ver_marcados;
 	private float pagado;
-
+	private float desc_coto;
+	
 	public float getPagado() {
 		return pagado;
 	}
@@ -87,6 +97,7 @@ public class Lista extends PersistenteEnBD {
 				 this.fecha= rs.getDate("fecha");
 				 this.ver_marcados= rs.getBoolean("ver_marcados");
 				 this.pagado= rs.getFloat("pagado");
+				 this.desc_coto= rs.getFloat("desc_coto");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
 		 } catch(SQLException ex) {

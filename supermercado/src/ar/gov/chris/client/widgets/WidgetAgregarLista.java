@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class WidgetAgregarLista extends DialogBox {
@@ -26,8 +27,15 @@ public class WidgetAgregarLista extends DialogBox {
 	private FlowPanel panel;
 	private Button agregar;
 	private Button cancelar;
+	
+	private Label lblcomentario;
+	private Label lblfecha;
+	private Label lblpagado;
+
 	private TextBox comentario;
 	private TextBox fecha;
+	private TextBox pagado= new TextBox();
+
 	private Button cal;
 	private PantallaListaDeCompras parent;
 	
@@ -48,6 +56,9 @@ public class WidgetAgregarLista extends DialogBox {
 		if(es_update)
 			this.datos_lista= datos_lista;
 //		this.setText("Agregar Nueva Lista");
+		
+		lblcomentario= new Label("Comentario/Descripcion");
+		lblfecha= new Label("Fecha");
 		comentario= new TextBox();
 		fecha= new TextBox();
 		
@@ -64,6 +75,8 @@ public class WidgetAgregarLista extends DialogBox {
 			fecha.setText(datos_lista.getFecha().toString());
 			fecha.setEnabled(false);
 			agregar.setText("Actualizar");
+			lblpagado= new Label("Importe pagado");
+//			pagado= new TextBox();
 		} else
 			this.setText("Agregar Nueva Lista");
 		
@@ -71,21 +84,26 @@ public class WidgetAgregarLista extends DialogBox {
 		HorizontalPanel botones= new HorizontalPanel();
 		
 		botones.add(agregar);
-		botones.add(cal);
+		if(es_update)
+			botones.add(cal);
 
 		botones.add(cancelar);
 		
 		panel= new FlowPanel();
+		panel.add(lblcomentario);
 		panel.add(comentario);
-		if(es_update)
+		if(es_update) {
+			panel.add(lblfecha);
 			panel.add(fecha);
-
+			panel.add(lblpagado);
+			panel.add(pagado);
+		}
 		panel.add(botones);
 		this.add(panel);
 	}
 
 	/** Agrega los listeners a los botones.
-	 * @param id_widget ndice para el debugger.
+	 *
 	 */
 	private void agregar_listeners() {
 		agregar.addClickHandler(new ClickHandler(){
@@ -101,13 +119,28 @@ public class WidgetAgregarLista extends DialogBox {
 					String mes=datos[1];
 					String dia=datos[2];
 					
+					// no se bien porque pero tengo que  restar 1900 
+					// para que me quede bien el anio.
 					int anionum= Integer.parseInt(anio)-1900;
 					int mesnum= Integer.parseInt(mes)-1;
 					int dianum= Integer.parseInt(dia);
 					Date fecha_act= new Date(anionum, mesnum, dianum);
 					datos_lista.setComentario(comentario.getText());
 					datos_lista.setFecha(fecha_act);
-					parent.actualizar_producto(datos_lista);
+					if(!pagado.getText().isEmpty()) {
+						
+						try {
+						float importe_pagado= Float.parseFloat(pagado.getText());
+						datos_lista.setPagado(importe_pagado);
+						parent.actualizar_producto(datos_lista);
+						} catch (NumberFormatException e) {
+							MensajeAlerta.mensaje_error("Error: " + e.getMessage() + ". Ingrese un importe valido.");
+//							throw new GWT_ExcepcionFormatoInvalido(e);
+						}
+						
+					} else
+						parent.actualizar_producto(datos_lista);
+					
 					
 				} else
 				  parent.agregar_lista(comentario.getText());
@@ -119,13 +152,20 @@ public class WidgetAgregarLista extends DialogBox {
 				hide();
 			}
 		});
-		comentario.addKeyPressHandler(new KeyPressHandler() {
+		
+		KeyPressHandler Handler= new KeyPressHandler() {
 			 @Override
 			 public void onKeyPress(KeyPressEvent event) {
 			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
 				  agregar.click();
 			 }
-		 });
+		 };
+		
+		comentario.addKeyPressHandler(Handler);
+		
+//		fecha.addKeyPressHandler(Handler);
+		
+		pagado.addKeyPressHandler(Handler);
 		
 		cal.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

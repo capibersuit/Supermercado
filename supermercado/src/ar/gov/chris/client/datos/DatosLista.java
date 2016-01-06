@@ -11,9 +11,16 @@ public class DatosLista implements IsSerializable {
 	Date fecha;
 	private boolean ver_marcados;
 	private float pagado;
+	private float desc_coto;
 
 	
 	
+	public float getDesc_coto() {
+		return desc_coto;
+	}
+	public void setDesc_coto(float desc_coto) {
+		this.desc_coto = desc_coto;
+	}
 	public boolean isVer_marcados() {
 		return ver_marcados;
 	}
@@ -46,5 +53,6 @@ public class DatosLista implements IsSerializable {
 	public float getPagado() {
 		return pagado;
 	}
+	
 	
 }

@@ -1,9 +1,6 @@
 package ar.gov.chris.client.pantalla;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import com.google.gwt.core.client.GWT;
@@ -24,7 +21,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Label;
 
 import ar.gov.chris.client.Supermercado;
-import ar.gov.chris.client.clases.NombreProdComparator;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.OraculoConComodin;
@@ -55,7 +51,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 	
 	private LinkedList<DatosProducto> lista_productos;
 	protected Button boton_imprimir= new Button("Imprimir");
-
+	
+	private float descuento_coto;
 
 	public PantallaVistaDeCompra() {
 //		super();
@@ -112,8 +109,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 			
 		});
 	}
-
-
+	
+	
 	protected void pantalla_principal() {
 		panel.clear();
 
@@ -167,15 +164,19 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   btn_ver_marcados= new Button("Ver/Ocultar marcados");
 
 		   btn_agregar_prod= new Button("Agregar producto");
-		   prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this);
+		   
 		   panel.add(h);
-		   panel.add(boton_imprimir);
-		   panel.add(btn_ver_marcados);
-
-		   panel.add(btn_agregar_prod);
-		   panel.add(prod);
-
-		   agregar_handlers();
+		   
+		   float desc_coto= get_descuento_coto(id_compra);
+//		   prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, desc_coto);
+//		   panel.add(h);
+//		   panel.add(boton_imprimir);
+//		   panel.add(btn_ver_marcados);
+//
+//		   panel.add(btn_agregar_prod);
+//		   panel.add(prod);
+//
+//		   agregar_handlers();
 	}
 		 public void onFailure(Throwable caught) {
 			 
@@ -415,4 +416,48 @@ public class PantallaVistaDeCompra extends Pantalla {
 	public void setVer_marcados(boolean ver_marcados) {
 		this.ver_marcados = ver_marcados;
 	}
+
+	public void set_descuento_coto(int num_compra, float desc) {
+		
+		DatosLista dl= new DatosLista();
+		dl.setId(num_compra);
+		dl.setDesc_coto(desc);
+		proxy_listas.actualizar_lista(dl, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
+						"el descuento a la compra: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+//				Window.Location.reload();
+			}
+			
+		});		
+	}
+	
+	public float get_descuento_coto(final int id_compra) {
+		
+		proxy_listas.buscar_desc_coto(id_compra, new AsyncCallback<Float> (){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());					
+			}
+
+			@Override
+			public void onSuccess(Float result){
+				descuento_coto=result;
+				
+				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto);
+				   panel.add(boton_imprimir);
+				   panel.add(btn_ver_marcados);
+
+				   panel.add(btn_agregar_prod);
+				   panel.add(prod);
+
+				   agregar_handlers();
+			}
+		
+	});
+		return descuento_coto;
+}
 }

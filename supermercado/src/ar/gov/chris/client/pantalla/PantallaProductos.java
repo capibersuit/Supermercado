@@ -83,17 +83,16 @@ public class PantallaProductos extends Pantalla {
 
 		panel.add(btn_productos);
 		agregar_prod= new WidgetAgregarProducto(this, null);	
-		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this);
+		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this, (Float) null);
 		panel.add(productos);
 		agregar_handlers();
 
 	}
 
-	@Override
-	public void agregar_producto(String nombre, String precio) {
-		DatosProducto datos_prod= new DatosProducto();
-		datos_prod.setNombre(nombre);
-		datos_prod.setPrecio(Float.parseFloat(precio));
+	public void agregar_producto(DatosProducto datos_prod) {
+//		DatosProducto datos_prod= new DatosProducto();
+//		datos_prod.setNombre(nombre);
+//		datos_prod.setPrecio(Float.parseFloat(precio));
 			
 		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {

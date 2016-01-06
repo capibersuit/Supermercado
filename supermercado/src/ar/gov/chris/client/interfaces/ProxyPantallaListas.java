@@ -24,4 +24,7 @@ public interface ProxyPantallaListas extends RemoteService {
 
 	int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
+	float buscar_desc_coto(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
+
+
 }

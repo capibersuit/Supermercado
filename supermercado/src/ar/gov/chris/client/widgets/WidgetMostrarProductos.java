@@ -33,7 +33,7 @@ public class WidgetMostrarProductos extends Composite {
 	private Label desc_coto_literal_label;
 	private Label desc_coto_label;
 
-	private Label desc_coto_decripcion= new Label("Ingrese el descuento realizado por coto");
+	private Label desc_coto_decripcion= new Label("Ingrese su descuento y presione tab");
 	private TextBox desc_coto= new TextBox();
 	
 	private Label desc_tarj_literal_label;
@@ -72,9 +72,11 @@ public class WidgetMostrarProductos extends Composite {
 	 * @param titulo Titulo del widget.
 	 */
 	public WidgetMostrarProductos(final LinkedList<DatosProducto> lista_productos, 
-			String titulo, int num_compra, final Pantalla parent) {
+			String titulo, final int num_compra, final Pantalla parent, float descuento_coto) {
 
 		this.parent= parent;
+		this.desc_coto.setText(String.valueOf(descuento_coto));
+		this.desc_coto_float= descuento_coto;
 		principal= new FlowPanel();
 		lista_prod= new FlexTable();
 		titulo_label= new Label(titulo);
@@ -295,6 +297,9 @@ public class WidgetMostrarProductos extends Composite {
 						String total_str= String.valueOf(poner_dos_decimales(total));
 						total_final_label.setText(total_str);
 						lista_prod.setWidget(next_row, 3, total_final_label);
+						
+						((PantallaVistaDeCompra)parent).set_descuento_coto(num_compra, desc_coto_float);
+						
 				}}});
 			
 			
