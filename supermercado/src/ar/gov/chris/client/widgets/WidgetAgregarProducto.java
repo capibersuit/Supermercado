@@ -32,7 +32,7 @@ public class WidgetAgregarProducto extends DialogBox {
 	
 	private boolean es_update;
 	
-	private DatosProducto datos_prod;
+	private DatosProducto datos_prod = new DatosProducto();
 	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
 	 *  o modificar un producto.
@@ -80,30 +80,37 @@ public class WidgetAgregarProducto extends DialogBox {
 	private void agregar_listeners() {
 		agregar.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent arg0) {
-				if(parent instanceof PantallaProductos) {
-					if(es_update) {
-						datos_prod.setNombre(nombre.getText());
-						datos_prod.setPrecio(Float.parseFloat(precio.getText()));
-						((PantallaProductos)parent).actualizar_producto(datos_prod);
-						
-					} else
-					    ((PantallaProductos)parent).agregar_producto(nombre.getText(), precio.getText());
 				
+				if(!precio.getText().matches(" *") && !nombre.getText().matches(" *")) {
+					
+					try {
+				
+				datos_prod.setNombre(nombre.getText().trim());
+				datos_prod.setPrecio(Float.parseFloat(precio.getText()));
+				
+				if(parent instanceof PantallaProductos) {
+
+					if(es_update) {
+						((PantallaProductos)parent).actualizar_producto(datos_prod);
+					} else
+					    ((PantallaProductos)parent).agregar_producto(datos_prod);
 				} else {
 					if(parent instanceof PantallaVistaDeCompra)
 						if(es_update) {
-							datos_prod.setNombre(nombre.getText());
-							datos_prod.setPrecio(Float.parseFloat(precio.getText()));
 							((PantallaVistaDeCompra)parent).actualizar_producto(datos_prod);
-							
-						} else
-							((PantallaVistaDeCompra)parent).agregar_producto(nombre.getText(), precio.getText());
-	
+						} 
 				}
-					
 				hide();
 			}
-		});
+			
+				 catch (NumberFormatException e) {
+					MensajeAlerta.mensaje_error("Error: " + e.getMessage() + ". Ingrese un precio valido.");
+//					throw new GWT_ExcepcionFormatoInvalido(e);
+				}
+			} else {
+				MensajeAlerta.mensaje_error("El nombre y el precio no pueden ser vacios.");
+			}
+		}});
 		cancelar.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent arg0) {
 				hide();
