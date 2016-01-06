@@ -14,6 +14,15 @@ public class Lista extends PersistenteEnBD {
 	String comentario;
 	Date fecha;
 	private boolean ver_marcados;
+	private float pagado;
+
+	public float getPagado() {
+		return pagado;
+	}
+
+	public void setPagado(float pagado) {
+		this.pagado = pagado;
+	}
 
 	public Lista(String comentario, Date fecha) {
 		super();
@@ -51,11 +60,14 @@ public class Lista extends PersistenteEnBD {
 		this.ver_marcados = ver_marcados;
 	}
 
+	
+	
 	@Override
 	public String toString() {
-		return "Lista [comentario=" + comentario + ", fecha=" + fecha + "]";
+		return "Lista [comentario=" + comentario + ", fecha=" + fecha
+				+ ", ver_marcados=" + ver_marcados + ", pagado=" + pagado + "]";
 	}
-	
+
 	public Lista(ConexionBD con, int id) throws ExcepcionBD, ExcepcionNoExiste {
 		 String query= "SELECT * FROM listas WHERE id=" + id;
 		 this.cargar_lista(con, query, "Lista con id " + id);
@@ -74,6 +86,7 @@ public class Lista extends PersistenteEnBD {
 				 this.comentario= rs.getString("comentario");
 				 this.fecha= rs.getDate("fecha");
 				 this.ver_marcados= rs.getBoolean("ver_marcados");
+				 this.pagado= rs.getFloat("pagado");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
 		 } catch(SQLException ex) {
@@ -88,6 +101,7 @@ public class Lista extends PersistenteEnBD {
 		 HashMapSQL lista_campos= new HashMapSQL();
 		 lista_campos.put("comentario", this.comentario);
 		 lista_campos.put("fecha", this.fecha);
+		 lista_campos.put("pagado", this.pagado);
 
 		super.grabar(con, lista_campos, "public.listas", "public.listas", true, "", id, false);
 	}

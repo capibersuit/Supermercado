@@ -1,5 +1,6 @@
 package ar.gov.chris.client.widgets;
 
+import java.util.LinkedList;
 import java.util.Set;
 
 import ar.gov.chris.client.datos.DatosLista;
@@ -53,19 +54,28 @@ public class WidgetMostrarListas extends Composite {
 
 		Label comentario_label= new Label("Comentario");
 		Label fecha_label= new Label("Fecha");
+		
+		Label pagado_label= new Label("Pagado");
+
+		
 		Label id_lista_label= new Label("Ir");
 		Label borrar_label= new Label("B");
 		Label actualizar_label= new Label("A");
 
 		listas.setWidget(0, 0, comentario_label);
 		listas.setWidget(0, 1, fecha_label);
-		listas.setWidget(0, 2, id_lista_label);
-		listas.setWidget(0, 3, borrar_label);
-		listas.setWidget(0, 4, actualizar_label);
+		
+		listas.setWidget(0, 2, pagado_label);
+
+		listas.setWidget(0, 3, id_lista_label);
+		listas.setWidget(0, 4, borrar_label);
+		listas.setWidget(0, 5, actualizar_label);
 
 		next_row= 1; 
+		
+		LinkedList<DatosLista> lista_ordenada= parent.ordenar_listas(lista);
 
-		for (final DatosLista list : lista) {
+		for (final DatosLista list : lista_ordenada) {
 			
 //			this.lista= list;
 			
@@ -114,12 +124,16 @@ public class WidgetMostrarListas extends Composite {
 			});
 //			agregar_handler();
 
-//			CheckBox check_quitar= new CheckBox("Quitar l�nea");
+//			CheckBox check_quitar= new CheckBox("Quitar lineas");
 			listas.setText(next_row, 0, list.getComentario());
 			listas.setText(next_row, 1, list.getFecha().toString());
-			listas.setWidget(next_row, 2, btn_ir);
-			listas.setWidget(next_row, 3, btn_borrar);
-			listas.setWidget(next_row, 4, btn_actualizar);
+			
+			listas.setText(next_row, 2,  String.valueOf(poner_dos_decimales(list.getPagado())));
+
+			
+			listas.setWidget(next_row, 3, btn_ir);
+			listas.setWidget(next_row, 4, btn_borrar);
+			listas.setWidget(next_row, 5, btn_actualizar);
 
 //		lista_lineas.setText(next_row, 2, prod.obtener_marca());
 //		lista_lineas.setText(next_row, 3, prod.obtener_modelo());
@@ -140,6 +154,10 @@ public class WidgetMostrarListas extends Composite {
 		principal.add(titulo_label);
 		principal.add(listas);
 		initWidget(principal);
+	}
+	
+	private float poner_dos_decimales(float precio_total) {
+		return (float) (Math.round(precio_total*100)/100.0d);
 	}
 	
 //	void agregar_handler() {

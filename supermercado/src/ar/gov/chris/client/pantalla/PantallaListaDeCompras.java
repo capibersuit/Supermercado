@@ -1,7 +1,11 @@
 package ar.gov.chris.client.pantalla;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
+import ar.gov.chris.client.clases.FechaListaComparator;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
@@ -154,5 +158,16 @@ public class PantallaListaDeCompras extends Pantalla {
 		});				
 	}
 	
+	public LinkedList<DatosLista> ordenar_listas(Set<DatosLista> lista_compras) {
+		LinkedList<DatosLista> lista_para_ordenar= new LinkedList<DatosLista>();
+		//Obtengo todos los datos de las productos y los agrego a una lista.
+		for (Iterator<DatosLista> iter = lista_compras.iterator(); iter.hasNext();) {
+			DatosLista compra = iter.next();
+			lista_para_ordenar.add(compra);
+		}	
+		//Ordeno por nombre del producto la lista con los datos de los productos que obtuve.
+		Collections.sort(lista_para_ordenar, new FechaListaComparator());
+		return lista_para_ordenar;
+	}
 	
 }

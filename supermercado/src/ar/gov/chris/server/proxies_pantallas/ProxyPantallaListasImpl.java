@@ -76,6 +76,8 @@ ProxyPantallaListas {
 				datos.setComentario(rs.getString("comentario"));
 				datos.setFecha(rs.getDate("fecha"));
 				datos.setVer_marcados(rs.getBoolean("ver_marcados"));
+				datos.setPagado(rs.getFloat("pagado"));
+
 				datos_conj.add(datos);
 			}
 			commit= true;

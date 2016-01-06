@@ -10,7 +10,9 @@ public class DatosLista implements IsSerializable {
 	String comentario;
 	Date fecha;
 	private boolean ver_marcados;
+	private float pagado;
 
+	
 	
 	public boolean isVer_marcados() {
 		return ver_marcados;
@@ -36,6 +38,13 @@ public class DatosLista implements IsSerializable {
 	}
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	
+	public void setPagado(float pagado) {
+		this.pagado = pagado;
+	}
+	public float getPagado() {
+		return pagado;
 	}
 	
 }
