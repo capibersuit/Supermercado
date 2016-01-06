@@ -2,7 +2,7 @@ package ar.gov.chris.client.gwt.excepciones;
 
 public class GWT_ExcepcionYaExiste extends Exception {
 
-	private static final long serialVersionUID = -1585823419621923337L;
+	private static final long serialVersionUID = 1L;
 
 	/** Construye una expeción sin parámetros.
 	 */
