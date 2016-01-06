@@ -55,7 +55,7 @@ public class WidgetMostrarListas extends Composite {
 		Label comentario_label= new Label("Comentario");
 		Label fecha_label= new Label("Fecha");
 		
-		Label pagado_label= new Label("Pagado");
+		Label pagado_literal_label= new Label("Pagado");
 
 		
 		Label id_lista_label= new Label("Ir");
@@ -65,7 +65,7 @@ public class WidgetMostrarListas extends Composite {
 		listas.setWidget(0, 0, comentario_label);
 		listas.setWidget(0, 1, fecha_label);
 		
-		listas.setWidget(0, 2, pagado_label);
+		listas.setWidget(0, 2, pagado_literal_label);
 
 		listas.setWidget(0, 3, id_lista_label);
 		listas.setWidget(0, 4, borrar_label);
@@ -128,7 +128,14 @@ public class WidgetMostrarListas extends Composite {
 			listas.setText(next_row, 0, list.getComentario());
 			listas.setText(next_row, 1, list.getFecha().toString());
 			
-			listas.setText(next_row, 2,  String.valueOf(poner_dos_decimales(list.getPagado())));
+			Label pagado_label =new Label();
+			pagado_label.addStyleName("ComplejidadMedia");
+			
+			String pagado_str= String.valueOf(poner_dos_decimales(list.getPagado()));
+			
+			pagado_label.setText(pagado_str);
+			
+			listas.setWidget(next_row, 2,  pagado_label);
 
 			
 			listas.setWidget(next_row, 3, btn_ir);
