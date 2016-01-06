@@ -29,6 +29,8 @@ CREATE TABLE listas
 )
 
 ALTER TABLE listas ADD ver_marcados boolean
+ALTER TABLE listas ADD pagado double precision
+ALTER TABLE listas ADD desc_coto double precision
 
 
 CREATE TABLE rel_listas_productos
@@ -62,6 +64,8 @@ SELECT	* FROM productos order by id;
 
 
 SELECT	* FROM listas
+
+update listas SET pagado = 1526
 
 SELECT	* FROM rel_listas_productos
 
