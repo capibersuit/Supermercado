@@ -69,8 +69,6 @@ public class PantallaVistaDeCompra extends Pantalla {
 			MensajeAlerta.mensaje_error("Error: id de compra mal formado");
 			History.newItem(Supermercado.PANTALLA_INICIO);
 		}
-		
-			
 		}
 
 	
@@ -102,9 +100,6 @@ public class PantallaVistaDeCompra extends Pantalla {
 					}
 					
 				});
-				
-					
-				
 			}
 			
 		});
@@ -318,38 +313,28 @@ public class PantallaVistaDeCompra extends Pantalla {
 
 
 	private void agregrar_prod_en_lista() {
-		DatosProducto datos_prod= new DatosProducto();
+		final DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(sb_productos.getText());
 		int cant= cant_prod.getSelectedIndex()+1;
-		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, new AsyncCallback<Void>(){
+		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, new AsyncCallback<DatosProducto>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
 						"el producto en la lista: " + caught.getMessage());
 			}
-			public void onSuccess(Void result) {
+			public void onSuccess(DatosProducto result) {
 				
-				Window.Location.reload();
+				prod.insertar_producto("Vista de compra", PantallaVistaDeCompra.this, result, true);
+				prod.insertar_final();
+//				Window.Location.reload();
 				
 //				MensajeAlerta.mensaje_info("Prducto agregago correctamente");
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
-			
+					
 		});
 				
 	}
-	
-	/** Se crea el proxy_carga para comunicarse con el servidor.
-	 */
-	protected void inicializar(){
-		this.proxy_listas= (ProxyPantallaListasAsync)
-		GWT.create(ProxyPantallaListas.class);
-		super.inicializar((ServiceDefTarget) this.proxy_listas, "Listas");
-		this.proxy_prod= (ProxyPantallaProductosAsync)
-		GWT.create(ProxyPantallaProductos.class);
-		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
-	}
-
 
 	public void borra_producto_de_lista(String nombre, int id_compra) {
 		proxy_prod.borra_producto_de_lista(nombre, id_compra, new AsyncCallback<Void>(){
@@ -358,7 +343,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
-				Window.Location.reload();
+//				Window.Location.reload();
 
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
@@ -460,4 +445,15 @@ public class PantallaVistaDeCompra extends Pantalla {
 	});
 		return descuento_coto;
 }
+	
+	/** Se crea el proxy_carga para comunicarse con el servidor.
+	 */
+	protected void inicializar(){
+		this.proxy_listas= (ProxyPantallaListasAsync)
+		GWT.create(ProxyPantallaListas.class);
+		super.inicializar((ServiceDefTarget) this.proxy_listas, "Listas");
+		this.proxy_prod= (ProxyPantallaProductosAsync)
+		GWT.create(ProxyPantallaProductos.class);
+		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
+	}
 }

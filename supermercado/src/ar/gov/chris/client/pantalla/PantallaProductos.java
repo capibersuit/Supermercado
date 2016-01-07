@@ -89,18 +89,21 @@ public class PantallaProductos extends Pantalla {
 
 	}
 
-	public void agregar_producto(DatosProducto datos_prod) {
+	public void agregar_producto(final DatosProducto datos_producto) {
 //		DatosProducto datos_prod= new DatosProducto();
 //		datos_prod.setNombre(nombre);
 //		datos_prod.setPrecio(Float.parseFloat(precio));
 			
-		proxy_prod.agregar_producto(datos_prod, new AsyncCallback<Void>(){
+		proxy_prod.agregar_producto(datos_producto, new AsyncCallback<DatosProducto>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
-			public void onSuccess(Void result) {
-				Window.Location.reload();
+			public void onSuccess(DatosProducto result) {
+				agregar_prod= new WidgetAgregarProducto(PantallaProductos.this, null);
+				productos.insertar_producto("Lista de productos", PantallaProductos.this, result, true);
+
+//				Window.Location.reload();
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
@@ -127,7 +130,7 @@ public class PantallaProductos extends Pantalla {
 		});		
 	}
 	
-	public void borrar_producto(String nombre) {
+	public void borrar_producto(final String nombre) {
 		
 		proxy_prod.borrar_producto(nombre, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
@@ -135,7 +138,9 @@ public class PantallaProductos extends Pantalla {
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
-				Window.Location.reload();
+				
+				productos.remover_producto(nombre);
+//				Window.Location.reload();
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}

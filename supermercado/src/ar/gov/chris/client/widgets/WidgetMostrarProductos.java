@@ -52,13 +52,13 @@ public class WidgetMostrarProductos extends Composite {
 	//	private DatosProducto prod_actual;
 
 
-	private PushButton btn_borrar;
-	private PushButton btn_actualizar;
-	private PushButton btn_marcar;
+//	private PushButton btn_borrar;
+//	private PushButton btn_actualizar;
+//	private PushButton btn_marcar;
 
 
 	private WidgetConfirmar confirmar_borrado;
-	private WidgetAgregarProducto actualizar_prod;
+//	private WidgetAgregarProducto actualizar_prod;
 	protected float desc_coto_float;
 	
 	private float total=0;
@@ -145,118 +145,74 @@ public class WidgetMostrarProductos extends Composite {
 		for (final DatosProducto prod : lista_productos) {
 			next_col=0;
 
-			btn_borrar= new PushButton("Borrar");
-			btn_actualizar= new PushButton("Actualizar");
-			btn_marcar= new PushButton("Marcar");
+//			btn_borrar= new PushButton("Borrar");
+//			btn_actualizar= new PushButton("Actualizar");
+//			btn_marcar= new PushButton("Marcar");
+//
+//
+//			final ClickHandler handler = new ClickHandler(){
+//				public void onClick(ClickEvent arg0) {
+//					if(parent instanceof PantallaProductos) {
+//						int fila_a_borrar= next_row;
+//						lista_prod.removeRow(fila_a_borrar);
+//						((PantallaProductos)parent).borrar_producto(prod.getNombre());
+//						
+//					} else if(parent instanceof PantallaVistaDeCompra)
+//						((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod.getNombre(), ((PantallaVistaDeCompra)parent).getId_compra());
+//					//					hide();
+//				}
+//			};
+//
+//			btn_borrar.addClickHandler(new ClickHandler() {
+//
+//				@Override
+//				public void onClick(ClickEvent event) {
+//					//				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod, "Esta seguro que quiere borrar el producto", );
+//					//				confirmar_borrado.show();
+//					//****
+//					confirmar_borrado= new WidgetConfirmar(parent, "Esta seguro que quiere borrar el producto", handler);
+//					confirmar_borrado.show();
+//					//****
+//				}
+//			});
+//
+//			btn_actualizar.addClickHandler(new ClickHandler() {
+//
+//				@Override
+//				public void onClick(ClickEvent event) {
+//					actualizar_prod= new WidgetAgregarProducto(parent, prod);
+//					actualizar_prod.show();
+//				}
+//			});
+//
+//			
+//			final int row_a_marcar= next_row;
+//			
+//			ClickHandler handler_marcar= new ClickHandler() {
+//
+//				@Override
+//				public void onClick(ClickEvent event) {
+//					boolean marcada= prod.isEsta_marcada();
+//
+//					if(marcada)
+//						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ContenidoTablas");
+//					else
+//						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
+//					prod.setEsta_marcada(!marcada);
+//					((PantallaVistaDeCompra)parent).actualizar_producto(prod);
+//					
+//					
+//				}
+//			};
+//
+//			btn_marcar.addClickHandler(handler_marcar);
+//			
+//			//			prod_actual= prod;
+//			//			agregar_handler();
 
-
-			final ClickHandler handler = new ClickHandler(){
-				public void onClick(ClickEvent arg0) {
-					if(parent instanceof PantallaProductos)
-						((PantallaProductos)parent).borrar_producto(prod.getNombre());
-					else if(parent instanceof PantallaVistaDeCompra)
-						((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod.getNombre(), ((PantallaVistaDeCompra)parent).getId_compra());
-					//					hide();
-				}
-			};
-
-			btn_borrar.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					//				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod, "Esta seguro que quiere borrar el producto", );
-					//				confirmar_borrado.show();
-					//****
-					confirmar_borrado= new WidgetConfirmar(parent, "Esta seguro que quiere borrar el producto", handler);
-					confirmar_borrado.show();
-					//****
-				}
-			});
-
-			btn_actualizar.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					actualizar_prod= new WidgetAgregarProducto(parent, prod);
-					actualizar_prod.show();
-				}
-			});
 
 			
-			final int row_a_marcar= next_row;
-			
-			ClickHandler handler_marcar= new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					boolean marcada= prod.isEsta_marcada();
-
-					if(marcada)
-						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ContenidoTablas");
-					else
-						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
-					prod.setEsta_marcada(!marcada);
-					((PantallaVistaDeCompra)parent).actualizar_producto(prod);
-					
-					
-				}
-			};
-
-			btn_marcar.addClickHandler(handler_marcar);
-			
-			//			prod_actual= prod;
-			//			agregar_handler();
-
-
-			
-			lista_prod.setText(next_row, next_col, prod.getNombre());
-			next_col++;
-			
-			float precio= prod.getPrecio();
-			
-			precio = poner_dos_decimales(precio);
-			
-			subtotal_compra+= precio;
-			
-			lista_prod.setText(next_row, next_col, String.valueOf(precio));
-			next_col++;
-			
-			if(titulo.equalsIgnoreCase("Vista de compra")) {
-				lista_prod.setText(next_row, next_col, ((prod.getCantidad()!=0) ? String.valueOf(prod.getCantidad()) : "NA"));
-				next_col++;
-
-				float precio_total= prod.getPrecio() * prod.getCantidad();
-				
-//				precio_total= (float) (Math.round(precio_total*100)/100.0d);
-				
-				lista_prod.setText(next_row, next_col, String.valueOf(poner_dos_decimales(precio_total)));
-				next_col++;
-			}
-			lista_prod.setWidget(next_row, next_col, btn_borrar);
-			next_col++;
-
-			lista_prod.setWidget(next_row, next_col, btn_actualizar);
-			next_col++;
-			
-			if(titulo.equalsIgnoreCase("Vista de compra"))
-				lista_prod.setWidget(next_row, next_col, btn_marcar);
-
-
-			//		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());
-			//		if (lista.size() > 1) {
-			//			check_quitar.setFormValue(linea.obtener_nro_cuenta() + " " +
-			//					linea.obtener_descripcion_categoria_accesorio() + " (" +linea.obtener_id() + ")");
-			//			lista_lineas.setWidget(next_row, 5, check_quitar);
-			//		}
-			
-			if(prod.isEsta_marcada()) {
-				if(((PantallaVistaDeCompra)parent).isVer_marcados())
-					lista_prod.getRowFormatter().setStyleName(next_row, "ComplejidadMedia");
-				else
-					lista_prod.getRowFormatter().setVisible(next_row, false);
-			} else {
-				lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
-			}
+			insertar_producto(titulo, parent, prod, false);
 			next_row++;
 		}
 		
@@ -303,39 +259,7 @@ public class WidgetMostrarProductos extends Composite {
 				}}});
 			
 			
-			lista_prod.setWidget(next_row, 2, subtotal_literal_label);
-			String subtotal_compra_str= String.valueOf(poner_dos_decimales(subtotal_compra));
-			subtotal_compra_label.setText(subtotal_compra_str);
-			lista_prod.setWidget(next_row, 3, subtotal_compra_label);
-			next_row++;
-
-			lista_prod.setWidget(next_row, 2, desc_coto_literal_label);
-			String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
-			desc_coto_label.setText(desc_coto_str);
-			lista_prod.setWidget(next_row, 3, desc_coto_label);
-			next_row++;
-			
-			float tot_aux= (subtotal_compra-desc_coto_float);
-			total= tot_aux;
-			float desc_tarj=tot_aux/100*20;
-			total= total -(desc_tarj);
-
-			lista_prod.setWidget(next_row, 2, desc_tarj_literal_label);
-			String desc_tarj_str= String.valueOf(poner_dos_decimales(desc_tarj));
-			desc_tarj_label.setText(desc_tarj_str);
-			lista_prod.setWidget(next_row, 3, desc_tarj_label);
-			next_row++;
-
-//			int desc_coto_int= Integer.parseInt(desc_coto.getText());
-			
-//			float tot_aux= (subtotal_compra-desc_coto_float);
-//			total= tot_aux;
-//			total= total - (tot_aux/100*20);
-						
-			lista_prod.setWidget(next_row, 2, total_literal_label);
-			String total_str= String.valueOf(poner_dos_decimales(total));
-			total_final_label.setText(total_str);
-			lista_prod.setWidget(next_row, 3, total_final_label);
+			insertar_final();
 			
 		}
 
@@ -353,8 +277,209 @@ public class WidgetMostrarProductos extends Composite {
 
 
 
+	public void insertar_final() {
+		
+		if(parent instanceof PantallaVistaDeCompra)
+			next_row++;
+		
+		lista_prod.setWidget(next_row, 2, subtotal_literal_label);
+		String subtotal_compra_str= String.valueOf(poner_dos_decimales(subtotal_compra));
+		subtotal_compra_label.setText(subtotal_compra_str);
+		lista_prod.setWidget(next_row, 3, subtotal_compra_label);
+		next_row++;
+
+		lista_prod.setWidget(next_row, 2, desc_coto_literal_label);
+		String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
+		desc_coto_label.setText(desc_coto_str);
+		lista_prod.setWidget(next_row, 3, desc_coto_label);
+		next_row++;
+		
+		float tot_aux= (subtotal_compra-desc_coto_float);
+		total= tot_aux;
+		float desc_tarj=tot_aux/100*20;
+		total= total -(desc_tarj);
+
+		lista_prod.setWidget(next_row, 2, desc_tarj_literal_label);
+		String desc_tarj_str= String.valueOf(poner_dos_decimales(desc_tarj));
+		desc_tarj_label.setText(desc_tarj_str);
+		lista_prod.setWidget(next_row, 3, desc_tarj_label);
+		next_row++;
+
+//			int desc_coto_int= Integer.parseInt(desc_coto.getText());
+		
+//			float tot_aux= (subtotal_compra-desc_coto_float);
+//			total= tot_aux;
+//			total= total - (tot_aux/100*20);
+					
+		lista_prod.setWidget(next_row, 2, total_literal_label);
+		String total_str= String.valueOf(poner_dos_decimales(total));
+		total_final_label.setText(total_str);
+		lista_prod.setWidget(next_row, 3, total_final_label);
+	}
+
+
+
+	public void insertar_producto(String titulo, final Pantalla parent,
+			final DatosProducto prod, boolean resetear_coordenadas) {
+		
+		if(resetear_coordenadas) {
+			
+//		next_row= 1;
+			if(titulo.equalsIgnoreCase("Vista de compra"))
+				next_row = next_row-3;
+			else
+			next_row++;
+		next_col= 0;
+		}
+		//**********************
+		
+		PushButton btn_borrar;
+		PushButton btn_actualizar;
+		PushButton btn_marcar;
+		
+		btn_borrar= new PushButton("Borrar");
+		btn_actualizar= new PushButton("Actualizar");
+		btn_marcar= new PushButton("Marcar");
+
+
+		final ClickHandler handler = new ClickHandler(){
+			public void onClick(ClickEvent arg0) {
+				if(parent instanceof PantallaProductos) {
+//					int fila_a_borrar= next_row;
+//					lista_prod.removeRow(fila_a_borrar);
+					((PantallaProductos)parent).borrar_producto(prod.getNombre());
+					
+				} else if(parent instanceof PantallaVistaDeCompra)
+					((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod.getNombre(), ((PantallaVistaDeCompra)parent).getId_compra());
+				//					hide();
+			}
+		};
+
+		btn_borrar.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				//				confirmar_borrado= new WidgetConfirmar(parent, /*prod_actual*/prod, "Esta seguro que quiere borrar el producto", );
+				//				confirmar_borrado.show();
+				//****
+				confirmar_borrado= new WidgetConfirmar(parent, "Esta seguro que quiere borrar el producto", handler);
+				confirmar_borrado.show();
+				//****
+			}
+		});
+
+		btn_actualizar.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				WidgetAgregarProducto actualizar_prod;
+				actualizar_prod= new WidgetAgregarProducto(parent, prod);
+				actualizar_prod.show();
+			}
+		});
+
+		
+		final int row_a_marcar= next_row;
+		
+		ClickHandler handler_marcar= new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				boolean marcada= prod.isEsta_marcada();
+
+				if(marcada)
+					lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ContenidoTablas");
+				else
+					lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
+				prod.setEsta_marcada(!marcada);
+				((PantallaVistaDeCompra)parent).actualizar_producto(prod);
+				
+				
+			}
+		};
+
+		btn_marcar.addClickHandler(handler_marcar);
+		
+		//			prod_actual= prod;
+		//			agregar_handler();
+		
+		
+		//*************************
+		
+		lista_prod.setText(next_row, next_col, prod.getNombre());
+		next_col++;
+		
+		float precio= prod.getPrecio();
+		
+		precio = poner_dos_decimales(precio);
+		
+		subtotal_compra+= precio;
+		
+		lista_prod.setText(next_row, next_col, String.valueOf(precio));
+		next_col++;
+		
+		if(titulo.equalsIgnoreCase("Vista de compra")) {
+			lista_prod.setText(next_row, next_col, ((prod.getCantidad()!=0) ? String.valueOf(prod.getCantidad()) : "NA"));
+			next_col++;
+
+			float precio_total= prod.getPrecio() * prod.getCantidad();
+			
+//				precio_total= (float) (Math.round(precio_total*100)/100.0d);
+			
+			lista_prod.setText(next_row, next_col, String.valueOf(poner_dos_decimales(precio_total)));
+			next_col++;
+		}
+		lista_prod.setWidget(next_row, next_col, btn_borrar);
+		next_col++;
+
+		lista_prod.setWidget(next_row, next_col, btn_actualizar);
+		next_col++;
+		
+		if(titulo.equalsIgnoreCase("Vista de compra"))
+			lista_prod.setWidget(next_row, next_col, btn_marcar);
+
+
+		//		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());
+		//		if (lista.size() > 1) {
+		//			check_quitar.setFormValue(linea.obtener_nro_cuenta() + " " +
+		//					linea.obtener_descripcion_categoria_accesorio() + " (" +linea.obtener_id() + ")");
+		//			lista_lineas.setWidget(next_row, 5, check_quitar);
+		//		}
+		
+		if(prod.isEsta_marcada()) {
+			if(((PantallaVistaDeCompra)parent).isVer_marcados())
+				lista_prod.getRowFormatter().setStyleName(next_row, "ComplejidadMedia");
+			else
+				lista_prod.getRowFormatter().setVisible(next_row, false);
+		} else {
+			lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
+		}
+	}
+
+
+
 	private float poner_dos_decimales(float precio_total) {
 		return (float) (Math.round(precio_total*100)/100.0d);
+	}
+
+
+
+	public void remover_producto(String nombre) {
+		
+		int filas_de_la_lista= lista_prod.getRowCount();
+		
+		for(int i = 102; i < filas_de_la_lista; i++) {
+		
+			String nombre_prod= lista_prod.getText(i, 0);
+			
+			int fila = 0;
+			
+			if(nombre.equalsIgnoreCase(nombre_prod)) {
+				fila= i; 
+				lista_prod.removeRow(fila);
+				break;
+			}
+		}
 	}
 
 }

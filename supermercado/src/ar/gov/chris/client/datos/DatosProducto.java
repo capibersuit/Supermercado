@@ -8,6 +8,11 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	String nombre;
 	//String descripcion;
 	float precio;
+	
+	public DatosProducto() {
+		
+	}
+	
 	int cantidad;
 	boolean esta_marcada;
 	

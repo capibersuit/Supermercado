@@ -90,6 +90,7 @@ public class WidgetConfirmar extends DialogBox {
 			 public void onKeyPress(KeyPressEvent event) {
 			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
 				  aceptar.click();
+			  hide();
 			 }
 		 });
 	}

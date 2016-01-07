@@ -42,7 +42,7 @@ ProxyPantallaProductos {
 	}
 
 	
-	public void agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD, GWT_ExcepcionYaExiste{
+	public DatosProducto agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD, GWT_ExcepcionYaExiste{
 		
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;
@@ -52,6 +52,7 @@ ProxyPantallaProductos {
 			
 			Producto prod= new Producto(datos_prod.getNombre(), datos_prod.getPrecio());
 			prod.grabar(con, true);
+			datos_prod.setId(prod.getId());
 			commit= true;
 		
 		} catch (ExcepcionBD e) {
@@ -61,19 +62,18 @@ ProxyPantallaProductos {
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
+		return datos_prod;
 		
 		
 	}
 	
 	@Override
-	public void borrar_producto(String nombre) throws GWT_ExcepcionBD {
+	public void borrar_producto(String nombre) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;
 
 		try {
-			
-			
 			Producto prod= new Producto(con, nombre);
 			prod.borrar(con);
 			commit= true;
@@ -82,16 +82,16 @@ ProxyPantallaProductos {
 			throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionNoExiste(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}		
 	}
 	
 	@Override
-	public void borra_producto_de_lista(String nombre, int id_compra) throws GWT_ExcepcionBD {
+	public void borra_producto_de_lista(String nombre, int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;	
-		
 		
 			try {
 				Producto prod= new Producto(con, nombre);
@@ -103,12 +103,10 @@ ProxyPantallaProductos {
 			} catch (ExcepcionBD e) {
 				throw new GWT_ExcepcionBD(e);
 			} catch (ExcepcionNoExiste e) {
-				e.printStackTrace();
+				throw new GWT_ExcepcionNoExiste(e);
 			}finally {
 				this.cerrar_transaccion(con, commit);
 			}
-		
-
 	}
 
 
@@ -136,14 +134,11 @@ ProxyPantallaProductos {
 			throw new GWT_ExcepcionBD(e);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
-
-		
-		
 		return datos_conj;
 	}
 	
@@ -153,10 +148,7 @@ ProxyPantallaProductos {
 		ConexionBD con= this.obtener_transaccion();
 		
 		boolean commit= true;	
-
-
 //		Lista l = new Lista(comentario, fecha);
-		
 		try {
 			ResultSet rs= con.select("SELECT * FROM rel_listas_productos where id_compra = " + id_lista);
 			
@@ -176,22 +168,19 @@ ProxyPantallaProductos {
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionNoExiste e) {
 			throw new GWT_ExcepcionNoExiste(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
-
-		
-		
 		return datos_conj;
 	}
 
 
 	@Override
-	public void agregar_producto_a_lista(DatosProducto datos_prod, int id_compra, int cant) throws GWT_ExcepcionBD {
+	public DatosProducto agregar_producto_a_lista(DatosProducto datos_prod, int id_compra, int cant) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
@@ -202,22 +191,25 @@ ProxyPantallaProductos {
 			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, precio, esta_marcada) VALUES (" +
 			id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() +"," +datos_prod.isEsta_marcada() + ")");
 			
+			datos_prod.setId(id_prod);
+			datos_prod.setPrecio(prod.getPrecio());
+			datos_prod.setCantidad(cant);
+			
 			commit= true;
 
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
 		}catch (ExcepcionNoExiste e) {
-			e.printStackTrace();
+			throw new GWT_ExcepcionNoExiste(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
-		
-		
+		return datos_prod;
 	}
 
 
 	@Override
-	public void actualizar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD {
+	public void actualizar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
@@ -234,13 +226,15 @@ ProxyPantallaProductos {
 			throw new GWT_ExcepcionBD(e);
 		}catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionNoExiste(e);
+
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}		
 	}
 	
 	@Override
-	public void actualizar_producto_a_lista(DatosProducto datos_prod, String id_compra) throws GWT_ExcepcionBD {
+	public void actualizar_producto_a_lista(DatosProducto datos_prod, String id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
@@ -259,6 +253,7 @@ ProxyPantallaProductos {
 			throw new GWT_ExcepcionBD(e);
 		}catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
+			throw new GWT_ExcepcionNoExiste(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
@@ -291,10 +286,4 @@ ProxyPantallaProductos {
 			e.printStackTrace();
 		}
 	}
-
-
-
-
-	
-
 }
