@@ -11,7 +11,7 @@ import ar.gov.chris.server.excepciones.ExcepcionBug;
 public class Sanitizador {
 	/** Caracteres permitidos en todo tipo de expresiï¿½n.
 	 */
-	static final public String PERMITIDOS= "a-zA-Z0-9_@.: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¡!ï¿½?\\(\\)\n\r\t\\-\\+/\\\\";
+	static final public String PERMITIDOS= "a-zA-Z0-9_@.: ñÑáéíóúÁÉÍÓÚ¡!¿?\\(\\)\n\r\t\\-\\+/\\\\"; // áéíóú
 	/** Caracteres extra permitido en SQL.
 	 */
 	static final public String PERMITIDOS_SQL= ",;<>\\|";
