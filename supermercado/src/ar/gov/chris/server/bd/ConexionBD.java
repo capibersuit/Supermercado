@@ -319,7 +319,7 @@ public class ConexionBD {
 	static public String generar_string_SQL(HashMapSQL lista_campos, String tabla,
 			boolean nuevo, int id, String nombre_atr_id, String condicion,
 			boolean es_select) {
-	 
+	 System.out.println("Estoy entrando al metodo GENERAR STRING SQL!!! ");
 			
 //	  Si lo quiero grabar con un id en particular, lo agrego a la lista de campos
 	 if (id!=0 && nuevo)
