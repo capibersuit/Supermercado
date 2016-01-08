@@ -162,8 +162,13 @@ ProxyPantallaListas {
 			String query= "UPDATE listas SET ";
 			if(comen != null && fech != null)
 				query+=	"comentario= '"+ comen + "', fecha= '"+ fech +"',";
-			query+=	" ver_marcados = "+ ver_marcad + ", pagado = "+ pagado + ", desc_coto = "+ desc_coto +
-					" WHERE id = " + id_lista;
+			
+			query+=	" ver_marcados = "+ ver_marcad;
+			if(pagado !=0)
+				query+=	", pagado = "+ pagado; 
+			if(desc_coto !=0)	
+				query+= ", desc_coto = "+ desc_coto;
+			query+= " WHERE id = " + id_lista;
 			
 //			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
 //			+ prod.getNombre() + " WHERE id = " + id_prod);
@@ -174,7 +179,7 @@ ProxyPantallaListas {
 			e.printStackTrace();
 			throw new GWT_ExcepcionBD(e);
 
-		}catch (ExcepcionNoExiste e) {
+		} catch (ExcepcionNoExiste e) {
 			e.printStackTrace();
 			throw new GWT_ExcepcionBD(e);
 
