@@ -12,6 +12,16 @@ import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 public class Lista extends PersistenteEnBD {
 	
 	String comentario;
+	Date fecha;
+	private boolean ver_marcados;
+	private float pagado;
+	private float desc_coto;
+	
+	
+	public Lista() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	public float getDesc_coto() {
 		return desc_coto;
@@ -21,10 +31,7 @@ public class Lista extends PersistenteEnBD {
 		this.desc_coto = desc_coto;
 	}
 
-	Date fecha;
-	private boolean ver_marcados;
-	private float pagado;
-	private float desc_coto;
+
 	
 	public float getPagado() {
 		return pagado;
@@ -121,7 +128,4 @@ public class Lista extends PersistenteEnBD {
 		con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = "+ this.id);		
 		con.ejecutar_sql("DELETE FROM listas WHERE id = "+ this.id);		
 	}
-	
-	
-
 }
