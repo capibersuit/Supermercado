@@ -108,6 +108,8 @@ public class WidgetMostrarProductos extends Composite {
 		total_final_label.addStyleName("LabelDistinguido");
 		
 
+		Label id_prod_label= new Label("ID");
+
 		Label nombre_prod_label= new Label("Producto");
 		Label precio_label= new Label("Precio");
 		Label cant_label= new Label("Cantidad");
@@ -116,6 +118,9 @@ public class WidgetMostrarProductos extends Composite {
 		Label actualizar_label= new Label("Actualizar");
 		Label marcar_label= new Label("Marcar");
 		
+		
+		lista_prod.setWidget(0, next_col, id_prod_label);
+		next_col++;
 		lista_prod.setWidget(0, next_col, nombre_prod_label);
 		next_col++;
 		lista_prod.setWidget(0, next_col, precio_label);
@@ -406,6 +411,9 @@ public class WidgetMostrarProductos extends Composite {
 		
 		//*************************
 		
+		lista_prod.setText(next_row, next_col, String.valueOf(prod.getId()));
+		next_col++;
+		
 		lista_prod.setText(next_row, next_col, prod.getNombre());
 		next_col++;
 		
@@ -413,7 +421,7 @@ public class WidgetMostrarProductos extends Composite {
 		
 		precio = poner_dos_decimales(precio);
 		
-		subtotal_compra+= precio;
+//		subtotal_compra+= precio;
 		
 		lista_prod.setText(next_row, next_col, String.valueOf(precio));
 		next_col++;
@@ -423,6 +431,7 @@ public class WidgetMostrarProductos extends Composite {
 			next_col++;
 
 			float precio_total= prod.getPrecio() * prod.getCantidad();
+			subtotal_compra+= precio_total;
 			
 //				precio_total= (float) (Math.round(precio_total*100)/100.0d);
 			
@@ -468,18 +477,69 @@ public class WidgetMostrarProductos extends Composite {
 		
 		int filas_de_la_lista= lista_prod.getRowCount();
 		
-		for(int i = 102; i < filas_de_la_lista; i++) {
+		for(int i = 1; i < filas_de_la_lista; i++) {
 		
-			String nombre_prod= lista_prod.getText(i, 0);
+			String nombre_prod= lista_prod.getText(i, 1);
 			
 			int fila = 0;
 			
 			if(nombre.equalsIgnoreCase(nombre_prod)) {
 				fila= i; 
+				try {
 				lista_prod.removeRow(fila);
+				} catch (IndexOutOfBoundsException e) {
+					MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+							"el producto: " + e.getMessage());
+				}
 				break;
 			}
 		}
+	}
+	
+public void actualizar_producto(DatosProducto datos) {
+		
+		int filas_de_la_lista= lista_prod.getRowCount();
+		
+		for(int i = 1; i < filas_de_la_lista; i++) {
+		
+			String id_prod= lista_prod.getText(i, 0);
+			
+			int fila = 0;
+			int col = 1;
+
+			if(datos.getId()==(Integer.parseInt(id_prod))) {
+				fila= i; 
+				
+				lista_prod.setText(fila, col, datos.getNombre());
+				col++;
+				
+				float precio= datos.getPrecio();
+				
+				precio = poner_dos_decimales(precio);
+				
+				subtotal_compra+= precio;
+				
+				lista_prod.setText(fila, col, String.valueOf(precio));
+				col++;
+				
+				if(parent instanceof PantallaVistaDeCompra) { 
+
+//				if(titulo.equalsIgnoreCase("Vista de compra")) {
+					lista_prod.setText(fila, col, ((datos.getCantidad()!=0) ? String.valueOf(datos.getCantidad()) : "NA"));
+					col++;
+
+					float precio_total= datos.getPrecio() * datos.getCantidad();
+					
+//						precio_total= (float) (Math.round(precio_total*100)/100.0d);
+					
+					lista_prod.setText(fila, col, String.valueOf(poner_dos_decimales(precio_total)));
+					col++;
+								
+				break;
+				}
+			}
+		}
+//		insertar_final();
 	}
 
 }

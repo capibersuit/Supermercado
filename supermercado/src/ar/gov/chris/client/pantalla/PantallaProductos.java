@@ -111,7 +111,7 @@ public class PantallaProductos extends Pantalla {
 		});
 	}
 	
-	public void actualizar_producto(DatosProducto datos_prod) {
+	public void actualizar_producto(final DatosProducto datos_prod) {
 //		DatosProducto datos_prod= new DatosProducto();
 //		datos_prod.setNombre(nombre);
 //		datos_prod.setPrecio(Float.parseFloat(precio));
@@ -122,7 +122,11 @@ public class PantallaProductos extends Pantalla {
 						"el producto: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
-				Window.Location.reload();
+				
+				productos.actualizar_producto(datos_prod);
+				
+//				Window.Location.reload();
+//				
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}

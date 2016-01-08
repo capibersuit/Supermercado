@@ -327,6 +327,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 				prod.insertar_final();
 //				Window.Location.reload();
 				
+				sb_productos.setText("");
 //				MensajeAlerta.mensaje_info("Prducto agregago correctamente");
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
@@ -336,7 +337,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 				
 	}
 
-	public void borra_producto_de_lista(String nombre, int id_compra) {
+	public void borra_producto_de_lista(final String nombre, int id_compra) {
 		proxy_prod.borra_producto_de_lista(nombre, id_compra, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar borrar " +
@@ -345,6 +346,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 			public void onSuccess(Void result) {
 //				Window.Location.reload();
 
+				prod.remover_producto(nombre);
+				
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
@@ -353,7 +356,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 	}
 
 
-	public void actualizar_producto(DatosProducto datos_prod) {
+	public void actualizar_producto(final DatosProducto datos_prod) {
 
 		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
@@ -361,6 +364,9 @@ public class PantallaVistaDeCompra extends Pantalla {
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
+				
+				prod.actualizar_producto(datos_prod);
+
 //				Window.Location.reload();
 			}
 			
