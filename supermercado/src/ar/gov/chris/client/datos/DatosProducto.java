@@ -8,26 +8,14 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	String nombre;
 	//String descripcion;
 	float precio;
+	int cantidad;
+	boolean esta_marcada;
 	
 	public DatosProducto() {
 		
 	}
+			
 	
-	int cantidad;
-	boolean esta_marcada;
-	
-	public boolean isEsta_marcada() {
-		return esta_marcada;
-	}
-	public void setEsta_marcada(boolean esta_marcada) {
-		this.esta_marcada = esta_marcada;
-	}
-	public int getCantidad() {
-		return cantidad;
-	}
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
 	public int getId() {
 		return id;
 	}
@@ -45,6 +33,18 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	}
 	public void setPrecio(float precio) {
 		this.precio = precio;
+	}
+	public boolean isEsta_marcada() {
+		return esta_marcada;
+	}
+	public void setEsta_marcada(boolean esta_marcada) {
+		this.esta_marcada = esta_marcada;
+	}
+	public int getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 	@Override
 	public String toString() {
