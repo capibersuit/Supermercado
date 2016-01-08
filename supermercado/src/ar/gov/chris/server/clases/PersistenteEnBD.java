@@ -3,8 +3,8 @@ package ar.gov.chris.server.clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.HashMapSQL;
@@ -12,9 +12,9 @@ import ar.gov.chris.server.excepciones.*;
 
 public abstract class PersistenteEnBD {
 	
-	private static final String SE_MODIFICO_EN= "Se modific� en ";
-	private static final String SE_QUITO_DE= "Se quit� de ";
-	private static final String SE_AGREGO_A= "Se agreg� a ";
+//	private static final String SE_MODIFICO_EN= "Se modific� en ";
+//	private static final String SE_QUITO_DE= "Se quit� de ";
+//	private static final String SE_AGREGO_A= "Se agreg� a ";
 	/* El id num�rico del objeto, en la BD. 
 	 * Debe ser la primary key del objeto en la BD. */
 	protected int id;
@@ -22,20 +22,20 @@ public abstract class PersistenteEnBD {
 	protected String nombre_atributo_id= "id";
 	/* vivo indica que el objeto no est� borrado en la base.
 	 */
-	private boolean vivo= true;
+//	private boolean vivo= true;
 	/** es_nuevo significa que no existe en la base.
 	 */
-	private boolean es_nuevo= true;
+//	private boolean es_nuevo= true;
 	/** esta_modificado significa que la copia en memoria
 	 * difiere de lo que figura en la base.
 	 */
-	private boolean esta_modificado= false;
+//	private boolean esta_modificado= false;
 	/** En este Map se guardan los valores de los campos
 	 * y las modificaciones que se les van haciendo de manera
 	 * que al grabar se pueda saber qu� cambi�.
 	 */
-	private Map<String, Object> campos_modificados=
-		new HashMap<String, Object>();
+//	private Map<String, Object> campos_modificados=
+//		new HashMap<String, Object>();
 
 	/** Constructor sin par�metros.
 	 */
