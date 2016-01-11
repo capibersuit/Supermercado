@@ -474,27 +474,28 @@ public class WidgetMostrarProductos extends Composite {
 
 
 	public void remover_producto(String nombre) {
-		
-		int filas_de_la_lista= lista_prod.getRowCount();
-		
+
+		int filas_de_la_lista= lista_prod.getRowCount()-5;
+
 		for(int i = 1; i < filas_de_la_lista; i++) {
-		
-			String nombre_prod= lista_prod.getText(i, 1);
-			
-			int fila = 0;
-			
-			if(nombre.equalsIgnoreCase(nombre_prod)) {
-				fila= i; 
-				try {
-				lista_prod.removeRow(fila);
-				} catch (IndexOutOfBoundsException e) {
-					MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
-							"el producto: " + e.getMessage());
+
+			try {
+				String nombre_prod= lista_prod.getText(i, 1);
+				int fila = 0;
+				if(nombre.equalsIgnoreCase(nombre_prod)) {
+					fila= i; 
+
+					lista_prod.removeRow(fila);
+					break;
 				}
+			} catch (IndexOutOfBoundsException e) {
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+						"el producto: " + e.getMessage());
 				break;
 			}
 		}
 	}
+	
 	
 public void actualizar_producto(DatosProducto datos) {
 		
