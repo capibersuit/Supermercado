@@ -47,6 +47,7 @@ public class WidgetMostrarProductos extends Composite {
 	private int next_col=0;
 	private Pantalla parent;
 
+	private static int CANT_FILAS_FINAL= 3;
 
 
 	//	private DatosProducto prod_actual;
@@ -63,6 +64,7 @@ public class WidgetMostrarProductos extends Composite {
 	
 	private float total=0;
 	float subtotal_compra=0;
+	private String nombre_prod_ant="";
 	
 
 
@@ -146,8 +148,12 @@ public class WidgetMostrarProductos extends Composite {
 			lista_prod.setWidget(0, next_col, marcar_label);
 
 		next_row= 1; 
-		
+		int tamanio_lista= lista_productos.size();
+		int i=1;
 		for (final DatosProducto prod : lista_productos) {
+			
+//		for (final DatosProducto prod : lista_productos) {
+
 			next_col=0;
 
 //			btn_borrar= new PushButton("Borrar");
@@ -218,7 +224,11 @@ public class WidgetMostrarProductos extends Composite {
 
 			
 			insertar_producto(titulo, parent, prod, false);
-			next_row++;
+			//Esto es para que no me sume una fila mas al final.
+			
+			if(i < tamanio_lista)
+				next_row++;
+			i++;
 		}
 		
 		if(titulo.equalsIgnoreCase("Vista de compra")) {
@@ -264,7 +274,7 @@ public class WidgetMostrarProductos extends Composite {
 				}}});
 			
 			
-			insertar_final();
+			insertar_final(tamanio_lista);
 			
 		}
 
@@ -282,11 +292,11 @@ public class WidgetMostrarProductos extends Composite {
 
 
 
-	public void insertar_final() {
+	public void insertar_final(int tam_lista) {
 		
-		if(parent instanceof PantallaVistaDeCompra)
+		if(parent instanceof PantallaVistaDeCompra && tam_lista > 0)
 			next_row++;
-		
+				
 		lista_prod.setWidget(next_row, 2, subtotal_literal_label);
 		String subtotal_compra_str= String.valueOf(poner_dos_decimales(subtotal_compra));
 		subtotal_compra_label.setText(subtotal_compra_str);
@@ -331,7 +341,7 @@ public class WidgetMostrarProductos extends Composite {
 			
 //		next_row= 1;
 			if(titulo.equalsIgnoreCase("Vista de compra"))
-				next_row = next_row-3;
+				next_row = next_row-CANT_FILAS_FINAL;
 			else
 			next_row++;
 		next_col= 0;
@@ -463,6 +473,7 @@ public class WidgetMostrarProductos extends Composite {
 		} else {
 			lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
 		}
+//		next_row++;
 	}
 
 
@@ -475,23 +486,31 @@ public class WidgetMostrarProductos extends Composite {
 
 	public void remover_producto(String nombre) {
 
-		int filas_de_la_lista= lista_prod.getRowCount()-5;
+		//Esto es para evitar que me tire error cuando el metodo se ejecuta 2 veces... QUE NO SE PORQUE CORNO PASA...
+		if(!nombre_prod_ant.equalsIgnoreCase(nombre)) {
+			nombre_prod_ant= nombre;
 
-		for(int i = 1; i < filas_de_la_lista; i++) {
+			int filas_de_la_lista= lista_prod.getRowCount();
+			if(parent instanceof PantallaVistaDeCompra)
+				filas_de_la_lista= filas_de_la_lista-CANT_FILAS_FINAL;
 
-			try {
-				String nombre_prod= lista_prod.getText(i, 1);
-				int fila = 0;
-				if(nombre.equalsIgnoreCase(nombre_prod)) {
-					fila= i; 
+			for(int i = 1; i < filas_de_la_lista; i++) {
 
-					lista_prod.removeRow(fila);
+				try {
+					String nombre_prod= lista_prod.getText(i, 1);
+					int fila = 0;
+					if(nombre.equalsIgnoreCase(nombre_prod)) {
+						fila= i; 
+
+						lista_prod.removeRow(fila);
+						next_row--;
+						break;
+					}
+				} catch (IndexOutOfBoundsException e) {
+					MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+							"el producto: " + e.getMessage());
 					break;
 				}
-			} catch (IndexOutOfBoundsException e) {
-				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
-						"el producto: " + e.getMessage());
-				break;
 			}
 		}
 	}

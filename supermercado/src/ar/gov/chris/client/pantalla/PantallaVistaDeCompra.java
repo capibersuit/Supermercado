@@ -324,7 +324,9 @@ public class PantallaVistaDeCompra extends Pantalla {
 			public void onSuccess(DatosProducto result) {
 				
 				prod.insertar_producto("Vista de compra", PantallaVistaDeCompra.this, result, true);
-				prod.insertar_final();
+				//Acá (por ahora al menos) le paso 1 como parametro, porque como estoy
+				// en la funcion que acaba de agregar un producto, seguro que al menos, hay un prod.
+				prod.insertar_final(1);
 //				Window.Location.reload();
 				
 				sb_productos.setText("");
