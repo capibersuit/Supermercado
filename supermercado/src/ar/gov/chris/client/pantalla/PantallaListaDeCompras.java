@@ -21,8 +21,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
-public class PantallaListaDeCompras extends Pantalla {
+public class PantallaListaDeCompras extends PantallaInicio {
 	
 	
 	private Button btn_agregar_lista;
@@ -44,13 +45,16 @@ public class PantallaListaDeCompras extends Pantalla {
 		pantalla_principal();
 	}
 
-	private void pantalla_principal() {
+	@Override
+	protected void pantalla_principal() {
 		
 //		btn_agregar_lista= new Button("Nueva Lista");
 //		panel.add(btn_agregar_lista);
 //		
 //		agregar_lista= new WidgetAgregarLista(this);
 //		agregar_handlers();
+		
+		super.pantalla_principal();
 		obtener_datos_listas();
 	}
 	
@@ -92,10 +96,14 @@ public class PantallaListaDeCompras extends Pantalla {
 	
 	
 	protected void armar_pantalla() {
+		HorizontalPanel hp = new HorizontalPanel();
 		btn_agregar_lista= new Button("Nueva Lista");
 		btn_ir_a_prod= new Button("Ir a productos");
-		panel.add(btn_ir_a_prod);
-		panel.add(btn_agregar_lista);
+		hp.add(btn_ir_a_prod);
+		hp.add(btn_agregar_lista);
+//		panel.add(btn_ir_a_prod);
+//		panel.add(btn_agregar_lista);
+		panel.add(hp);
 		
 		agregar_lista= new WidgetAgregarLista(this, null);
 		listas= new WidgetMostrarListas(datos_lista, "Listas de compras", this);
