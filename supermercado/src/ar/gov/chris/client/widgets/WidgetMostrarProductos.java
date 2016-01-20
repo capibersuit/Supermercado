@@ -48,6 +48,8 @@ public class WidgetMostrarProductos extends Composite {
 	private Pantalla parent;
 
 	private static int CANT_FILAS_FINAL= 3;
+	
+	int cant_prod= 0;
 
 
 	//	private DatosProducto prod_actual;
@@ -75,6 +77,8 @@ public class WidgetMostrarProductos extends Composite {
 	 */
 	public WidgetMostrarProductos(final LinkedList<DatosProducto> lista_productos, 
 			String titulo, final int num_compra, final Pantalla parent, float descuento_coto) {
+			
+//		cant_prod= lista_productos.size();
 
 		this.parent= parent;
 		this.desc_coto.setText(String.valueOf(descuento_coto));
@@ -83,10 +87,14 @@ public class WidgetMostrarProductos extends Composite {
 		lista_prod= new FlexTable();
 		titulo_label= new Label(titulo);
 		titulo_label.addStyleName("LabelDistinguido");
-		if(titulo.equalsIgnoreCase("Vista de compra")) {
-			cant_prod_label= new Label("Esta compra tiene: " + lista_productos.size() + " productos.");
-		} else 
-			cant_prod_label= new Label("Cantidad de productos registrados: " + lista_productos.size());
+		
+//		if(titulo.equalsIgnoreCase("Vista de compra")) {
+//			cant_prod_label= new Label("Esta compra tiene: " + cant_prod + " productos.");
+//		} else 
+//			cant_prod_label= new Label("Cantidad de productos registrados: " + cant_prod);
+//		
+		cant_prod_label= new Label();
+		
 		cant_prod_label.setStyleName("HeaderTablas");
 		
 		subtotal_literal_label= new Label("Subtotal");
@@ -474,6 +482,14 @@ public class WidgetMostrarProductos extends Composite {
 			lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
 		}
 //		next_row++;
+		
+		cant_prod++;
+		
+		if(parent instanceof PantallaVistaDeCompra) {
+			cant_prod_label.setText("Esta compra tiene: " + cant_prod + " productos."); //= new Label("Esta compra tiene: " + cant_prod + " productos.");
+		} else 
+			cant_prod_label.setText("Cantidad de productos registrados: " + cant_prod);
+				
 	}
 
 
@@ -498,12 +514,48 @@ public class WidgetMostrarProductos extends Composite {
 
 				try {
 					String nombre_prod= lista_prod.getText(i, 1);
+										
 					int fila = 0;
 					if(nombre.equalsIgnoreCase(nombre_prod)) {
 						fila= i; 
+						
+						if(parent instanceof PantallaVistaDeCompra) {
+						//--------------------------------------------------------------
 
+						String precio_prod_total= lista_prod.getText(i, 4);
+
+
+						subtotal_compra= subtotal_compra- Float.parseFloat(precio_prod_total);
+						String subtotal_compra_str= String.valueOf(poner_dos_decimales(subtotal_compra));
+						subtotal_compra_label.setText(subtotal_compra_str);
+						
+						String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
+						desc_coto_label.setText(desc_coto_str);
+						
+						
+						float tot_aux= (subtotal_compra-desc_coto_float);
+						total= tot_aux;
+						float desc_tarj=tot_aux/100*20;
+						total= total -(desc_tarj);
+
+						String desc_tarj_str= String.valueOf(poner_dos_decimales(desc_tarj));
+						desc_tarj_label.setText(desc_tarj_str);
+						
+
+
+									
+						String total_str= String.valueOf(poner_dos_decimales(total));
+						total_final_label.setText(total_str);
+						}
+						//--------------------------------------------------------------
 						lista_prod.removeRow(fila);
 						next_row--;
+						cant_prod--;
+						
+						if(parent instanceof PantallaVistaDeCompra) {
+							cant_prod_label.setText("Esta compra tiene: " + cant_prod + " productos."); //= new Label("Esta compra tiene: " + cant_prod + " productos.");
+						} else 
+							cant_prod_label.setText("Cantidad de productos registrados: " + cant_prod);
 						break;
 					}
 				} catch (IndexOutOfBoundsException e) {
