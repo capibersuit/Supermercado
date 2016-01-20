@@ -1,28 +1,39 @@
 package ar.gov.chris.client.pantalla;
 
 
+import ar.gov.chris.client.interfaces.ProxyPantallaListas;
+import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
+import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
+import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 
 public class PantallaInicio extends Pantalla {
+	
+	protected ProxyPantallaListasAsync proxy_listas;
+	protected ProxyPantallaProductosAsync proxy_prod;
+
 
 	Button btn_productos;
 	Button btn_listas;
 	
 	public PantallaInicio() {
 		super();
+		inicializar();
 		pantalla_principal();
-		// TODO Auto-generated constructor stub
+//		cargar_pantalla();
 	}
 
 	public PantallaInicio(String msj) {
 		MensajeAlerta.mensaje_error(msj);	
 		}
-
+	//@Override
 	protected void pantalla_principal() {
 		
 		btn_productos= new Button("Productos");
@@ -46,6 +57,17 @@ public class PantallaInicio extends Pantalla {
 		
 	}
 	
-	
+	/** Se crea el proxy_carga para comunicarse con el servidor.
+	 */
+	protected void inicializar(){
+		
+		this.proxy_prod= (ProxyPantallaProductosAsync)
+		GWT.create(ProxyPantallaProductos.class);
+		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
+				
+		this.proxy_listas= (ProxyPantallaListasAsync)
+		GWT.create(ProxyPantallaListas.class);
+		super.inicializar((ServiceDefTarget) this.proxy_listas, "Listas");
+	}
 
 }

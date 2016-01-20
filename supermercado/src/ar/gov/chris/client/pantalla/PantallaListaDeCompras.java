@@ -30,7 +30,7 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	private Button btn_ir_a_prod;
 
 
-	private ProxyPantallaListasAsync proxy_listas;
+//	private ProxyPantallaListasAsync proxy_listas;
 
 	
 	private WidgetAgregarLista agregar_lista;
@@ -41,13 +41,14 @@ public class PantallaListaDeCompras extends PantallaInicio {
 
 	public PantallaListaDeCompras() {
 		super();
-		inicializar();
-		pantalla_principal();
+//		inicializar();
+//		pantalla_principal();
 	}
 
 	@Override
 	protected void pantalla_principal() {
-		
+		panel.clear();
+
 //		btn_agregar_lista= new Button("Nueva Lista");
 //		panel.add(btn_agregar_lista);
 //		
@@ -78,7 +79,7 @@ public class PantallaListaDeCompras extends PantallaInicio {
 		});
 	}
 	
-	private void obtener_datos_listas() {
+	 protected void obtener_datos_listas() {
 		proxy_listas.buscar_listas(new AsyncCallback<Set<DatosLista>>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
@@ -98,8 +99,8 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	protected void armar_pantalla() {
 		HorizontalPanel hp = new HorizontalPanel();
 		btn_agregar_lista= new Button("Nueva Lista");
-		btn_ir_a_prod= new Button("Ir a productos");
-		hp.add(btn_ir_a_prod);
+//		btn_ir_a_prod= new Button("Ir a productos");
+//		hp.add(btn_ir_a_prod);
 		hp.add(btn_agregar_lista);
 //		panel.add(btn_ir_a_prod);
 //		panel.add(btn_agregar_lista);
@@ -120,22 +121,14 @@ public class PantallaListaDeCompras extends PantallaInicio {
 			}
 		});
 		
-		btn_ir_a_prod.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem("PantallaProductos");
-				History.fireCurrentHistoryState();
-			}
-		});
-	}
-
-	/** Se crea el proxy_carga para comunicarse con el servidor.
-	 */
-	protected void inicializar(){
-		this.proxy_listas= (ProxyPantallaListasAsync)
-		GWT.create(ProxyPantallaListas.class);
-		super.inicializar((ServiceDefTarget) this.proxy_listas, "Listas");
+//		btn_ir_a_prod.addClickHandler(new ClickHandler() {
+//			
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				History.newItem("PantallaProductos");
+//				History.fireCurrentHistoryState();
+//			}
+//		});
 	}
 
 	public void borrar_lista(int id) {
@@ -177,5 +170,11 @@ public class PantallaListaDeCompras extends PantallaInicio {
 		Collections.sort(lista_para_ordenar, new FechaListaComparator());
 		return lista_para_ordenar;
 	}
-	
+
+	/** Se crea el proxy_carga para comunicarse con el servidor.
+	 */
+//	@Override
+//	protected void inicializar(){
+//		super.inicializar();
+//	}
 }

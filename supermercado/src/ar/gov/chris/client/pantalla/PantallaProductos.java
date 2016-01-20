@@ -24,7 +24,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 
-public class PantallaProductos extends Pantalla {
+public class PantallaProductos extends PantallaInicio {
 	
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
@@ -35,7 +35,7 @@ public class PantallaProductos extends Pantalla {
 	private Button btn_ir_a_listas;
 	private Button btn_productos;
 
-	private ProxyPantallaProductosAsync proxy_prod;
+//	private ProxyPantallaProductosAsync proxy_prod;
 	
 //	private final GreetingServiceAsync greetingService = GWT
 //			.create(GreetingService.class);
@@ -47,16 +47,17 @@ public class PantallaProductos extends Pantalla {
 
 	public PantallaProductos() {
 		super();
-		inicializar();
-		pantalla_principal();
+//		inicializar();
+//		pantalla_principal();
 	}
-
-	private void pantalla_principal() {
+//	@Override
+	protected void pantalla_principal() {
 		panel.clear();
 //		proxy_prod.buscar_productos();
 //		btn_productos= new Button("Nuevo Producto");
 //		panel.add(btn_productos);
 //		agregar_prod= new WidgetAgregarProducto(this);
+		super.pantalla_principal();
 		obtener_datos_productos();
 //		agregar_handlers();
 	}
@@ -78,8 +79,8 @@ public class PantallaProductos extends Pantalla {
 
 	protected void armar_pantalla() {
 		btn_productos= new Button("Nuevo Producto");
-		btn_ir_a_listas= new Button("Ir a listas");
-		panel.add(btn_ir_a_listas);
+//		btn_ir_a_listas= new Button("Ir a listas");
+//		panel.add(btn_ir_a_listas);
 
 		panel.add(btn_productos);
 		agregar_prod= new WidgetAgregarProducto(this, null);	
@@ -161,23 +162,22 @@ public class PantallaProductos extends Pantalla {
 			}
 		});
 		
-		btn_ir_a_listas.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem("PantallaListaDeCompras");
-				History.fireCurrentHistoryState();
-			}
-		});
+//		btn_ir_a_listas.addClickHandler(new ClickHandler() {
+//			
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				History.newItem("PantallaListaDeCompras");
+//				History.fireCurrentHistoryState();
+//			}
+//		});
 	}
 
 	/** Se crea el proxy_carga para comunicarse con el servidor.
 	 */
-	protected void inicializar(){
-		this.proxy_prod= (ProxyPantallaProductosAsync)
-		GWT.create(ProxyPantallaProductos.class);
-		super.inicializar((ServiceDefTarget) this.proxy_prod, "Productos");
-	}
+//	@Override
+//	protected void inicializar(){
+//		super.inicializar();
+//	}
 
 	
 

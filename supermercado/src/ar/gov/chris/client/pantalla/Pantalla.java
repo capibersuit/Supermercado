@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 
 
-public class Pantalla extends Composite {
+public abstract class Pantalla extends Composite {
 	protected FlowPanel panel= new FlowPanel();
 //	private final Image imagen_espera= new Image("imagenes/loading.gif");
 //	private final HTML msj_espera= new HTML();
@@ -28,6 +28,14 @@ public class Pantalla extends Composite {
 	 this.panel.setStyleName("PanelPrincipal");
 	 initWidget(this.panel);
 	}
+	
+//	protected void cargar_pantalla() {
+//		pantalla_principal();
+//	}
+	
+	/** La pantalla principal a mostrar luego de la validación. 
+	 */
+	abstract protected void pantalla_principal();
 	
 
 	/** Termina de crear el proxy para comunicarse con el servidor.

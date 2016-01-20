@@ -32,12 +32,14 @@ import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 import ar.gov.chris.client.util.JavaScript;
 
-public class PantallaVistaDeCompra extends Pantalla {
+public class PantallaVistaDeCompra extends PantallaInicio {
 
 	private ProxyPantallaListasAsync proxy_listas;
 	private ProxyPantallaProductosAsync proxy_prod;
 
 	private int id_compra;
+	private String id_compra_str;
+
 	private boolean ver_marcados;
 	private Button btn_ver_marcados;
 
@@ -61,7 +63,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 	
 	public PantallaVistaDeCompra(String id) {
 		super();
-		inicializar();
+//		inicializar();
+//		id_compra_str= id;
 		try {
 		id_compra= Integer.parseInt(id);
 		existe_lista(id_compra);
@@ -70,6 +73,26 @@ public class PantallaVistaDeCompra extends Pantalla {
 			History.newItem(Supermercado.PANTALLA_INICIO);
 		}
 		}
+	
+//	@Override
+//	protected void pantalla_principal2() {
+//		panel.clear();
+
+//		btn_agregar_lista= new Button("Nueva Lista");
+//		panel.add(btn_agregar_lista);
+//		
+//		agregar_lista= new WidgetAgregarLista(this);
+//		agregar_handlers();
+		
+//		super.pantalla_principal();
+//		try {
+//			id_compra= Integer.parseInt(id_compra_str);
+//			existe_lista(id_compra);
+//			} catch (NumberFormatException e){
+//				MensajeAlerta.mensaje_error("Error: id de compra mal formado");
+//				History.newItem(Supermercado.PANTALLA_INICIO);
+//			}
+//	}
 
 	
 	private void existe_lista(final int id_compra) {
@@ -95,7 +118,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 					@Override
 					public void onSuccess(Integer result) {
 						ver_marcados= result==1;
-						pantalla_principal();
+						armar_pantalla_principal();
 						
 					}
 					
@@ -105,9 +128,9 @@ public class PantallaVistaDeCompra extends Pantalla {
 		});
 	}
 	
-	
-	protected void pantalla_principal() {
-		panel.clear();
+//	@Override
+	protected void armar_pantalla_principal() {
+//		panel.clear();
 
 		cant_prod= new ListBox();
 		
@@ -146,8 +169,8 @@ public class PantallaVistaDeCompra extends Pantalla {
 		   
 		   
 			 
-		   btn_ir_a_inicio= new Button("Ir a Inicio");
-		   panel.add(btn_ir_a_inicio);
+//		   btn_ir_a_inicio= new Button("Ir a Inicio");
+//		   panel.add(btn_ir_a_inicio);
 		   sb_productos.setWidth("300px");
 		   HorizontalPanel h = new HorizontalPanel();
 		   VerticalPanel vp_prod= new VerticalPanel();
@@ -200,14 +223,14 @@ public class PantallaVistaDeCompra extends Pantalla {
 		 });
 	    sb_productos.setFocus(true);
 	    
-	    btn_ir_a_inicio.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem(Supermercado.PANTALLA_INICIO);
-				History.fireCurrentHistoryState();
-			}
-		});
+//	    btn_ir_a_inicio.addClickHandler(new ClickHandler() {
+//			
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				History.newItem(Supermercado.PANTALLA_INICIO);
+//				History.fireCurrentHistoryState();
+//			}
+//		});
 	    
 	    boton_imprimir.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
@@ -324,7 +347,7 @@ public class PantallaVistaDeCompra extends Pantalla {
 			public void onSuccess(DatosProducto result) {
 				
 				prod.insertar_producto("Vista de compra", PantallaVistaDeCompra.this, result, true);
-				//Acá (por ahora al menos) le paso 1 como parametro, porque como estoy
+				//Acï¿½ (por ahora al menos) le paso 1 como parametro, porque como estoy
 				// en la funcion que acaba de agregar un producto, seguro que al menos, hay un prod.
 				prod.insertar_final(1);
 //				Window.Location.reload();
