@@ -23,7 +23,7 @@ public class PantallaInicio extends Pantalla {
 		MensajeAlerta.mensaje_error(msj);	
 		}
 
-	private void pantalla_principal() {
+	protected void pantalla_principal() {
 		
 		btn_productos= new Button("Productos");
 		btn_listas= new Button("Listas");
