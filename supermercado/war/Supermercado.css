@@ -867,6 +867,12 @@ gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
 .gwt-SuggestBoxPopup .item-selected { 
    color: blue;
    font-size: 300%; 
+       /*background: red !important;*/
+   
+}
+
+.gwt-SuggestBoxPopup .suggestPopupContent {
+ background: #FFEEDF;
 }
 
 /* ---------creo que lo que sigue no lo uso por ahora --------- */
@@ -877,6 +883,8 @@ gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
    width: 200px;
 }
 .gwt-SuggestBoxPopup.item { 
+	    background: red !important;
+	
    color: red; 
 }
 .gwt-SuggestBoxPopup .suggestPopupTopLeft { 
