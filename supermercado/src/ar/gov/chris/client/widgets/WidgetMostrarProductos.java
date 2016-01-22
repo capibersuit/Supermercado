@@ -416,12 +416,17 @@ public class WidgetMostrarProductos extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				
 				boolean marcada= prod.isEsta_marcada();
 
 				if(marcada)
 					lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ContenidoTablas");
-				else
-					lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
+				else {
+					if(((PantallaVistaDeCompra)parent).isVer_marcados())
+						lista_prod.getRowFormatter().setStyleName(row_a_marcar, "ComplejidadMedia");
+					else
+						lista_prod.getRowFormatter().setVisible(row_a_marcar, false);
+				}
 				prod.setEsta_marcada(!marcada);
 				((PantallaVistaDeCompra)parent).actualizar_producto(prod);
 				

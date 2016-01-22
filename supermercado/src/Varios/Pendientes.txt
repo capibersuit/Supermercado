@@ -1,5 +1,7 @@
 Pendientes:
 
-* Cuando borro un producto y quiero marcar/desmarcar cualquiera que esté en la lista luego del borrado, 
-se marca/desmarca el siguiente al que debería. Creo que esto pasa porque no actualizo la varible local
+* Cuando borro un producto y quiero marcar/desmarcar cualquiera que estï¿½ en la lista luego del borrado, 
+se marca/desmarca el siguiente al que deberï¿½a. Creo que esto pasa porque no actualizo la varible local
 "row_a_marcar". Lo dejo para luego ya que no tengo claro como arreglarlo.
+
+escribo esto para que se genere un cambio en LA RAMA y ver si se ve en el master o en la rama.
