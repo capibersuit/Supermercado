@@ -13,13 +13,15 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class PantallaInicio extends Pantalla {
 	
 	protected ProxyPantallaListasAsync proxy_listas;
 	protected ProxyPantallaProductosAsync proxy_prod;
 
-
+	protected HorizontalPanel menu;
+	
 	Button btn_productos;
 	Button btn_listas;
 	
@@ -35,11 +37,15 @@ public class PantallaInicio extends Pantalla {
 		}
 	//@Override
 	protected void pantalla_principal() {
-		
+		menu= new HorizontalPanel();
 		btn_productos= new Button("Productos");
 		btn_listas= new Button("Listas");
-		panel.add(btn_productos);
-		panel.add(btn_listas);
+		menu.add(btn_productos);
+		menu.add(btn_listas);
+
+//		panel.add(btn_productos);
+//		panel.add(btn_listas);
+		panel.add(menu);
 		agregar_listener();
 	}
 

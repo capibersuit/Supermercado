@@ -89,12 +89,12 @@ ProxyPantallaProductos {
 	}
 	
 	@Override
-	public void borra_producto_de_lista(String nombre, int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+	public void borra_producto_de_lista(DatosProducto produ, int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;	
 		
 			try {
-				Producto prod= new Producto(con, nombre);
+				Producto prod= new Producto(con, produ.getNombre());
 				
 				con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + " AND id_prod = "+ prod.getId());
 				

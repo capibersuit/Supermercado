@@ -17,7 +17,7 @@ public interface ProxyPantallaListasAsync {
 
 	void borrar_lista(int id_compra, AsyncCallback<Void> asyncCallback);
 
-	void actualizar_lista(DatosLista datos_lista,
+	void actualizar_lista(DatosLista datos_lista, boolean actualizar_desc,
 			AsyncCallback<Void> asyncCallback);
 
 	void mostrar_ocultar_prod_en_lista(int id_compra,
@@ -26,4 +26,7 @@ public interface ProxyPantallaListasAsync {
 	void lista_esta_visible(int id_compra, AsyncCallback<Integer> asyncCallback);
 
 	void buscar_desc_coto(int id_compra, AsyncCallback<Float> asyncCallback);
+
+//	void actualizar_descuento_lista(DatosLista dl,
+//			boolean b, AsyncCallback<Void> asyncCallback);
 }

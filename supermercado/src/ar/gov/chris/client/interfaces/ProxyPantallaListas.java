@@ -18,13 +18,15 @@ public interface ProxyPantallaListas extends RemoteService {
 
 	void borrar_lista(int id_compra) throws GWT_ExcepcionBD;
 
-	void actualizar_lista(DatosLista datos_lista) throws GWT_ExcepcionBD;
+	void actualizar_lista(DatosLista datos_lista, boolean actualizar_desc) throws GWT_ExcepcionBD;
 
 	void mostrar_ocultar_prod_en_lista(int id_compra);
 
 	int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
 	float buscar_desc_coto(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
+
+//	void actualizar_descuento_lista(DatosLista dl, boolean b);
 
 
 }

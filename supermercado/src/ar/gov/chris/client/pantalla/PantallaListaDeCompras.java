@@ -97,14 +97,16 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	
 	
 	protected void armar_pantalla() {
-		HorizontalPanel hp = new HorizontalPanel();
+//		HorizontalPanel hp = new HorizontalPanel();
 		btn_agregar_lista= new Button("Nueva Lista");
 //		btn_ir_a_prod= new Button("Ir a productos");
 //		hp.add(btn_ir_a_prod);
-		hp.add(btn_agregar_lista);
+//		hp.add(btn_agregar_lista);
+		menu.add(btn_agregar_lista);
+
 //		panel.add(btn_ir_a_prod);
 //		panel.add(btn_agregar_lista);
-		panel.add(hp);
+//		panel.add(hp);
 		
 		agregar_lista= new WidgetAgregarLista(this, null);
 		listas= new WidgetMostrarListas(datos_lista, "Listas de compras", this);
@@ -146,7 +148,7 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	}
 
 	public void actualizar_producto(DatosLista datos_lista) {
-		proxy_listas.actualizar_lista(datos_lista, new AsyncCallback<Void>(){
+		proxy_listas.actualizar_lista(datos_lista, false, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar actualizar " +
 						"la lista: " + caught.getMessage());

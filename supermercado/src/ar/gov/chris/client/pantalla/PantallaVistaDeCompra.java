@@ -254,7 +254,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			datos_lista.setId(id_compra);
 			datos_lista.setVer_marcados(ver_marcados);
 			
-			proxy_listas.actualizar_lista(datos_lista, new AsyncCallback<Void>(){
+			proxy_listas.actualizar_lista(datos_lista, false, new AsyncCallback<Void>(){
 				public void onFailure(Throwable caught) {
 					MensajeAlerta.mensaje_error("Ocurrio un error al intentar mostrar u ocultar " +
 							"los productos en la lista: " + caught.getMessage());
@@ -350,6 +350,8 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				//Ac� (por ahora al menos) le paso 1 como parametro, porque como estoy
 				// en la funcion que acaba de agregar un producto, seguro que al menos, hay un prod.
 				prod.insertar_final(1);
+				
+				lista_productos.add(result);
 //				Window.Location.reload();
 				
 				sb_productos.setText("");
@@ -362,8 +364,8 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				
 	}
 
-	public void borra_producto_de_lista(final String nombre, int id_compra) {
-		proxy_prod.borra_producto_de_lista(nombre, id_compra, new AsyncCallback<Void>(){
+	public void borra_producto_de_lista(final DatosProducto produ, int id_compra) {
+		proxy_prod.borra_producto_de_lista(produ, id_compra, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar borrar " +
 						"el producto de la lista: " + caught.getMessage());
@@ -371,8 +373,13 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			public void onSuccess(Void result) {
 //				Window.Location.reload();
 
-				prod.remover_producto(nombre);
 				
+				prod.remover_producto(produ.getNombre());
+				
+							
+				boolean pudo_borrar=lista_productos.remove(produ);
+//				if(!pudo_borrar)
+//					MensajeAlerta.mensaje_error("No se pudo borrar el elemento de la lista de impresion.");
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
 			}
@@ -438,7 +445,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		DatosLista dl= new DatosLista();
 		dl.setId(num_compra);
 		dl.setDesc_coto(desc);
-		proxy_listas.actualizar_lista(dl, new AsyncCallback<Void>(){
+		proxy_listas.actualizar_lista(dl, true, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
 						"el descuento a la compra: " + caught.getMessage());
@@ -464,10 +471,18 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				descuento_coto=result;
 				
 				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto);
-				   panel.add(boton_imprimir);
-				   panel.add(btn_ver_marcados);
+				  
+					HorizontalPanel hp = new HorizontalPanel();
+					hp.add(boton_imprimir);
+					hp.add(btn_ver_marcados);
+					hp.add(btn_agregar_prod);
 
-				   panel.add(btn_agregar_prod);
+//				   panel.add(boton_imprimir);
+//				   panel.add(btn_ver_marcados);
+//				   panel.add(btn_agregar_prod);
+//				   
+				   panel.add(hp);
+				   
 				   panel.add(prod);
 
 				   agregar_handlers();

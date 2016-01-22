@@ -145,7 +145,7 @@ ProxyPantallaListas {
 	}
 
 	@Override
-	public void actualizar_lista(DatosLista datos_lista) throws GWT_ExcepcionBD {
+	public void actualizar_lista(DatosLista datos_lista, boolean actualizar_desc) throws GWT_ExcepcionBD {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
@@ -166,7 +166,8 @@ ProxyPantallaListas {
 			query+=	" ver_marcados = "+ ver_marcad;
 			if(pagado !=0)
 				query+=	", pagado = "+ pagado; 
-			if(desc_coto !=0)	
+//			if(desc_coto !=0)
+			if(actualizar_desc)
 				query+= ", desc_coto = "+ desc_coto;
 			query+= " WHERE id = " + id_lista;
 			
@@ -237,5 +238,11 @@ ProxyPantallaListas {
 			}		
 		return l.getDesc_coto();
 	}
+
+//	@Override
+//	public void actualizar_descuento_lista(DatosLista dl) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 }
 

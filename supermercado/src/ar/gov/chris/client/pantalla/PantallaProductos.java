@@ -32,7 +32,7 @@ public class PantallaProductos extends PantallaInicio {
 //	private final GreetingServiceAsync greetingService = GWT
 //			.create(GreetingService.class);
 	
-	private Button btn_ir_a_listas;
+//	private Button btn_ir_a_listas;
 	private Button btn_productos;
 
 //	private ProxyPantallaProductosAsync proxy_prod;
@@ -82,7 +82,9 @@ public class PantallaProductos extends PantallaInicio {
 //		btn_ir_a_listas= new Button("Ir a listas");
 //		panel.add(btn_ir_a_listas);
 
-		panel.add(btn_productos);
+//		panel.add(btn_productos);
+		menu.add(btn_productos);
+		
 		agregar_prod= new WidgetAgregarProducto(this, null);	
 		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this, 0);
 		panel.add(productos);
