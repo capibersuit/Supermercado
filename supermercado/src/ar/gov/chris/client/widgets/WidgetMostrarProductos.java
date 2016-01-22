@@ -1,9 +1,8 @@
 package ar.gov.chris.client.widgets;
 
-import java.awt.Button;
 import java.util.LinkedList;
-import java.util.Set;
 
+import ar.gov.chris.client.Supermercado;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.pantalla.Pantalla;
 import ar.gov.chris.client.pantalla.PantallaProductos;
@@ -76,7 +75,7 @@ public class WidgetMostrarProductos extends Composite {
 	 * @param titulo Titulo del widget.
 	 */
 	public WidgetMostrarProductos(final LinkedList<DatosProducto> lista_productos, 
-			String titulo, final int num_compra, final Pantalla parent, float descuento_coto) {
+			String titulo, final int num_compra, final Pantalla parent, final float descuento_coto) {
 			
 //		cant_prod= lista_productos.size();
 
@@ -244,8 +243,13 @@ public class WidgetMostrarProductos extends Composite {
 				public void onBlur(BlurEvent event) {
 					String aux= desc_coto.getText();
 					if (!aux.isEmpty()) {
+						try {
 						desc_coto_float= Float.parseFloat(aux);
-						
+						} catch (NumberFormatException e){
+							desc_coto.setText(String.valueOf(descuento_coto));
+							MensajeAlerta.mensaje_error("Error: debe ingresar un importe valido");
+							return;
+						}
 						//***
 						String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
 						desc_coto_label.setText(desc_coto_str);
@@ -290,9 +294,13 @@ public class WidgetMostrarProductos extends Composite {
 		lista_prod.getRowFormatter().setStyleName(0, "HeaderTablas");
 
 		principal.add(titulo_label);
+		
+//		principal.add(desc_coto_decripcion);
+		if(parent instanceof PantallaVistaDeCompra) {
+
 		principal.add(desc_coto_decripcion);
 		principal.add(desc_coto);
-
+		}
 		principal.add(cant_prod_label);
 		principal.add(lista_prod);
 		initWidget(principal);
@@ -373,7 +381,7 @@ public class WidgetMostrarProductos extends Composite {
 					((PantallaProductos)parent).borrar_producto(prod.getNombre());
 					
 				} else if(parent instanceof PantallaVistaDeCompra)
-					((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod.getNombre(), ((PantallaVistaDeCompra)parent).getId_compra());
+					((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod, ((PantallaVistaDeCompra)parent).getId_compra());
 				//					hide();
 			}
 		};
