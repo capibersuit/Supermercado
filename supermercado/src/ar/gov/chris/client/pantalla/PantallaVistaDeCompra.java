@@ -262,7 +262,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				public void onSuccess(Void result) {
 					
 					Window.Location.reload();
-
+// quiero ver si comitea ya que hoy 10-02-2016 cambie la contrasena de github !!!!!
 				}
 				
 			});
