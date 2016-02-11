@@ -263,6 +263,8 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 					
 					Window.Location.reload();
 // quiero ver si comitea ya que hoy 10-02-2016 cambie la contrasena de github !!!!!
+		// Ahora quiero ver si comitea desde la ultrabook el 11-02-2016 !!!!!
+
 				}
 				
 			});
