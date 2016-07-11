@@ -53,7 +53,7 @@ public class WidgetConfirmar extends DialogBox {
 		HorizontalPanel botones= new HorizontalPanel();
 		botones.add(aceptar);
 		botones.add(cancelar);
-		agregar_listeners();
+//		agregar_listeners();
 		
 //		aceptar.setFocus(true);
 		
