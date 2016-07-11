@@ -382,7 +382,8 @@ public class WidgetMostrarProductos extends Composite {
 					
 				} else if(parent instanceof PantallaVistaDeCompra)
 					((PantallaVistaDeCompra)parent).borra_producto_de_lista(prod, ((PantallaVistaDeCompra)parent).getId_compra());
-				//					hide();
+				//hide();
+				confirmar_borrado.hide();
 			}
 		};
 
