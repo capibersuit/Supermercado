@@ -306,35 +306,40 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	}
 	
 	private String dibujar_productos() {
-		String equipos_y_accesorios= "";
-		equipos_y_accesorios+= "<table border=1 width =100%>";
+		String tabla_productos= "";
+		tabla_productos+= "<table border=1 width =100%>";
 
-		equipos_y_accesorios+= "<tr>";
-		equipos_y_accesorios+= "<td>" + "Producto" + "</td>\n";
-		equipos_y_accesorios+= "<td>" + "Precio" + "</td>";
-		equipos_y_accesorios+= "<td>" + "Cantidad" + "</td>";
+		tabla_productos+= "<tr>";
+		tabla_productos+= "<td>" + "Producto" + "</td>\n";
+		tabla_productos+= "<td>" + "Cantidad" + "</td>";
+		tabla_productos+= "<td>" + "Precio" + "</td>";
+		
 
-		equipos_y_accesorios+= "</tr>";
+		tabla_productos+= "</tr>";
 
 		LinkedList<DatosProducto> prods= lista_productos;
 		for (DatosProducto prod: prods) {
-			equipos_y_accesorios+=  "<tr>";
-			equipos_y_accesorios+= "<td align=\"center\">" +
+			tabla_productos+=  "<tr>";
+			tabla_productos+= "<td align=\"center\">" +
 					prod.getNombre() + "</td>\n";
 			
-			equipos_y_accesorios+= "<td align=\"center\">";
-			equipos_y_accesorios+= prod.getPrecio() + "</td>";
+			tabla_productos+= "<td align=\"center\">";
+			tabla_productos+= prod.getCantidad() + "</td>";
 			
-			equipos_y_accesorios+= "<td align=\"center\">";
-			equipos_y_accesorios+= prod.getCantidad() + "</td>";
-
-			equipos_y_accesorios+=  "</tr>";
+			tabla_productos+= "<td align=\"center\">";
+			tabla_productos+= poner_dos_decimales(prod.getPrecio()) + "</td>";
+			
+			tabla_productos+=  "</tr>";
 		}
-		equipos_y_accesorios+= "</table>";
-		return equipos_y_accesorios;
+		tabla_productos+= "</table>";
+		return tabla_productos;
 	}
 
-
+	//TODO: Esta funcion esta repetida en WidgetMostrarProductos
+	//      ver de dejarla en un solo sitio.
+	private float poner_dos_decimales(float precio_total) {
+		return (float) (Math.round(precio_total*100)/100.0d);
+	}
 	private void agregrar_prod_en_lista() {
 		final DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(sb_productos.getText());
