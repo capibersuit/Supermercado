@@ -1,5 +1,6 @@
 package ar.gov.chris.client.widgets;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 import ar.gov.chris.client.Supermercado;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
@@ -25,6 +27,7 @@ public class WidgetMostrarProductos extends Composite {
 	private FlowPanel principal;
 	private FlexTable lista_prod;
 	private Label titulo_label;
+	private Label fecha_compra_lablel;
 	private Label cant_prod_label;
 	private Label subtotal_literal_label;
 	private Label subtotal_compra_label;
@@ -73,9 +76,10 @@ public class WidgetMostrarProductos extends Composite {
 	 * 
 	 * @param lista_productos Lista de l�neas a mostrar.
 	 * @param titulo Titulo del widget.
+	 * @param fecha_compra 
 	 */
 	public WidgetMostrarProductos(final LinkedList<DatosProducto> lista_productos, 
-			String titulo, final int num_compra, final Pantalla parent, final float descuento_coto) {
+			String titulo, final int num_compra, final Pantalla parent, final float descuento_coto, Date fecha_compra) {
 			
 //		cant_prod= lista_productos.size();
 
@@ -84,9 +88,17 @@ public class WidgetMostrarProductos extends Composite {
 		this.desc_coto_float= descuento_coto;
 		principal= new FlowPanel();
 		lista_prod= new FlexTable();
+		HorizontalPanel hp = new HorizontalPanel();
+		
 		titulo_label= new Label(titulo);
 		titulo_label.addStyleName("LabelDistinguido");
 		
+		hp.add(titulo_label);
+		if(fecha_compra != null) {
+			fecha_compra_lablel= new Label("-" + fecha_compra.toString());
+			fecha_compra_lablel.addStyleName("LabelDistinguido");
+			hp.add(fecha_compra_lablel);
+		}
 //		if(titulo.equalsIgnoreCase("Vista de compra")) {
 //			cant_prod_label= new Label("Esta compra tiene: " + cant_prod + " productos.");
 //		} else 
@@ -293,11 +305,13 @@ public class WidgetMostrarProductos extends Composite {
 		lista_prod.setStyleName("PanelConBordesExpandido");
 		lista_prod.getRowFormatter().setStyleName(0, "HeaderTablas");
 
-		principal.add(titulo_label);
+//		principal.add(titulo_label);
+		
+		principal.add(hp);
 		
 //		principal.add(desc_coto_decripcion);
 		if(parent instanceof PantallaVistaDeCompra) {
-
+//		principal.add(fecha_compra_lablel);	
 		principal.add(desc_coto_decripcion);
 		principal.add(desc_coto);
 		}
