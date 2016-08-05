@@ -1,5 +1,6 @@
 package ar.gov.chris.client.pantalla;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -38,6 +39,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	private ProxyPantallaProductosAsync proxy_prod;
 
 	private int id_compra;
+	private Date fecha_compra;
 	private String id_compra_str;
 
 	private boolean ver_marcados;
@@ -95,6 +97,39 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 //	}
 
 	
+//	private void existe_lista(final int id_compra) {
+//		proxy_listas.existe_lista(id_compra, new AsyncCallback<Void> (){
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());	
+//				History.newItem(Supermercado.PANTALLA_INICIO);
+//			}
+//
+//			@Override
+//			public void onSuccess(Void result) {
+//				
+//				proxy_listas.lista_esta_visible(id_compra, new AsyncCallback<Integer> (){
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						MensajeAlerta.mensaje_error("Error: " + caught.getMessage());	
+//						History.newItem(Supermercado.PANTALLA_INICIO);
+//					}
+//
+//					@Override
+//					public void onSuccess(Integer result) {
+//						ver_marcados= result==1;
+//						armar_pantalla_principal();
+//						
+//					}
+//					
+//				});
+//			}
+//			
+//		});
+//	}
+	
 	private void existe_lista(final int id_compra) {
 		proxy_listas.existe_lista(id_compra, new AsyncCallback<Void> (){
 
@@ -107,7 +142,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			@Override
 			public void onSuccess(Void result) {
 				
-				proxy_listas.lista_esta_visible(id_compra, new AsyncCallback<Integer> (){
+				proxy_listas.lista_esta_visible(id_compra, new AsyncCallback<DatosLista> (){
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -116,8 +151,9 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 					}
 
 					@Override
-					public void onSuccess(Integer result) {
-						ver_marcados= result==1;
+					public void onSuccess(DatosLista result) {
+						ver_marcados= result.isVer_marcados();
+						fecha_compra= result.getFecha();
 						armar_pantalla_principal();
 						
 					}
@@ -475,7 +511,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			public void onSuccess(Float result){
 				descuento_coto=result;
 				
-				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto);
+				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto, fecha_compra);
 				  
 					HorizontalPanel hp = new HorizontalPanel();
 					hp.add(boton_imprimir);
