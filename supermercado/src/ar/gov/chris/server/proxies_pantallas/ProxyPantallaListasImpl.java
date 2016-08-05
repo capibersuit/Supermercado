@@ -196,16 +196,20 @@ ProxyPantallaListas {
 	}
 
 	@Override
-	public int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+	public DatosLista lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		ConexionBD con;
 		Lista l;
 		Boolean commit= false;
 		con = this.obtener_transaccion();
-
+		DatosLista dl;
 		try {
 			l = new Lista(con, id_compra);
 //			existe= true;
 //			existe= l  != null;
+			
+			dl= new DatosLista();
+			dl.setFecha(l.getFecha());
+			dl.setVer_marcados(l.isVer_marcados());
 			commit = true;
 		} catch (ExcepcionBD e) {
 				throw new GWT_ExcepcionBD(e);
@@ -214,7 +218,7 @@ ProxyPantallaListas {
 			} finally {
 				this.cerrar_transaccion(con, commit);
 			}		
-		return l.isVer_marcados() ? 1 : 0;
+		return dl;
 	}
 
 	@Override
