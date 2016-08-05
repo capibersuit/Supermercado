@@ -23,7 +23,7 @@ public interface ProxyPantallaListasAsync {
 	void mostrar_ocultar_prod_en_lista(int id_compra,
 			AsyncCallback<Void> asyncCallback);
 
-	void lista_esta_visible(int id_compra, AsyncCallback<Integer> asyncCallback);
+	void lista_esta_visible(int id_compra, AsyncCallback<DatosLista> asyncCallback);
 
 	void buscar_desc_coto(int id_compra, AsyncCallback<Float> asyncCallback);
 

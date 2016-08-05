@@ -22,7 +22,7 @@ public interface ProxyPantallaListas extends RemoteService {
 
 	void mostrar_ocultar_prod_en_lista(int id_compra);
 
-	int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
+	DatosLista lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
 	float buscar_desc_coto(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
