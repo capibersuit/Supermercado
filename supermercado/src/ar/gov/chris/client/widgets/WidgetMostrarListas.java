@@ -80,6 +80,7 @@ public class WidgetMostrarListas extends Composite {
 //			this.lista= list;
 			
 			btn_ir = new PushButton(new Image("/imagenes/boton-ir.jpg"));
+			btn_ir.setTitle("Compra nro. "+ list.getId());
 			btn_ir.addClickHandler(new ClickHandler() {
 				
 				@Override
