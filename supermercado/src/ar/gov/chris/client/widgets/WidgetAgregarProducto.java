@@ -28,6 +28,8 @@ public class WidgetAgregarProducto extends DialogBox {
 	private Button cancelar;
 	private TextBox nombre;
 	private TextBox precio;
+	private TextBox cantidad;
+
 	private Pantalla parent;
 	
 	private boolean es_update;
@@ -48,12 +50,14 @@ public class WidgetAgregarProducto extends DialogBox {
 			datos_prod= prod;
 		nombre= new TextBox();
 		precio= new TextBox();
+		cantidad = new TextBox();
 		agregar= new Button("Agregar");
 		cancelar= new Button("Cancelar");
 		if(es_update) {
 			this.setText("Actualizar Producto");
 			nombre.setText(prod.getNombre());
 			precio.setText(String.valueOf((prod.getPrecio())));
+			cantidad.setText(String.valueOf(prod.getCantidad()));
 			agregar.setText("Actualizar");
 		} else
 			this.setText("Agregar Nuevo Producto");
@@ -69,6 +73,8 @@ public class WidgetAgregarProducto extends DialogBox {
 		panel= new FlowPanel();
 		panel.add(nombre);
 		panel.add(precio);
+		if(parent instanceof PantallaVistaDeCompra)
+			panel.add(cantidad);
 
 		panel.add(botones);
 		this.add(panel);
@@ -97,6 +103,7 @@ public class WidgetAgregarProducto extends DialogBox {
 				} else {
 					if(parent instanceof PantallaVistaDeCompra)
 						if(es_update) {
+							datos_prod.setCantidad(Integer.parseInt(cantidad.getText()));
 							((PantallaVistaDeCompra)parent).actualizar_producto(datos_prod);
 						} 
 				}
@@ -125,6 +132,14 @@ public class WidgetAgregarProducto extends DialogBox {
 		 });
 		
 		precio.addKeyPressHandler(new KeyPressHandler() {
+			 @Override
+			 public void onKeyPress(KeyPressEvent event) {
+			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
+				  agregar.click();
+			 }
+		 });
+		
+		cantidad.addKeyPressHandler(new KeyPressHandler() {
 			 @Override
 			 public void onKeyPress(KeyPressEvent event) {
 			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())

@@ -242,7 +242,8 @@ ProxyPantallaProductos {
 			Producto prod= new Producto(con, datos_prod.getId());
 //			int id_prod= prod.getId();
 			
-			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ datos_prod.getPrecio() +", esta_marcada= " + datos_prod.isEsta_marcada()
+			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ datos_prod.getPrecio() +
+					", esta_marcada= " + datos_prod.isEsta_marcada() + " , cant= " + datos_prod.getCantidad() 
 					+" WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId());
 			
 			verificar_si_cambiar_precio_global(con, datos_prod, id_compra);
