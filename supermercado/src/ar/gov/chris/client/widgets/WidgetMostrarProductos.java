@@ -72,7 +72,7 @@ public class WidgetMostrarProductos extends Composite {
 	
 
 
-	/** Crea un {@link WidgetMostrarLineas} a partir de los par�metros.
+	/** Crea un {@link WidgetMostrarProductos} a partir de los par�metros.
 	 * 
 	 * @param lista_productos Lista de l�neas a mostrar.
 	 * @param titulo Titulo del widget.
