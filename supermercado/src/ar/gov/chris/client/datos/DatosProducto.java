@@ -1,5 +1,8 @@
 package ar.gov.chris.client.datos;
 
+
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class DatosProducto implements IsSerializable /*, Comparable<DatosProducto> */{
@@ -10,6 +13,8 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	float precio;
 	int cantidad;
 	boolean esta_marcada;
+	private Date fecha_venc;
+	
 	
 	public DatosProducto() {
 		
@@ -48,8 +53,19 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	}
 	@Override
 	public String toString() {
-		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio="
+		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", fecha_venc=" + fecha_venc + ", precio="
 				+ precio + "]";
+	}
+
+
+	public void setFechaVenc(Date fecha_venc) {
+		this.fecha_venc= fecha_venc;
+	}
+
+
+	public Object getFechaVenc() {
+		// TODO Auto-generated method stub
+		return fecha_venc;
 	}
 	
 //	@Override
