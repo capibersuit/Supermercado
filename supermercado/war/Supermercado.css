@@ -439,6 +439,12 @@ hr {
 	color: #55331C;
 	width: 150px;
 	height: 80px; 
+	cursor:pointer;
+	border-radius: 13px;
+}
+
+.gwt-Button:hover {
+color: Blue;
 }
 
 .gwt-Button[disabled] {
@@ -481,6 +487,10 @@ hr {
 	border: 1px inset #BF8660;
 	background-color: #FFD5AF;
 	cursor: pointer;
+}
+
+.gwt-PushButton:hover {
+color: Red;
 }
 
 .gwt-CheckBox {

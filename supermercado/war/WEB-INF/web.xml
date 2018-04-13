@@ -37,6 +37,17 @@
     <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaListas</url-pattern>
   </servlet-mapping>
   
+  
+   <servlet>
+    <servlet-name>ProxyPantallaPrecios</servlet-name>
+    <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaPreciosImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ProxyPantallaPrecios</servlet-name>
+    <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaPrecios</url-pattern>
+  </servlet-mapping>
+  
   <!-- 
   <servlet>
     <servlet-name>ProxyPantallaListas2</servlet-name>

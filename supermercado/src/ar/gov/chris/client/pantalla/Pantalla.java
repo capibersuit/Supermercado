@@ -1,12 +1,16 @@
 package ar.gov.chris.client.pantalla;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
+import ar.gov.chris.client.clases.FechaVencComparator;
 import ar.gov.chris.client.clases.NombreProdComparator;
+import ar.gov.chris.client.clases.NombreProdPrecioComparator;
 import ar.gov.chris.client.datos.DatosProducto;
+import ar.gov.chris.client.datos.DatosReprtePrecios;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -77,6 +81,30 @@ public abstract class Pantalla extends Composite {
 		}	
 		//Ordeno por nombre del producto la lista con los datos de los productos que obtuve.
 		Collections.sort(lista_para_ordenar, new NombreProdComparator());
+		return lista_para_ordenar;
+	}
+	
+	protected LinkedList<DatosReprtePrecios> ordenar_productos_con_precio(Set<DatosReprtePrecios> lista_prod) {
+		LinkedList<DatosReprtePrecios> lista_para_ordenar= new LinkedList<DatosReprtePrecios>();
+		//Obtengo todos los datos de las productos y los agrego a una lista.
+		for (Iterator<DatosReprtePrecios> iter = lista_prod.iterator(); iter.hasNext();) {
+			DatosReprtePrecios prods = iter.next();
+			lista_para_ordenar.add(prods);
+		}	
+		//Ordeno por nombre del producto la lista con los datos de los productos que obtuve.
+		Collections.sort(lista_para_ordenar, new NombreProdPrecioComparator());
+		return lista_para_ordenar;
+	}
+	
+	protected LinkedList<DatosProducto> ordenar_vemcimientos(Set<DatosProducto> lista_prod) {
+		LinkedList<DatosProducto> lista_para_ordenar= new LinkedList<DatosProducto>();
+		//Obtengo todos los datos de las productos y los agrego a una lista.
+		for (Iterator<DatosProducto> iter = lista_prod.iterator(); iter.hasNext();) {
+			DatosProducto prods = iter.next();
+			lista_para_ordenar.add(prods);
+		}	
+		//Ordeno por fecha de venc del producto la lista con los datos de los productos que obtuve.
+		Collections.sort(lista_para_ordenar, new FechaVencComparator());
 		return lista_para_ordenar;
 	}
 

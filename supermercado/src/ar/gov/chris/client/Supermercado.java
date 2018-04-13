@@ -6,7 +6,11 @@ import ar.gov.chris.client.pantalla.Pantalla;
 import ar.gov.chris.client.pantalla.PantallaInicio;
 import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.pantalla.PantallaListas;
+import ar.gov.chris.client.pantalla.PantallaPrecios;
 import ar.gov.chris.client.pantalla.PantallaProductos;
+import ar.gov.chris.client.pantalla.PantallaUiBinder;
+import ar.gov.chris.client.pantalla.PantallaVencimientos;
+import ar.gov.chris.client.pantalla.PantallaVencimientosOrd;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
 import ar.gov.chris.shared.FieldVerifier;
 
@@ -47,12 +51,22 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 	public static final String PANTALLA_VISTA_DE_COMPRA= "PantallaVistaDeCompra";
 	public static final String PANTALLA_PRODUCTOS= "PantallaProductos";
 	public static final String PANTALLA_lISTAS= "PantallaListaDeCompras";
+	public static final String PANTALLA_VENCIMIENTOS= "PantallaVencimientos";
+	public static final String PANTALLA_VENCIMIENTOSORD= "PantallaVencimientosOrd";
+	public static final String PANTALLA_PRECIOS= "PantallaPrecios";
+	
+	public static final String PANTALLA_UIBINDER2= "PantallaUiBinder2";
+
+
 	
 	static {
 		TITULOS.put(PANTALLA_INICIO, new HTML("Bienvenido al sistema de soporte del MECON"));
 		TITULOS.put(PANTALLA_VISTA_DE_COMPRA, new HTML("Vista de compra"));
 		TITULOS.put(PANTALLA_PRODUCTOS, new HTML("Productos"));
 		TITULOS.put(PANTALLA_lISTAS, new HTML("Listas"));
+		TITULOS.put(PANTALLA_VENCIMIENTOS, new HTML("Reporte de vencimientos"));
+		TITULOS.put(PANTALLA_VENCIMIENTOSORD, new HTML("Reporte de vencimientos Ordenable"));
+
 
 	}
 	
@@ -83,6 +97,12 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 		Window.setTitle("Sistema de control de listas de supermercado");
 	
 		
+		if (historyToken.equals(PANTALLA_UIBINDER2)) {
+			panel_aplicacion.clear();
+
+			panel_aplicacion.add(new PantallaUiBinder("Christian"));
+			Window.setTitle("Vista de productos");
+		}
 	
 		if (historyToken.equals(PANTALLA_INICIO)) {
 			panel_aplicacion.clear();
@@ -119,11 +139,33 @@ if (historyToken.startsWith(PANTALLA_VISTA_DE_COMPRA)) {
 		pv= new PantallaVistaDeCompra(id);
 		Window.setTitle("Vista de compra nro: " + id);
 	} else
-		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un número de compra.");
+		pv= new PantallaInicio("ERROR en Vista de compra: No ha ingresado un nï¿½mero de compra.");
 	panel_aplicacion.add(pv);}
 
 		
-		
+if (historyToken.equals(PANTALLA_VENCIMIENTOS)) {
+	panel_aplicacion.clear();
+
+			panel_aplicacion.add(new PantallaVencimientos());
+			Window.setTitle("Reporte de vencimientos Ordenable");
+
+}
+
+if (historyToken.equals(PANTALLA_VENCIMIENTOSORD)) {
+	panel_aplicacion.clear();
+
+			panel_aplicacion.add(new PantallaVencimientosOrd());
+			Window.setTitle("Reporte de vencimientos");
+
+}
+	
+if (historyToken.equals(PANTALLA_PRECIOS)) {
+	panel_aplicacion.clear();
+
+			panel_aplicacion.add(new PantallaPrecios());
+			Window.setTitle("Reporte de Precios");
+
+}
 		
 //		else if (historyToken.startsWith(PANTALLA_BUSQUEDA_INTERNET)) {
 //			String[] s = historyToken.split("-");

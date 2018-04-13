@@ -20,7 +20,7 @@ public class CorreoE {
 //    static String To = "reclarinette2002@yahoo.com.ar";
     
 
-    public String Subject;// = "ATENCIÓN: Productos con vencimiento próximo...";// + new Date().toString();
+    public String Subject;// = "ATENCIï¿½N: Productos con vencimiento prï¿½ximo...";// + new Date().toString();
     
   
      public void SendMail(String cuerpo_mail) throws RuntimeException {
@@ -29,8 +29,8 @@ public class CorreoE {
 //	    LectorPropiedades.
 
 		try {
-			Username = LectorPropiedades.obtener_valor("Username");					
-			 PassWord = LectorPropiedades.obtener_valor("PassWord");
+			Username = "alarma.vencimientos";//LectorPropiedades.obtener_valor("Username");					
+			 PassWord = "laquevenga";//LectorPropiedades.obtener_valor("PassWord");
 		     To = LectorPropiedades.obtener_valor("To");	    
 		     Subject = LectorPropiedades.obtener_valor("Subject");
 		    
@@ -72,7 +72,7 @@ public class CorreoE {
             message.setText(Mensage, "utf-8", "html");
 
             Transport.send(message);
-    		System.out.println("Salgo del sendmail y supuestamente envió el correo !!!");
+    		System.out.println("Salgo del sendmail y supuestamente enviÃ³ el correo !!!");
 
 
         } catch (MessagingException e) {
@@ -82,18 +82,18 @@ public class CorreoE {
      
      
      
-     /** Envía un correo electrónico con el MIME type de tipo texto y el subtipo
+     /** Envï¿½a un correo electrï¿½nico con el MIME type de tipo texto y el subtipo
  	 * indicado.
  	 * @param from El From.
  	 * @param receptores Direcciones de los receptores, separadas por coma.
  	 * @param receptores_bcc Direcciones de recpetores con copia oculta,
- 	 * separados por coma. Si es <code>null</code> no se envía copia oculta
+ 	 * separados por coma. Si es <code>null</code> no se envï¿½a copia oculta
  	 * a nadie.
  	 * @param subject El subject.
  	 * @param texto El cuerpo del mensaje.
  	 * @param headers Arreglo de headers adicionales. Puede ser
  	 * <code>null</code> si no se van a usar headers adicionales.
- 	 * @param charset Codificación del texto pasado cómo parámetro 
+ 	 * @param charset Codificaciï¿½n del texto pasado cï¿½mo parï¿½metro 
  	 * (por ej. "iso-8859-1", "utf-8").
  	 * @param subtipo_mime Subtipo del MIME type texto (por ej.: "plain", "html",
  	 * etc.).
@@ -136,8 +136,8 @@ public class CorreoE {
  	/** Toma una lista de direcciones separadas por coma y devuelve un arreglo
  	 * de {@link InternetAddress}.
  	 * @param receptores La lista de receptores separados por coma.
- 	 * @return Ídem.
- 	 * @throws AddressException Si alguna dirección no es tiene el formato
+ 	 * @return ï¿½dem.
+ 	 * @throws AddressException Si alguna direcciï¿½n no es tiene el formato
  	 * correcto.
  	 */
  	private static InternetAddress[] separar_direcciones(String receptores)

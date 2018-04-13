@@ -1,2 +1,0 @@
-serviceClass: ar.gov.chris.client.GreetingService
-path: DF41A4F1BB94BD159ED105630BCD2DA1.gwt.rpc

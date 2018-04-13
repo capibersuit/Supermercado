@@ -7,7 +7,6 @@ CREATE TABLE productos
   id serial NOT NULL,
   nombre text,
   precio double precision,
-
   CONSTRAINT id_pk_productos PRIMARY KEY (id )
 )
 WITH (
@@ -250,7 +249,11 @@ update listas set fecha = '05/04/2017' where id = 29
 update rel_listas_productos set existe_todavia = false where id_compra = 24 and id_prod = 143
 
 
+------------------------05-12-2017   pobando ejecutar desde dentro de eclipse !!!!! --------------------------------------
 
+
+select * from productos
+select * from listas
 
 
 

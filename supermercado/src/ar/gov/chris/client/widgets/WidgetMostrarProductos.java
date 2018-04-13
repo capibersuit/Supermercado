@@ -1,19 +1,23 @@
 package ar.gov.chris.client.widgets;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import ar.gov.chris.client.Supermercado;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.pantalla.Pantalla;
 import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
+import ar.gov.chris.client.util.Mate;
 
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -70,6 +74,8 @@ public class WidgetMostrarProductos extends Composite {
 	float subtotal_compra=0;
 	private String nombre_prod_ant="";
 	
+	private CheckBox cb_marcar_desmarcar_todos;
+	
 
 
 	/** Crea un {@link WidgetMostrarProductos} a partir de los par�metros.
@@ -84,7 +90,7 @@ public class WidgetMostrarProductos extends Composite {
 //		cant_prod= lista_productos.size();
 
 		this.parent= parent;
-		this.desc_coto.setText(String.valueOf(descuento_coto));
+		this.desc_coto.setText(String.valueOf(Mate.poner_dos_decimales(descuento_coto)));
 		this.desc_coto_float= descuento_coto;
 		principal= new FlowPanel();
 		lista_prod= new FlexTable();
@@ -128,8 +134,22 @@ public class WidgetMostrarProductos extends Composite {
 		total_final_label= new Label();
 		total_final_label.addStyleName("LabelDistinguido");
 		
+		Label marcar_maviso_label= new Label("MM");
 
 		Label id_prod_label= new Label("ID");
+		
+		//*********************
+		cb_marcar_desmarcar_todos= new CheckBox();
+		
+		cb_marcar_desmarcar_todos.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				marcar_todos();
+			}
+		});
+		
+		//*****************
 
 		Label nombre_prod_label= new Label("Producto");
 		Label precio_label= new Label("Precio");
@@ -139,7 +159,12 @@ public class WidgetMostrarProductos extends Composite {
 		Label actualizar_label= new Label("Actualizar");
 		Label marcar_label= new Label("Marcar");
 		
+//		lista_prod.setWidget(0, next_col, marcar_maviso_label);
 		
+		lista_prod.setWidget(0, next_col, cb_marcar_desmarcar_todos);
+
+		
+		next_col++;
 		lista_prod.setWidget(0, next_col, id_prod_label);
 		next_col++;
 		lista_prod.setWidget(0, next_col, nombre_prod_label);
@@ -263,10 +288,10 @@ public class WidgetMostrarProductos extends Composite {
 							return;
 						}
 						//***
-						String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
+						String desc_coto_str= String.valueOf(Mate.poner_dos_decimales(desc_coto_float));
 						desc_coto_label.setText(desc_coto_str);
 						lista_prod.setWidget(next_row-2, 3, desc_coto_label);
-//						lista_prod.setText(next_row-2, 3, String.valueOf(poner_dos_decimales(desc_coto_float)));
+//						lista_prod.setText(next_row-2, 3, String.valueOf(Mate.poner_dos_decimales(desc_coto_float)));
 
 						//***
 						
@@ -280,7 +305,7 @@ public class WidgetMostrarProductos extends Composite {
 						
 						//***
 						
-						String desc_tarj_str= String.valueOf(poner_dos_decimales(desc_tarj));
+						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
 						desc_tarj_label.setText(desc_tarj_str);
 						lista_prod.setWidget(next_row-1, 3, desc_tarj_label);
 						
@@ -289,7 +314,7 @@ public class WidgetMostrarProductos extends Composite {
 						
 						
 						
-						String total_str= String.valueOf(poner_dos_decimales(total));
+						String total_str= String.valueOf(Mate.poner_dos_decimales(total));
 						total_final_label.setText(total_str);
 						lista_prod.setWidget(next_row, 3, total_final_label);
 						
@@ -328,13 +353,13 @@ public class WidgetMostrarProductos extends Composite {
 			next_row++;
 				
 		lista_prod.setWidget(next_row, 2, subtotal_literal_label);
-		String subtotal_compra_str= String.valueOf(poner_dos_decimales(subtotal_compra));
+		String subtotal_compra_str= String.valueOf(Mate.poner_dos_decimales(subtotal_compra));
 		subtotal_compra_label.setText(subtotal_compra_str);
 		lista_prod.setWidget(next_row, 3, subtotal_compra_label);
 		next_row++;
 
 		lista_prod.setWidget(next_row, 2, desc_coto_literal_label);
-		String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
+		String desc_coto_str= String.valueOf(Mate.poner_dos_decimales(desc_coto_float));
 		desc_coto_label.setText(desc_coto_str);
 		lista_prod.setWidget(next_row, 3, desc_coto_label);
 		next_row++;
@@ -345,7 +370,7 @@ public class WidgetMostrarProductos extends Composite {
 		total= total -(desc_tarj);
 
 		lista_prod.setWidget(next_row, 2, desc_tarj_literal_label);
-		String desc_tarj_str= String.valueOf(poner_dos_decimales(desc_tarj));
+		String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
 		desc_tarj_label.setText(desc_tarj_str);
 		lista_prod.setWidget(next_row, 3, desc_tarj_label);
 		next_row++;
@@ -357,15 +382,24 @@ public class WidgetMostrarProductos extends Composite {
 //			total= total - (tot_aux/100*20);
 					
 		lista_prod.setWidget(next_row, 2, total_literal_label);
-		String total_str= String.valueOf(poner_dos_decimales(total));
+		String total_str= String.valueOf(Mate.poner_dos_decimales(total));
 		total_final_label.setText(total_str);
 		lista_prod.setWidget(next_row, 3, total_final_label);
 	}
 
 
-
+	/**
+	 * 
+	 * @param titulo
+	 * @param parent
+	 * @param prod
+	 * @param resetear_coordenadas
+	 */
 	public void insertar_producto(String titulo, final Pantalla parent,
 			final DatosProducto prod, boolean resetear_coordenadas) {
+		
+		CheckBox check_quitar= new CheckBox();
+
 		
 		if(resetear_coordenadas) {
 			
@@ -443,7 +477,7 @@ public class WidgetMostrarProductos extends Composite {
 						lista_prod.getRowFormatter().setVisible(row_a_marcar, false);
 				}
 				prod.setEsta_marcada(!marcada);
-				((PantallaVistaDeCompra)parent).actualizar_producto(prod);
+				((PantallaVistaDeCompra)parent).actualizar_producto(prod, true);
 				
 				
 			}
@@ -457,6 +491,14 @@ public class WidgetMostrarProductos extends Composite {
 		
 		//*************************
 		
+		check_quitar.setFormValue(String.valueOf(prod.getId()));
+		
+//		check_quitar.setFormValue(String.valueOf(next_row));
+
+		
+		lista_prod.setWidget(next_row, next_col, check_quitar);
+		next_col++;
+
 		lista_prod.setText(next_row, next_col, String.valueOf(prod.getId()));
 		next_col++;
 		
@@ -465,7 +507,7 @@ public class WidgetMostrarProductos extends Composite {
 		
 		float precio= prod.getPrecio();
 		
-		precio = poner_dos_decimales(precio);
+		precio = Mate.poner_dos_decimales(precio);
 		
 //		subtotal_compra+= precio;
 		
@@ -481,7 +523,7 @@ public class WidgetMostrarProductos extends Composite {
 			
 //				precio_total= (float) (Math.round(precio_total*100)/100.0d);
 			
-			lista_prod.setText(next_row, next_col, String.valueOf(poner_dos_decimales(precio_total)));
+			lista_prod.setText(next_row, next_col, String.valueOf(Mate.poner_dos_decimales(precio_total)));
 			next_col++;
 		}
 		lista_prod.setWidget(next_row, next_col, btn_borrar);
@@ -519,14 +561,22 @@ public class WidgetMostrarProductos extends Composite {
 			cant_prod_label.setText("Cantidad de productos registrados: " + cant_prod);
 				
 	}
-
-
-
-	private float poner_dos_decimales(float precio_total) {
-		return (float) (Math.round(precio_total*100)/100.0d);
-	}
-
-
+	
+	
+//	public marcar_filas() {
+//		if(prod.isEsta_marcada()) {
+//			if(((PantallaVistaDeCompra)parent).isVer_marcados())
+//				lista_prod.getRowFormatter().setStyleName(next_row, "ComplejidadMedia");
+//			else
+//				lista_prod.getRowFormatter().setVisible(next_row, false);
+//		} else {
+//			lista_prod.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
+//		}
+//	}
+//
+//	private float Mate.poner_dos_decimales(float precio_total) {
+//		return (float) (Math.round(precio_total*100)/100.0d);
+//	}
 
 	public void remover_producto(String nombre) {
 
@@ -541,7 +591,7 @@ public class WidgetMostrarProductos extends Composite {
 			for(int i = 1; i < filas_de_la_lista; i++) {
 
 				try {
-					String nombre_prod= lista_prod.getText(i, 1);
+					String nombre_prod= lista_prod.getText(i, 2);
 										
 					int fila = 0;
 					if(nombre.equalsIgnoreCase(nombre_prod)) {
@@ -550,14 +600,14 @@ public class WidgetMostrarProductos extends Composite {
 						if(parent instanceof PantallaVistaDeCompra) {
 						//--------------------------------------------------------------
 
-						String precio_prod_total= lista_prod.getText(i, 4);
+						String precio_prod_total= lista_prod.getText(i, 5);
 
 
 						subtotal_compra= subtotal_compra- Float.parseFloat(precio_prod_total);
-						String subtotal_compra_str= String.valueOf(poner_dos_decimales(subtotal_compra));
+						String subtotal_compra_str= String.valueOf(Mate.poner_dos_decimales(subtotal_compra));
 						subtotal_compra_label.setText(subtotal_compra_str);
 						
-						String desc_coto_str= String.valueOf(poner_dos_decimales(desc_coto_float));
+						String desc_coto_str= String.valueOf(Mate.poner_dos_decimales(desc_coto_float));
 						desc_coto_label.setText(desc_coto_str);
 						
 						
@@ -566,13 +616,13 @@ public class WidgetMostrarProductos extends Composite {
 						float desc_tarj=tot_aux/100*20;
 						total= total -(desc_tarj);
 
-						String desc_tarj_str= String.valueOf(poner_dos_decimales(desc_tarj));
+						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
 						desc_tarj_label.setText(desc_tarj_str);
 						
 
 
 									
-						String total_str= String.valueOf(poner_dos_decimales(total));
+						String total_str= String.valueOf(Mate.poner_dos_decimales(total));
 						total_final_label.setText(total_str);
 						}
 						//--------------------------------------------------------------
@@ -596,16 +646,18 @@ public class WidgetMostrarProductos extends Composite {
 	}
 	
 	
-public void actualizar_producto(DatosProducto datos) {
+public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 		
 		int filas_de_la_lista= lista_prod.getRowCount();
+	
+		int POS_COL_ID_PROD=1;
 		
 		for(int i = 1; i < filas_de_la_lista; i++) {
 		
-			String id_prod= lista_prod.getText(i, 0);
+			String id_prod= lista_prod.getText(i, POS_COL_ID_PROD);
 			
 			int fila = 0;
-			int col = 1;
+			int col = POS_COL_ID_PROD + 1;
 
 			if(datos.getId()==(Integer.parseInt(id_prod))) {
 				fila= i; 
@@ -615,9 +667,9 @@ public void actualizar_producto(DatosProducto datos) {
 				
 				float precio= datos.getPrecio();
 				
-				precio = poner_dos_decimales(precio);
+				precio = Mate.poner_dos_decimales(precio);
 				
-				subtotal_compra+= precio;
+//				subtotal_compra+= precio;
 				
 				lista_prod.setText(fila, col, String.valueOf(precio));
 				col++;
@@ -628,18 +680,78 @@ public void actualizar_producto(DatosProducto datos) {
 					lista_prod.setText(fila, col, ((datos.getCantidad()!=0) ? String.valueOf(datos.getCantidad()) : "NA"));
 					col++;
 
-					float precio_total= datos.getPrecio() * datos.getCantidad();
+					float precio_total_anterior= datos.getPrecio_anterior() * datos.getCantidad_anterior();
+					
+					float precio_total_nuevo= datos.getPrecio() * datos.getCantidad();
+
 					
 //						precio_total= (float) (Math.round(precio_total*100)/100.0d);
 					
-					lista_prod.setText(fila, col, String.valueOf(poner_dos_decimales(precio_total)));
+					lista_prod.setText(fila, col, String.valueOf(Mate.poner_dos_decimales(precio_total_nuevo)));
 					col++;
+					
+					
+					//***************-------------------------------
+					if(!es_marcar) {
+
+						String precio_prod_total= lista_prod.getText(i, 5);
+
+						subtotal_compra= subtotal_compra- precio_total_anterior;
+
+						subtotal_compra= subtotal_compra + Float.parseFloat(precio_prod_total);
+						String subtotal_compra_str= String.valueOf(Mate.poner_dos_decimales(subtotal_compra));
+						subtotal_compra_label.setText(subtotal_compra_str);
+
+						String desc_coto_str= String.valueOf(Mate.poner_dos_decimales(desc_coto_float));
+						desc_coto_label.setText(desc_coto_str);
+
+
+						float tot_aux= (subtotal_compra-desc_coto_float);
+						total= tot_aux;
+						float desc_tarj=tot_aux/100*20;
+						total= total -(desc_tarj);
+
+						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
+						desc_tarj_label.setText(desc_tarj_str);
+
+						String total_str= String.valueOf(Mate.poner_dos_decimales(total));
+						total_final_label.setText(total_str);
+
+					}
+					//**************------------------------------------
 								
 				break;
 				}
 			}
 		}
-//		insertar_final();
+//		insertar_final(2);
 	}
+
+/** Devuelve los ids las productos seleccionadas para quitar/marcar de la compra.
+ * 
+ * @return Ídem.
+ */
+public Set<String> obtener_seleccionados(){
+	HashSet<String> res= new HashSet<String>();
+	for (int i= 1; i < lista_prod.getRowCount()-4; i++){
+		CheckBox cb= (CheckBox) lista_prod.getWidget(i, 0);
+		if (cb.getValue()){
+			res.add(cb.getFormValue());
+		}
+	}
+	return res;
+}
+
+public Set<String> marcar_todos(){
+	HashSet<String> res= new HashSet<String>();
+	for (int i= 1; i < lista_prod.getRowCount()-4; i++){
+		CheckBox cb= (CheckBox) lista_prod.getWidget(i, 0);
+		if(cb_marcar_desmarcar_todos.getValue())
+			cb.setValue(true);
+		else 
+			cb.setValue(false);
+	}
+	return res;
+}
 
 }

@@ -1,6 +1,8 @@
 package ar.gov.chris.client.pantalla;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -32,6 +34,7 @@ import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 import ar.gov.chris.client.util.JavaScript;
+import ar.gov.chris.client.util.Mate;
 
 public class PantallaVistaDeCompra extends PantallaInicio {
 
@@ -44,6 +47,9 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 
 	private boolean ver_marcados;
 	private Button btn_ver_marcados;
+	private Button btn_marcar_productos;
+	private Button btn_desmarcar_productos;
+
 
 	private Button btn_ir_a_inicio;
 	private Button btn_agregar_prod;
@@ -216,12 +222,23 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		   h.add(vp_prod);
 		   h.add(cant_prod);
 		   btn_ver_marcados= new Button("Ver/Ocultar marcados");
+		   btn_marcar_productos= new Button("Marcar productos");
+		   btn_desmarcar_productos= new Button("Desmarcar productos");
 
 		   btn_agregar_prod= new Button("Agregar producto");
 		   
 		   panel.add(h);
 		   
+		   //*************************************************************************************************************************************
+		   //TODO: Hoy 03-02-2018 me doy cuenta que el eclipse me subraya desc_coto de naranja diciendome:
+		   // "The value of the local variable desc_coto is not used"
+		   // y efectivamente YO NO veo donde corno uso esta variable... PERO, si comento/borro esta linea
+		   // cuando cargo la pantalla de vista de una compra, no se dibuja la pantalla mas alla del texbox
+		   // del descuento, justamente
+		   
 		   float desc_coto= get_descuento_coto(id_compra);
+		   
+		 //***************************************************************************************************************************************
 //		   prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, desc_coto);
 //		   panel.add(h);
 //		   panel.add(boton_imprimir);
@@ -242,6 +259,35 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	
 	private void agregar_handlers() {
 		
+		btn_marcar_productos.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
+				Set<String> prods_seleccionadas= prod.obtener_seleccionados();
+				if (prods_seleccionadas.size() > 0) {
+//						marcar_varios(prods_seleccionadas);
+						marcar_productos_afectados(prods_seleccionadas);
+
+					
+				} else {
+					MensajeAlerta.mensaje_error("No se han seleccionado productos " +
+					"para marcar");
+				}
+			}
+		});
+		
+		btn_desmarcar_productos.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
+				Set<String> prods_seleccionadas= prod.obtener_seleccionados();
+				if (prods_seleccionadas.size() > 0) {
+//						marcar_varios(prods_seleccionadas);
+						desmarcar_productos_afectados(prods_seleccionadas);
+
+					
+				} else {
+					MensajeAlerta.mensaje_error("No se han seleccionado productos " +
+					"para desmarcar");
+				}
+			}
+		});
 		btn_agregar_prod.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
@@ -283,6 +329,10 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		});
 	}
 	
+//	protected void marcar_varios(Set<String> prods_seleccionadas) {
+//		prod.
+//	}
+
 	protected void mostrar_ocultar_prod_en_lista(boolean ver_marcados) {
 		{
 			
@@ -363,7 +413,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			tabla_productos+= prod.getCantidad() + "</td>";
 			
 			tabla_productos+= "<td align=\"center\">";
-			tabla_productos+= poner_dos_decimales(prod.getPrecio()) + "</td>";
+			tabla_productos+= Mate.poner_dos_decimales(prod.getPrecio()) + "</td>";
 			
 			tabla_productos+=  "</tr>";
 		}
@@ -373,9 +423,10 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 
 	//TODO: Esta funcion esta repetida en WidgetMostrarProductos
 	//      ver de dejarla en un solo sitio.
-	private float poner_dos_decimales(float precio_total) {
-		return (float) (Math.round(precio_total*100)/100.0d);
-	}
+//	private float poner_dos_decimales(float precio_total) {
+//		return (float) (Math.round(precio_total*100)/100.0d);
+//	}
+	
 	private void agregrar_prod_en_lista() {
 		final DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(sb_productos.getText());
@@ -429,16 +480,16 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	}
 
 
-	public void actualizar_producto(final DatosProducto datos_prod) {
+	public void actualizar_producto(final DatosProducto datos_prod, final boolean es_marcar) {
 
-		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), new AsyncCallback<Void>(){
+		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), false, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
 				
-				prod.actualizar_producto(datos_prod);
+				prod.actualizar_producto(datos_prod, es_marcar);
 
 //				Window.Location.reload();
 			}
@@ -514,6 +565,12 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto, fecha_compra);
 				  
 					HorizontalPanel hp = new HorizontalPanel();
+					
+					hp.add(btn_marcar_productos);
+
+					hp.add(btn_desmarcar_productos);
+
+
 					hp.add(boton_imprimir);
 					hp.add(btn_ver_marcados);
 					hp.add(btn_agregar_prod);
@@ -532,6 +589,59 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	});
 		return descuento_coto;
 }
+	
+	/** Quita a las personas afectadas indicadas del caso.
+	 * 
+	 * @param ids Ids de las personas a quitar.
+	 */
+	public void marcar_productos_afectados(final Set<String> ids) {
+		
+//		Set<String> solo_ids= new HashSet<String>();
+		proxy_prod.marcar_desmarcar_productos(String.valueOf(id_compra), ids, true, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+						"el producto de la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				
+//				prod.actualizar_producto(datos_prod);
+
+				Window.Location.reload();
+			}
+			
+		});	
+		
+		
+//		
+//		String ids_personas= "";
+//		for(Iterator<String> iter= ids.iterator(); iter.hasNext();) {
+//			ids_personas+= iter.next() + " - ";
+//		}
+		
+		
+	}
+	
+	
+	/** Quita a las personas afectadas indicadas del caso.
+	 * 
+	 * @param ids Ids de las personas a quitar.
+	 */
+	public void desmarcar_productos_afectados(final Set<String> ids) {
+		
+		proxy_prod.marcar_desmarcar_productos(String.valueOf(id_compra), ids,  false, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+						"el producto de la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				
+//				prod.actualizar_producto(datos_prod);
+
+				Window.Location.reload();
+			}
+			
+		});	
+	}
 	
 	/** Se crea el proxy_carga para comunicarse con el servidor.
 	 */

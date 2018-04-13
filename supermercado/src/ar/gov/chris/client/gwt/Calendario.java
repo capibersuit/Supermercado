@@ -104,7 +104,7 @@ public boolean clearCell(int row, int column) {
 };
 private Date date= new Date();
 private final String[] days = new String[] { "Domingo", "Lunes", "Martes",
-	"Miércoles", "Jueves", "Viernes", "Sábado" };
+	"Miércoles", "Jueves", "Viernes", "Sabado" };
 private final String[] months = new String[] { "Enero", "Febrero", "Marzo",	"Abril",
 	"Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre",
 	"Diciembre" };
@@ -147,7 +147,7 @@ int firstDay= new Date(year - 1900, month, 1).getDay();
 int numOfDays= getDaysInMonth(year, month);
 int num_filas= 7;
 if ((numOfDays==31 && firstDay>4) || (numOfDays==30 && firstDay>5)) {
- // Necesitamos una fila más.
+ // Necesitamos una fila mas.
  num_filas++;
 }
 grid.resizeRows(num_filas);

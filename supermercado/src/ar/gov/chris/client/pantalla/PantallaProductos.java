@@ -126,7 +126,7 @@ public class PantallaProductos extends PantallaInicio {
 			}
 			public void onSuccess(Void result) {
 				
-				productos.actualizar_producto(datos_prod);
+				productos.actualizar_producto(datos_prod, false);
 				
 //				Window.Location.reload();
 //				

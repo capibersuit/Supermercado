@@ -2,19 +2,28 @@ package ar.gov.chris.bin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
+import ar.gov.chris.client.clases.FechaVencComparator;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.clases.CorreoE;
+import ar.gov.chris.server.clases.LectorPropiedades;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
+import ar.gov.chris.server.excepciones.ExcepcionIO;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 
 public class AgenteVencimientos {
 
 	final private static long SLEEP_TIME= 60000;
+	
+	private static String Mensage="";
+	private static String Mensage_fin="";
 
 	public static void main (String args[]) {
 
@@ -36,16 +45,23 @@ public class AgenteVencimientos {
 		try {
 			//while (true) {
 
-			Set<DatosProducto> productos= buscar_productos_lista();
+			LinkedList<DatosProducto> productos= buscar_productos_lista();
 
 			if(productos.size() > 0) {
 				StringBuffer cuerpo_mail = new StringBuffer();
+				
+				Mensage = LectorPropiedades.obtener_valor("Mensage");	
+				Mensage_fin = LectorPropiedades.obtener_valor("MensageFin");	
 
-				cuerpo_mail.append("Estimado habitante de nuestro hogar, se le informa que los siguientes productos estan próximos a vencer..."
-						+ ", ¡por favor, tenga a bien consumirlos antes de las fechas indicadas! y por su puesto ¡NO ME HABLEN DE TIRAR!");
 
+//				cuerpo_mail.append("Estimado habitante de nuestro hogar, se le informa que los siguientes productos estan prÃ³ximos a vencer..."
+//						+ ", Â¡por favor, tenga a bien consumirlos antes de las fechas indicadas! y por su puesto Â¡NO ME HABLEN DE TIRAR!");
+
+				cuerpo_mail.append(Mensage);
+				
 				cuerpo_mail.append("<br><br>");
-				cuerpo_mail.append("Desde ya muchas gracias por su colaboración.");
+//				cuerpo_mail.append("Desde ya muchas gracias por su colaboraciÃ³n.");
+				cuerpo_mail.append(Mensage_fin);
 				cuerpo_mail.append("<br><br>");
 
 
@@ -78,12 +94,30 @@ public class AgenteVencimientos {
 			System.err.println(e.getMessage());
 		}  /*catch (InterruptedException e) {
 			System.err.println(e.getMessage());
-		} */
+		} */ catch (ExcepcionIO e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
+	
+	//TODO: Este metodo esta copiado de la clase pantalla...
+	protected static LinkedList<DatosProducto> ordenar_vemcimientos(Set<DatosProducto> lista_prod) {
+		LinkedList<DatosProducto> lista_para_ordenar= new LinkedList<DatosProducto>();
+		//Obtengo todos los datos de las productos y los agrego a una lista.
+		for (Iterator<DatosProducto> iter = lista_prod.iterator(); iter.hasNext();) {
+			DatosProducto prods = iter.next();
+			lista_para_ordenar.add(prods);
+		}	
+		//Ordeno por fecha de venc del producto la lista con los datos de los productos que obtuve.
+		Collections.sort(lista_para_ordenar, new FechaVencComparator());
+		return lista_para_ordenar;
+	}
 
-	public static Set<DatosProducto> buscar_productos_lista() throws ExcepcionBD, ExcepcionNoExiste{
+	public static LinkedList<DatosProducto> buscar_productos_lista() throws ExcepcionBD, ExcepcionNoExiste{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
+		LinkedList<DatosProducto> datos_ordenados= new LinkedList<DatosProducto>();
+
 		ConexionBD con= new ConexionBD();
 		con.begin_transaction();
 
@@ -104,8 +138,12 @@ public class AgenteVencimientos {
 				//				datos.setCantidad(rs.getInt("cant"));
 				//				datos.setEsta_marcada(rs.getBoolean("esta_marcada"));
 				datos.setFechaVenc(rs.getDate("fecha_venc"));
+				
+				
 
 				datos_conj.add(datos);
+				
+				datos_ordenados= ordenar_vemcimientos(datos_conj);
 			}
 
 		}  catch (SQLException e) {
@@ -121,7 +159,7 @@ public class AgenteVencimientos {
 				System.err.println(ex.getMessage());
 			}
 		}
-		return datos_conj;
+		return datos_ordenados;
 	}
 
 }
