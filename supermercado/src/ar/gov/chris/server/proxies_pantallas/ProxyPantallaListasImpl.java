@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.server.bd.ConexionBD;
@@ -18,6 +19,7 @@ import ar.gov.chris.server.bd.PoolDeConexiones;
 import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
+import ar.gov.chris.server.genericos.contexto.ContextoDeSeguridad;
 import ar.gov.chris.shared.Sanitizador;
 
 @SuppressWarnings("serial")
@@ -63,12 +65,15 @@ ProxyPantallaListas {
 	}
 
 	@Override
-	public Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD{
+	public Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosLista> datos_conj= new HashSet<DatosLista>();
 		ConexionBD con= this.obtener_transaccion();
 		Boolean commit= false;
 		
 		try {
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
 			ResultSet rs= con.select("SELECT * FROM listas");
 			
 			while (rs.next()) {

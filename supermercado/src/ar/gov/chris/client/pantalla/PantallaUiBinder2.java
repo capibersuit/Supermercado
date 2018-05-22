@@ -4,6 +4,7 @@
 package ar.gov.chris.client.pantalla;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -18,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author chris
  *
  */
-public class PantallaUiBinder2 extends Composite implements HasText {
+public class PantallaUiBinder2 extends Composite {
 
 	private static PantallaUiBinder2UiBinder uiBinder = GWT
 			.create(PantallaUiBinder2UiBinder.class);
@@ -43,30 +44,21 @@ public class PantallaUiBinder2 extends Composite implements HasText {
 	}
 
 	@UiField
-	Button button;
+	InputElement inputEmail;
+	
+	@UiField
+	InputElement inputPassword;
 
 	public PantallaUiBinder2(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		// Can access @UiField after calling createAndBindUi
-		button.setText(firstName);
+		
 	}
 
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		Window.alert("Hello!");
-	}
+//	@UiHandler("button")
+//	void onClick(ClickEvent e) {
+//		Window.alert("Hello!");
+//	}
 
-	public void setText(String text) {
-		button.setText(text);
-	}
-
-	/**
-	 * Gets invoked when the default constructor is called
-	 * and a string is provided in the ui.xml file.
-	 */
-	public String getText() {
-		return button.getText();
-	}
 
 }

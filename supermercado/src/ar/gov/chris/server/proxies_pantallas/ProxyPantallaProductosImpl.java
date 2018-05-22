@@ -13,6 +13,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionYaExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
@@ -21,6 +22,7 @@ import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 import ar.gov.chris.server.excepciones.ExcepcionYaExiste;
+import ar.gov.chris.server.genericos.contexto.ContextoDeSeguridad;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
 
@@ -111,13 +113,17 @@ ProxyPantallaProductos {
 
 
 	@Override
-	public Set<DatosProducto> buscar_productos() throws GWT_ExcepcionBD{
+	public Set<DatosProducto> buscar_productos() throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= true;	
 
 
 		try {
+			
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
 			ResultSet rs= con.select("SELECT * FROM productos ORDER BY nombre");
 
 			while (rs.next()) {
@@ -179,13 +185,18 @@ ProxyPantallaProductos {
 	}
 
 	@Override
-	public Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD{
+	public Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= true;	
 
 
+
 		try {
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
+			
 			String query= "SELECT p.id, p.nombre, rlp.fecha_venc, rlp.existe_todavia, rlp.id_compra, l.fecha "
 					+ " FROM rel_listas_productos rlp, productos p, listas l "
 					+ "where rlp.id_prod = p.id AND rlp.id_compra= l.id and fecha_venc is not null "+ (solo_existentes? " and existe_todavia":"") +"  order by fecha_venc";

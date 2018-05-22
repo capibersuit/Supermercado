@@ -48,6 +48,16 @@
     <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaPrecios</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ProxyPantallaLoguearse</servlet-name>
+    <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaLoguearseImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ProxyPantallaLoguearse</servlet-name>
+    <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaLoguearse</url-pattern>
+  </servlet-mapping>
+  
   <!-- 
   <servlet>
     <servlet-name>ProxyPantallaListas2</servlet-name>

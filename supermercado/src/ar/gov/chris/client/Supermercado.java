@@ -5,34 +5,20 @@ import java.util.HashMap;
 import ar.gov.chris.client.pantalla.Pantalla;
 import ar.gov.chris.client.pantalla.PantallaInicio;
 import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
-import ar.gov.chris.client.pantalla.PantallaListas;
+import ar.gov.chris.client.pantalla.PantallaLoguearseSimple;
 import ar.gov.chris.client.pantalla.PantallaPrecios;
 import ar.gov.chris.client.pantalla.PantallaProductos;
-import ar.gov.chris.client.pantalla.PantallaUiBinder;
+import ar.gov.chris.client.pantalla.PantallaUiBinder2;
 import ar.gov.chris.client.pantalla.PantallaVencimientos;
 import ar.gov.chris.client.pantalla.PantallaVencimientosOrd;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
-import ar.gov.chris.shared.FieldVerifier;
-
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -56,6 +42,12 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 	public static final String PANTALLA_PRECIOS= "PantallaPrecios";
 	
 	public static final String PANTALLA_UIBINDER2= "PantallaUiBinder2";
+	
+	public static final String PANTALLA_LOGUEARSE= "PantallaLoguearse";
+	
+	public static final String PANTALLA_LOGUEARSE_SIMPLE= "PantallaLoguearseSimple";
+
+
 
 
 	
@@ -74,8 +66,8 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-//		RootLayoutPanel.get().add(panel_aplicacion);
-		RootPanel.get("menu").add(panel_aplicacion);
+		RootLayoutPanel.get().add(panel_aplicacion);
+//		RootPanel.get("menu").add(panel_aplicacion);
 	
 						
 		//Add history listener
@@ -84,7 +76,9 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 		// Inicialmente muestro la pantalla de logueo.
 		String initToken= History.getToken();
 		if (initToken.length() == 0)
-			initToken= PANTALLA_INICIO;
+//			initToken= PANTALLA_LOGUEARSE;
+			initToken= PANTALLA_LOGUEARSE_SIMPLE;
+
 		History.newItem(initToken);
 		History.fireCurrentHistoryState();
 	}
@@ -100,8 +94,17 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 		if (historyToken.equals(PANTALLA_UIBINDER2)) {
 			panel_aplicacion.clear();
 
-			panel_aplicacion.add(new PantallaUiBinder("Christian"));
+			panel_aplicacion.add(new PantallaUiBinder2());
 			Window.setTitle("Vista de productos");
+		}
+		
+		if (historyToken.equals(PANTALLA_LOGUEARSE_SIMPLE)) {
+			panel_aplicacion.clear();
+
+//			panel_aplicacion.add(new PantallaLoguearse());
+			panel_aplicacion.add(new PantallaLoguearseSimple());
+
+			Window.setTitle("Pantalla de logueo");
 		}
 	
 		if (historyToken.equals(PANTALLA_INICIO)) {

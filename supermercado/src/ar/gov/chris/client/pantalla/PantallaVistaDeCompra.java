@@ -194,7 +194,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 							
 		 
 		 public void onFailure(Throwable caught) {
-			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
+			 MensajeAlerta.mensaje_error("Error al buscar los productos disponibles para agregar a esta compra: " + caught.getMessage());
 
 		 }
 	 });
@@ -251,7 +251,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	}
 		 public void onFailure(Throwable caught) {
 			 
-			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
+			 MensajeAlerta.mensaje_error("Error al buscar los productos de la compra: " + id_compra + " " +caught.getMessage());
 
 			 }
 		});
