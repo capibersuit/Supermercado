@@ -1,0 +1,99 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.logo {
+	background: rgba(0, 0, 0, 0.35) none repeat scroll 0 0;
+	border: 2px solid #fea998;
+	border-radius: 8px;
+	margin: 20px auto;
+	-webkit-border-bottom-right-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-moz-border-radius-bottomright: 8px;
+	-moz-border-radius-bottomleft: 8px;
+	color: #A4CCEC;
+}
+
+.logo h1 {  font-family: 'Raleway', Arial, sans-serif; font-size: 30px;   text-align: center; color: #76ebdd; }
+
+.logo h2 {  font-family: 'Raleway', Arial, sans-serif; font-size:25px;   text-align: center;  color:#fff ; padding: 0 10px 0 10px ;}
+
+.logo h3 {  font-family: 'Raleway', Arial, sans-serif; font-size:18px;   text-align: center;  color:#544674 ; padding: 0 10px 0 10px ;}
+
+.logo h4 {  font-family: 'Raleway', Arial, sans-serif; font-size:18px;   text-align: center;  color:#fff; padding: 0 10px 10px 10px ;}
+
+.logo p {  font-family: 'Raleway', Arial, sans-serif; text-align: center;  color:#fff; padding: 0 10px 10px 10px ;}
+
+.logo label {  font-family: 'Raleway', Arial, sans-serif; text-align: center;  color:#fff; padding: 0 10px 10px 10px ;}
+
+.logo .btn-primary{
+	background-color: #2a0f6a;
+	border-color: #fea998;
+
+}
+
+.logo .btn-primary:hover {
+  color: #fff;
+  background-color: #9990ad;
+  	border-color: #fea998;
+}
+
+.description {
+    margin: 10px auto;
+	padding: 0 10px 10px 10px;
+	color: #fff;
+
+	background: rgba(0, 0, 0, 0.40);
+	-moz-border-radius: 8px ; -webkit-border-radius: 8px ; border-radius: 8px ;
+	border: 2px solid #fea998;
+	 font-size: 12px;
+
+}
+
+.container .btn-default{
+	background-color: #fabcaf;
+	border-color: #fea998;
+	font-weight: bold;
+	margin: 10px 0 10px 0;
+}
+
+.panel-heading {
+	font-weight: bold;
+	background-color:  #e8836f;
+	color: #fff;
+	border: 1px solid #fea998;
+	text-align: center;
+}
+
+.panel-body {
+	background-color:  #fff;
+	border: 1px solid #fea998;
+}
+
+.centerbtn{
+    position:absolute;
+    left:0;
+    text-align:center;
+    margin:auto;
+}
+
+.enmarcar{
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 4px solid #766995;
+	padding: 20px;
+}
+
+.col-center{
+    margin: 0 auto 0 auto;
+}
+
+.errors {
+	background-color: rgb(242, 222, 222);
+	border-color: rgb(235, 204, 209);
+	border-radius: 4px;
+	color: rgb(169, 68, 66);
+	font-size: 13px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
