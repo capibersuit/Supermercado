@@ -1,29 +1,19 @@
 package ar.gov.chris.client.pantalla;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
-import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.datos.DatosReprtePrecios;
-import ar.gov.chris.client.interfaces.ProxyPantallaPreciosAsync;
-import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
-import ar.gov.chris.client.widgets.WidgetAgregarLista;
-import ar.gov.chris.client.widgets.WidgetMostrarListas;
 import ar.gov.chris.client.widgets.WidgetMostrarPrecios;
-import ar.gov.chris.client.widgets.WidgetMostrarVencimientos;
-
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.Label;
 
 public class PantallaPrecios extends PantallaInicio {
 	
-private int CANT_ANIOS;
+//private int CANT_ANIOS;
 
 	protected LinkedList<DatosReprtePrecios>  datos_precios16;
 	protected LinkedList<DatosReprtePrecios>  datos_precios17;
@@ -61,6 +51,8 @@ private int CANT_ANIOS;
 //		CANT_ANIOS=2;
 		proxy_precios.buscar_precios("2015-12-31", "2017-01-01",new AsyncCallback<Set<DatosReprtePrecios>>(){
 			public void onFailure(Throwable caught) {
+				History.newItem("PantallaLoguearseSimple-Precios");
+		
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
 						"los precios: " + caught.getMessage());
 			}

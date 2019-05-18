@@ -87,6 +87,15 @@ public class WidgetMostrarVencimientos extends Composite {
 			lista_prod.setText(next_row, next_col, prod.getNombre());
 			next_col++;
 			lista_prod.setText(next_row, next_col, prod.getFecha_venc().toString());
+			
+			
+			//*********************** 06-06-2018:  VER SI PUEDO DE ALGUNA MANERA AGREGAR UN TOOLTIP A UN PRODUCTO PARA DECIR
+			
+			// ******************* COSAS COMO POR EJEMPLO QUE DE LOS 4 SPALEN 1 VENCE EN UNA FECHA PERO LOS OTROS 3 EN OTRA !!!!!
+			
+//			lista_prod.setTitle("PROBANDO TOOLTIP!!!!!!");
+			
+			
 			next_col++;
 			lista_prod.setText(next_row, next_col, prod.isExiste()? "SI":"NO");
 			next_col++;

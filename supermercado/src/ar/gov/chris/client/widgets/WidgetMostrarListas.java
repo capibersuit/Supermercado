@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
+import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
+import ar.gov.chris.client.clases.Sucursal;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.util.Mate;
+import ar.gov.chris.client.util.Util;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -54,7 +57,11 @@ public class WidgetMostrarListas extends Composite {
 		//		btn_ir = new PushButton("Ver lista");
 		//		btn_ir = new PushButton(new Image("/supermercado/src/ar/gov/chris/client/widgets/boton-ir.png"));
 
+		Label id_compra_label= new Label("Id");
 		Label comentario_label= new Label("Comentario");
+		Label super_label= new Label("Super");
+		Label suc_label= new Label("Sucursal");
+
 		Label fecha_label= new Label("Fecha");
 
 		Label pagado_literal_label= new Label("Pagado");
@@ -64,14 +71,21 @@ public class WidgetMostrarListas extends Composite {
 		Label borrar_label= new Label("B");
 		Label actualizar_label= new Label("A");
 
-		listas.setWidget(0, 0, comentario_label);
-		listas.setWidget(0, 1, fecha_label);
+		listas.setWidget(0, 0, id_compra_label);
 
-		listas.setWidget(0, 2, pagado_literal_label);
+		listas.setWidget(0, 1, comentario_label);
+		
+		listas.setWidget(0, 2, super_label);
 
-		listas.setWidget(0, 3, id_lista_label);
-		listas.setWidget(0, 4, borrar_label);
-		listas.setWidget(0, 5, actualizar_label);
+		listas.setWidget(0, 3, suc_label);
+
+		listas.setWidget(0, 4, fecha_label);
+		
+		listas.setWidget(0, 5, pagado_literal_label);
+		listas.setWidget(0, 6, id_lista_label);
+		
+		listas.setWidget(0, 7, borrar_label);
+		listas.setWidget(0, 8, actualizar_label);
 
 		next_row= 1; 
 
@@ -130,8 +144,15 @@ public class WidgetMostrarListas extends Composite {
 				//			agregar_handler();
 
 				//			CheckBox check_quitar= new CheckBox("Quitar lineas");
-				listas.setText(next_row, 0, list.getComentario());
-				listas.setText(next_row, 1, list.getFecha().toString());
+				listas.setText(next_row, 0, String.valueOf(list.getId()));
+				listas.setText(next_row, 1, list.getComentario());
+				
+				String id_suc= String.valueOf(list.getId_sucursal());
+				
+				listas.setText(next_row, 2, Util.obtener_supermercado_de_sucursal(id_suc).obtener_descripcion());
+				listas.setText(next_row, 3, Util.mapear_sucursal_por_id(id_suc).obtener_descripcion());
+
+				listas.setText(next_row, 4, list.getFecha().toString());
 
 				Label pagado_label =new Label();
 				pagado_label.addStyleName("ComplejidadMedia");
@@ -140,12 +161,12 @@ public class WidgetMostrarListas extends Composite {
 
 				pagado_label.setText(pagado_str);
 
-				listas.setWidget(next_row, 2,  pagado_label);
+				listas.setWidget(next_row, 5,  pagado_label);
 
 
-				listas.setWidget(next_row, 3, btn_ir);
-				listas.setWidget(next_row, 4, btn_borrar);
-				listas.setWidget(next_row, 5, btn_actualizar);
+				listas.setWidget(next_row, 6, btn_ir);
+				listas.setWidget(next_row, 7, btn_borrar);
+				listas.setWidget(next_row, 8, btn_actualizar);
 
 				//		lista_lineas.setText(next_row, 2, prod.obtener_marca());
 				//		lista_lineas.setText(next_row, 3, prod.obtener_modelo());

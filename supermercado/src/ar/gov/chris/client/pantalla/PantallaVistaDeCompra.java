@@ -1,8 +1,6 @@
 package ar.gov.chris.client.pantalla;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -63,6 +61,10 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	protected Button boton_imprimir= new Button("Imprimir");
 	
 	private float descuento_coto;
+	
+	private Button btn_deshabilitar_botones;
+	protected boolean botones_habilitados;
+
 
 	public PantallaVistaDeCompra() {
 //		super();
@@ -160,6 +162,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 					public void onSuccess(DatosLista result) {
 						ver_marcados= result.isVer_marcados();
 						fecha_compra= result.getFecha();
+						botones_habilitados= result.isBotones_habilitados();
 						armar_pantalla_principal();
 						
 					}
@@ -182,7 +185,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			String numero= Integer.toString(intObj);
 			cant_prod.addItem(numero);
 		}
-	 proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>() {
+	 proxy_prod.buscar_productos(id_compra, new AsyncCallback<Set<DatosProducto>>() {
 		 
 		 public void onSuccess(Set<DatosProducto> lista_prod) {
 		  for (DatosProducto p : lista_prod) {
@@ -194,7 +197,9 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 							
 		 
 		 public void onFailure(Throwable caught) {
-			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
+				History.newItem("PantallaLoguearseSimple-PantallaVistaDeCompra-"+id_compra);
+
+			 MensajeAlerta.mensaje_error("Error al buscar los productos disponibles para agregar a esta compra: " + caught.getMessage());
 
 		 }
 	 });
@@ -224,8 +229,14 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		   btn_ver_marcados= new Button("Ver/Ocultar marcados");
 		   btn_marcar_productos= new Button("Marcar productos");
 		   btn_desmarcar_productos= new Button("Desmarcar productos");
+		   btn_deshabilitar_botones= new Button("Deshabilitar botones");
+		   
+
 
 		   btn_agregar_prod= new Button("Agregar producto");
+		   
+//			deshabilitar_botones(botones_habilitados);
+
 		   
 		   panel.add(h);
 		   
@@ -250,8 +261,9 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 //		   agregar_handlers();
 	}
 		 public void onFailure(Throwable caught) {
-			 
-			 MensajeAlerta.mensaje_error("Error: " + caught.getMessage());
+				History.newItem("PantallaLoguearseSimple-PantallaVistaDeCompra-"+id_compra);
+
+			 MensajeAlerta.mensaje_error("Error al buscar los productos de la compra: " + id_compra + " " +caught.getMessage());
 
 			 }
 		});
@@ -304,6 +316,8 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			 }
 		 });
 	    sb_productos.setFocus(true);
+	    sb_productos.setAccessKey('s');
+
 	    
 //	    btn_ir_a_inicio.addClickHandler(new ClickHandler() {
 //			
@@ -327,11 +341,41 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				mostrar_ocultar_prod_en_lista(!ver_marcados);
 				}
 		});
+	    
+	    btn_deshabilitar_botones.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
+				deshabilitar_botones(botones_habilitados);	
+			}
+		});
 	}
 	
 //	protected void marcar_varios(Set<String> prods_seleccionadas) {
 //		prod.
 //	}
+
+	protected void deshabilitar_botones(boolean botones_habilitados) {
+		btn_desmarcar_productos.setEnabled(botones_habilitados);
+		btn_ver_marcados.setEnabled(botones_habilitados);
+		btn_marcar_productos.setEnabled(botones_habilitados);
+		btn_agregar_prod.setEnabled(botones_habilitados);
+		this.botones_habilitados= !botones_habilitados;
+		prod.deshabilitar_todos_los_botones(botones_habilitados);
+		
+		proxy_listas.hab_deshab_botones(String.valueOf(id_compra),  botones_habilitados, new AsyncCallback<Void>(){
+			public void onFailure(Throwable caught) {
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+						"el producto de la lista: " + caught.getMessage());
+			}
+			public void onSuccess(Void result) {
+				
+//				prod.actualizar_producto(datos_prod);
+
+//				Window.Location.reload();
+			}
+			
+		});
+		
+	}
 
 	protected void mostrar_ocultar_prod_en_lista(boolean ver_marcados) {
 		{
@@ -573,6 +617,8 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 
 					hp.add(boton_imprimir);
 					hp.add(btn_ver_marcados);
+					
+					hp.add(btn_deshabilitar_botones);
 					hp.add(btn_agregar_prod);
 
 //				   panel.add(boton_imprimir);
@@ -582,6 +628,8 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				   panel.add(hp);
 				   
 				   panel.add(prod);
+				   
+				   deshabilitar_botones(botones_habilitados);
 
 				   agregar_handlers();
 			}

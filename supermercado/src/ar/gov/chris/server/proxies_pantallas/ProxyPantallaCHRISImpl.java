@@ -1,11 +1,20 @@
 package ar.gov.chris.server.proxies_pantallas;
 
+import ar.gov.chris.client.datos.DatosAutorizacion;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
+import ar.gov.chris.server.autorizacion.Autorizador;
 import ar.gov.chris.server.bd.ConexionBD.*;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
+import ar.gov.chris.server.excepciones.ExcepcionNoAutorizado;
+import ar.gov.chris.server.genericos.contexto.ContextoDeSeguridad;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
-
+import ar.gov.chris.shared.Sanitizador;
+import ar.gov.mecon.componentes.server.seguridad.AutorizadorPorAmbito;
+//import ar.gov.mecon.genericos.autorizacion.Autorizador;
+//import ar.gov.mecon.genericos.contexto.ContextoDeSeguridad;
+import ar.gov.mecon.genericos.servicios.AplicacionConFuncionalidades;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
@@ -16,6 +25,25 @@ public class ProxyPantallaCHRISImpl extends RemoteServiceServlet {
 	/**
 	 * 
 	 */
+	
+	
+	//************************
+	
+	private static String NOMBRE_APLICACION;
+	
+//	  protected static String ERR_EST_AUTENTICACION = "No está autenticado, loguéese.";
+	  
+	  //XXX:Lo modifico hoy 20/07/2018 ya que no se porque sale mal en la aplicacion
+	  protected static String ERR_EST_AUTENTICACION = "Ud. no está autenticado, loguéese por favor.";
+
+	  
+	  protected static String ERR_EST_EXPIRADA = "Autenticación expirada. Loguéese nuevamente.";
+	  
+
+	  protected static String ERR_EST_AUTORIZACION = "Ud. no está autorizado para realizar esta función.";
+	
+	
+	//****************************
 	private static final long serialVersionUID = 1L;
 	protected ConexionBD con_unica= null;
 	/**
@@ -249,5 +277,197 @@ public class ProxyPantallaCHRISImpl extends RemoteServiceServlet {
 		 PoolDeConexiones.devolver_conexion(con_unica);
 	 super.finalize();
 	}
+	
+	
+	//*******************************************************************************************************
+	
+	
+	public ContextoDeSeguridad autenticar_ya_logueado(ConexionBD con)
+		    throws GWT_ExcepcionNoAutorizado
+		  {
+		    ContextoDeSeguridad cs = null;
+//		    try
+//		    {
+		      cs = new ContextoDeSeguridad(getThreadLocalRequest(), NOMBRE_APLICACION);
+//		      if (Autorizador.validar_token(cs) != Autorizador.StatusToken.TOKEN_VALIDO)
+//		      {
+//		        cs = intentar_validar_token_con_ambito();
+//		      }
+//		    } catch (ExcepcionNoAutorizado ex) {
+//		      cs = intentar_validar_token_con_ambito();
+//		    }
+		    
+		    return cs;
+		  }
+		  
+
+//		  private ContextoDeSeguridad intentar_validar_token_con_ambito()
+//		    throws GWT_ExcepcionNoAutorizado
+//		  {
+//		    ContextoDeSeguridad cs = new ContextoDeSeguridadCA(getThreadLocalRequest(), NOMBRE_APLICACION);
+//		    
+//		    if (Autorizador.validar_token(cs) != Autorizador.StatusToken.TOKEN_VALIDO) {
+//		      throw new GWT_ExcepcionNoAutorizado(ERR_EST_AUTENTICACION, false, false);
+//		    }
+//		    
+//
+//		    return cs;
+//		  }
+		  
+
+		  public ContextoDeSeguridad autenticar_y_autorizar(ConexionBD con/*, AplicacionConFuncionalidades permisos*/, String funcionalidad)
+		    throws GWT_ExcepcionNoAutorizado
+		  {
+		    ContextoDeSeguridad cs = null;
+		    StringBuffer error = new StringBuffer();
+		    try
+		    {
+		      cs = new ContextoDeSeguridad(getThreadLocalRequest(), NOMBRE_APLICACION);
+		    } catch (ExcepcionNoAutorizado ex) {
+		      System.out.println("Autorización denegada al generar el contexto de seguridad. Motivo: " + ex.getMessage());
+		      
+		      throw new GWT_ExcepcionNoAutorizado(ERR_EST_AUTENTICACION, false, false);
+		    }
+		    
+		    if (!Autorizador.validar_usuario(con, cs, funcionalidad, ERR_EST_AUTENTICACION, ERR_EST_EXPIRADA, ERR_EST_AUTORIZACION/*, permisos*/, error))
+		    {
+
+
+
+		      throw new GWT_ExcepcionNoAutorizado(error.toString(), true, false);
+		    }
+		    
+		    return cs;
+		  }
+		  
+
+//		  public ContextoDeSeguridadCA autenticar_y_autorizar_ca(ar.gov.mecon.genericos.bd.ConexionBD con, AplicacionConFuncionalidades permisos, String funcionalidad, Class<? extends AutorizadorPorAmbito> clase_autorizador)
+//		    throws GWT_ExcepcionNoAutorizado, ExcepcionBD
+//		  {
+//		    ContextoDeSeguridadCA cs = null;
+//		    StringBuffer error = new StringBuffer();
+//		    try
+//		    {
+//		      cs = new ContextoDeSeguridadCA(getThreadLocalRequest(), NOMBRE_APLICACION);
+//		    } catch (ExcepcionNoAutorizado ex) {
+//		      System.out.println("Autorización denegada al generar el contexto de seguridad. Motivo: " + ex.getMessage());
+//		      
+//
+//		      throw new GWT_ExcepcionNoAutorizado(ERR_EST_AUTORIZACION, false, false);
+//		    }
+//		    
+//		    if (!Autorizador.validar_usuario(con, cs, funcionalidad, ERR_EST_AUTENTICACION, ERR_EST_EXPIRADA, ERR_EST_AUTORIZACION, permisos, error))
+//		    {
+//
+//		      throw new GWT_ExcepcionNoAutorizado(error.toString(), false, false);
+//		    }
+		    
+
+
+//		    if (clase_autorizador != null) {
+//		      try {
+//		        AutorizadorPorAmbito autorizador = (AutorizadorPorAmbito)Introspeccion.instanciar_objeto(clase_autorizador.getName(), new Class[0], new Object[0]);
+//		        
+//
+//		        if (!autorizador.autorizar(con, cs.obtener_login(), cs.obtener_ambito(), funcionalidad, error))
+//		        {
+//		          throw new GWT_ExcepcionNoAutorizado(error.toString(), true, false); }
+//		      } catch (IllegalAccessException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      } catch (SecurityException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      } catch (NoSuchMethodException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      } catch (IllegalArgumentException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      }/* catch (InvocationTargetException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      } */catch (ClassNotFoundException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      } catch (InstantiationException ex) {
+//		        ex.printStackTrace();
+//		        throw new ExcepcionBug(ex.getMessage());
+//		      }
+//		    }
+		    
+
+//		    return cs;
+//		  }
+		  
+		  protected void usar_unica_conexion(boolean unica_conexion)
+		  {
+		    this.unica_conexion = unica_conexion;
+		  }
+		  
+
+
+		  public DatosAutorizacion autenticado_y_autorizado(String funcionalidad)
+		    throws GWT_ExcepcionBD
+		  {
+		    return autenticado_y_autorizado(funcionalidad, false, null);
+		  }
+		  
+
+
+//		  protected DatosAutorizacion autenticado_y_autorizado_ca(String funcionalidad, Class<? extends AutorizadorPorAmbito> clase_autenticador)
+//		    throws GWT_ExcepcionBD
+//		  {
+//		    return autenticado_y_autorizado(funcionalidad, true, clase_autenticador);
+//		  }
+		  
+
+		  private DatosAutorizacion autenticado_y_autorizado(String funcionalidad, boolean usar_ambito, Class<? extends AutorizadorPorAmbito> clase_autorizador)
+		    throws GWT_ExcepcionBD
+		  {
+		    DatosAutorizacion res = new DatosAutorizacion();
+		    
+		    res.cambiar_autorizado(true);
+		    ConexionBD con;
+		    if (unica_conexion) {
+		      con = con_unica;
+		    } else {
+		      con = obtener_conexion();
+		    }
+		    try
+		    {
+		      AplicacionConFuncionalidades ap;// = (AplicacionConFuncionalidades)clase_ap_con_funcionalidad.newInstance();
+		      funcionalidad = Sanitizador.sanitizar(funcionalidad);
+		      ContextoDeSeguridad cs; 
+		      
+//		      if (usar_ambito) {
+//		        ContextoDeSeguridad cs = autenticar_y_autorizar_ca(con, ap, funcionalidad, clase_autorizador);
+//		        res.setAmbito(((ContextoDeSeguridadCA)cs).obtener_ambito());
+//		        
+//		      } else {
+		    	  
+		        cs = autenticar_y_autorizar(con, funcionalidad); 
+//		       }
+		      
+		      res.cambiar_autenticado(true);
+		      res.setLogin(cs.obtener_login());
+		    } catch (GWT_ExcepcionNoAutorizado ex) {
+		      res.cambiar_autenticado(ex.estaAutenticado());
+		      res.cambiar_autorizado(ex.estaAutorizado());
+		      res.setMensaje_error(ex.getMessage());
+		      
+		      System.err.println("No autorizado para " + funcionalidad + " (desde " + getThreadLocalRequest().getRemoteAddr() + ")" + ". El error fue: " + ex.getMessage());
+		    } finally {
+		      if (!unica_conexion) {
+		        devolver_conexion(con);
+		      }
+		    }
+		    return res;
+		  }
+		
+	
+	
+	
+	//**************************************************************************************************************************
 
 }

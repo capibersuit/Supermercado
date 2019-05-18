@@ -18,15 +18,17 @@ public class Producto extends PersistenteEnBD {
 	String nombre;
 	//String descripcion;
 	float precio;
+	int id_super;
 	
 	public Producto() {
 		
 	}
-	public Producto(int id, String nombre, float precio) {
+	public Producto(int id, String nombre, float precio, int id_super) {
 		
 		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
+		this.id_super = id_super;
 	}
 	public Producto(String nombre, float precio) {
 		
@@ -51,6 +53,7 @@ public class Producto extends PersistenteEnBD {
 			 if (rs.next()) {
 				 this.nombre= rs.getString("nombre");
 				 this.precio= rs.getFloat("precio");
+				 this.id_super=rs.getInt("id_super");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
 		 } catch(SQLException ex) {
@@ -79,12 +82,20 @@ public class Producto extends PersistenteEnBD {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", precio="
-				+ precio + "]";
+	
+	public int getId_super() {
+		return id_super;
+	}
+	public void setId_super(int id_super) {
+		this.id_super = id_super;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "Producto [nombre=" + nombre + ", precio=" + precio
+				+ ", id_super=" + id_super + "]";
+	}
 	public void grabar(ConexionBD con, boolean solo_sino_existe) throws ExcepcionBD, ExcepcionYaExiste {
 		 if (this.nombre==null /*|| (this.precio) == 0*/)
 			throw new ExcepcionBug("No se puede grabar un producto sin su nombre");
@@ -92,11 +103,12 @@ public class Producto extends PersistenteEnBD {
 		 HashMapSQL lista_campos= new HashMapSQL();
 		 lista_campos.put("nombre", this.nombre);
 		 lista_campos.put("precio", this.precio);
+		 lista_campos.put("id_super", this.id_super);
 
 		 try {
 		 this.id=super.grabar(con, lista_campos, "public.productos", "public.productos", true, "", id, false);
 		 } catch (ExcepcionBD ex) {
-			// Manejo el caso donde no se pudo grabar porque la clave está repetida.
+			// Manejo el caso donde no se pudo grabar porque la clave estï¿½ repetida.
 				if (ex.es_clave_duplicada()) {
 					throw new ExcepcionYaExiste("Ya existe un producto con nombre '"+this.nombre+
 			 				"'", false);

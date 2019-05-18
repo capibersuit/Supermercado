@@ -7,14 +7,22 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class DatosLista implements IsSerializable {
 	
 	int id;
+	int id_sucursal;
 	String comentario;
 	Date fecha;
 	private boolean ver_marcados;
 	private float pagado;
 	private float desc_coto;
+	private boolean botones_habilitados;
 
 	
 	
+	public int getId_sucursal() {
+		return id_sucursal;
+	}
+	public void setId_sucursal(int id_sucursal) {
+		this.id_sucursal = id_sucursal;
+	}
 	public float getDesc_coto() {
 		return desc_coto;
 	}
@@ -53,6 +61,14 @@ public class DatosLista implements IsSerializable {
 	public float getPagado() {
 		return pagado;
 	}
+	public boolean isBotones_habilitados() {
+		return botones_habilitados;
+	}
+	public void setBotones_habilitados(boolean botones_habilitados) {
+		this.botones_habilitados = botones_habilitados;
+	}
+	
+	
 	
 	
 }

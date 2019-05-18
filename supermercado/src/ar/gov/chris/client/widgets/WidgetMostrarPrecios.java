@@ -73,7 +73,7 @@ public class WidgetMostrarPrecios extends Composite {
 
 
 
-			if(next_row % 20 == 0) {
+			if(next_row % 11 == 0) {
 				separador_fechas();
 			} else {
 

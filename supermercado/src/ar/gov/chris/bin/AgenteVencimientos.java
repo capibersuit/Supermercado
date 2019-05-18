@@ -20,7 +20,7 @@ import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 
 public class AgenteVencimientos {
 
-	final private static long SLEEP_TIME= 60000;
+//	final private static long SLEEP_TIME= 60000;
 	
 	private static String Mensage="";
 	private static String Mensage_fin="";
@@ -40,7 +40,7 @@ public class AgenteVencimientos {
 		//		}
 		//
 		//		ConexionBD con= new ConexionBD();
-		boolean commit= false;
+//		boolean commit= false;
 
 		try {
 			//while (true) {
@@ -57,13 +57,7 @@ public class AgenteVencimientos {
 //				cuerpo_mail.append("Estimado habitante de nuestro hogar, se le informa que los siguientes productos estan próximos a vencer..."
 //						+ ", ¡por favor, tenga a bien consumirlos antes de las fechas indicadas! y por su puesto ¡NO ME HABLEN DE TIRAR!");
 
-				cuerpo_mail.append(Mensage);
 				
-				cuerpo_mail.append("<br><br>");
-//				cuerpo_mail.append("Desde ya muchas gracias por su colaboración.");
-				cuerpo_mail.append(Mensage_fin);
-				cuerpo_mail.append("<br><br>");
-
 
 				cuerpo_mail.append("<table border=\"2px\">"
 						+ "	<tr> <td><b>Producto</b</td> <td><b>Vencimiento</b</td> </tr>");
@@ -77,6 +71,17 @@ public class AgenteVencimientos {
 				}
 
 				cuerpo_mail.append("</table>");
+				
+				cuerpo_mail.append("<br><br>");
+
+				
+				cuerpo_mail.append(Mensage);
+				
+				cuerpo_mail.append("<br><br>");
+//				cuerpo_mail.append("Desde ya muchas gracias por su colaboración.");
+				cuerpo_mail.append(Mensage_fin);
+				cuerpo_mail.append("<br><br>");
+
 
 				cuerpo_mail.append("<p>Atte. <b>SCLS.</b> </p>");
 				cuerpo_mail.append("<p><small>(Sistema de control de listas de supermercado)</small></p>");

@@ -15,6 +15,7 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	int cantidad;
 	int cantidad_anterior;
 	boolean esta_marcada;
+	int id_super;
 	
 	
 	
@@ -114,6 +115,7 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 		this.id_compra = id_compra;
 	}
 
+	
 
 //	@Override
 //	public String toString() {
@@ -124,18 +126,33 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	
 
 
+	public int getId_super() {
+		return id_super;
+	}
+
+
+	public void setId_super(int id_super) {
+		this.id_super = id_super;
+	}
+
+
 	public void setFechaVenc(Date fecha_venc) {
 		this.fecha_venc= fecha_venc;
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
 		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio="
-				+ precio + ", cantidad=" + cantidad + ", esta_marcada="
-				+ esta_marcada + ", fecha_venc=" + fecha_venc + ", existe="
-				+ existe + ", id_compra=" + id_compra + ", fecha_compra="
-				+ fecha_compra + "]";
+				+ precio + ", precio_anterior=" + precio_anterior
+				+ ", cantidad=" + cantidad + ", cantidad_anterior="
+				+ cantidad_anterior + ", esta_marcada=" + esta_marcada
+				+ ", id_super=" + id_super + ", fecha_venc=" + fecha_venc
+				+ ", existe=" + existe + ", id_compra=" + id_compra
+				+ ", fecha_compra=" + fecha_compra + "]";
 	}
 
 

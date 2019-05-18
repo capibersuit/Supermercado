@@ -9,18 +9,17 @@ import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionYaExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
-import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 import ar.gov.chris.server.excepciones.ExcepcionYaExiste;
+import ar.gov.chris.server.genericos.contexto.ContextoDeSeguridad;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
 
@@ -111,14 +110,22 @@ ProxyPantallaProductos {
 
 
 	@Override
-	public Set<DatosProducto> buscar_productos() throws GWT_ExcepcionBD{
+	public Set<DatosProducto> buscar_productos(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= true;	
 
 
 		try {
-			ResultSet rs= con.select("SELECT * FROM productos ORDER BY nombre");
+			
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
+			String query= "select * from productos";
+			
+			if(id_compra!= 0)
+				query+= "  where id_super in ( select id_super from sucursales where id in ( select id_sucursal from listas where id ="+ id_compra + "))";
+			ResultSet rs= con.select(query);
 
 			while (rs.next()) {
 				DatosProducto datos= new DatosProducto();
@@ -126,6 +133,8 @@ ProxyPantallaProductos {
 				datos.setId(rs.getInt("id"));
 				datos.setNombre(rs.getString("nombre"));
 				datos.setPrecio(rs.getFloat("precio"));
+				datos.setId_super(rs.getInt("id_super"));
+				
 				datos_conj.add(datos);
 			}
 
@@ -179,13 +188,18 @@ ProxyPantallaProductos {
 	}
 
 	@Override
-	public Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD{
+	public Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= true;	
 
 
+
 		try {
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
+			
 			String query= "SELECT p.id, p.nombre, rlp.fecha_venc, rlp.existe_todavia, rlp.id_compra, l.fecha "
 					+ " FROM rel_listas_productos rlp, productos p, listas l "
 					+ "where rlp.id_prod = p.id AND rlp.id_compra= l.id and fecha_venc is not null "+ (solo_existentes? " and existe_todavia":"") +"  order by fecha_venc";
@@ -386,5 +400,8 @@ ProxyPantallaProductos {
 			e.printStackTrace();
 		}
 	}
+
+
+	
 
 }

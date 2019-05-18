@@ -6,22 +6,15 @@ package ar.gov.chris.client.pantalla;
 import java.util.LinkedList;
 import java.util.Set;
 
-import ar.gov.chris.client.GreetingServiceAsync;
 import ar.gov.chris.client.datos.DatosProducto;
-import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
-import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
-import ar.gov.chris.client.util.JavaScript;
 import ar.gov.chris.client.widgets.WidgetAgregarProducto;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 
 public class PantallaProductos extends PantallaInicio {
@@ -63,10 +56,15 @@ public class PantallaProductos extends PantallaInicio {
 	}
 	
 	private void obtener_datos_productos() {
-		proxy_prod.buscar_productos(new AsyncCallback<Set<DatosProducto>>(){
+		proxy_prod.buscar_productos(0, new AsyncCallback<Set<DatosProducto>>(){
 			public void onFailure(Throwable caught) {
+				
+				History.newItem("PantallaLoguearseSimple-Productos");
+
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
 						"los productos: " + caught.getMessage());
+				
+
 			}
 			public void onSuccess(Set<DatosProducto> result) {
 				datos_prod= ordenar_productos(result);
@@ -78,7 +76,7 @@ public class PantallaProductos extends PantallaInicio {
 	}
 
 	protected void armar_pantalla() {
-		btn_productos= new Button("Nuevo Producto");
+		btn_productos= new Button("N<u>u</u>evo Producto");
 //		btn_ir_a_listas= new Button("Ir a listas");
 //		panel.add(btn_ir_a_listas);
 
@@ -101,6 +99,7 @@ public class PantallaProductos extends PantallaInicio {
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
+				
 			}
 			public void onSuccess(DatosProducto result) {
 				agregar_prod= new WidgetAgregarProducto(PantallaProductos.this, null);
@@ -163,6 +162,9 @@ public class PantallaProductos extends PantallaInicio {
 				agregar_prod.show();
 			}
 		});
+		
+		btn_productos.setAccessKey('u');
+
 		
 //		btn_ir_a_listas.addClickHandler(new ClickHandler() {
 //			

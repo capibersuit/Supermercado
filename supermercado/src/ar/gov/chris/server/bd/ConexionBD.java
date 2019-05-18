@@ -128,13 +128,14 @@ public class ConexionBD {
 		 if (tipo_conexion.equals(TipoConexion.SOLO_LECTURA)) {
 			 driver= "org.postgresql.Driver";
 			 
-//			 hostbd= "localhost";
+			 hostbd= "localhost";
 			 try {
 					hostbd= LectorPropiedades.obtener_valor("hostbd");
 				} catch (ExcepcionIO ex) {
 					throw new ExcepcionConexionBD("Error al buscar el host de la BD: "
 							 +ex.getMessage());
-				}//"192.168.1.30";
+				}
+			 //"192.168.1.30";
 
 			 bd= "supermercado";
 			 url= "jdbc:postgresql://"+ hostbd + "/"+bd; //+"?ssl";

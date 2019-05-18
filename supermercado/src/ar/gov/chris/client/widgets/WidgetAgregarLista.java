@@ -1,13 +1,21 @@
 package ar.gov.chris.client.widgets;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
+import ar.gov.chris.client.clases.Sucursal;
+import ar.gov.chris.client.clases.Super;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.gwt.PopupCalendario;
 import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.util.JavaScript;
+import ar.gov.chris.client.util.Util;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -20,6 +28,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class WidgetAgregarLista extends DialogBox {
@@ -41,6 +50,10 @@ public class WidgetAgregarLista extends DialogBox {
 	
 	private boolean es_update;
 	private DatosLista datos_lista;
+	
+	private ListBox sucursal;
+	private ListBox supermercado;
+
 
 	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
@@ -67,6 +80,23 @@ public class WidgetAgregarLista extends DialogBox {
 		agregar= new Button("Agregar");
 		cancelar= new Button("Cancelar");
 		cal= new Button("Consultar fecha");
+		
+		
+		//***************
+		supermercado= new ListBox();
+				
+		List<Super>  supermercados;
+		supermercados= BuscadorDatosEstaticos.supermercados;
+		
+			for (Super s : supermercados) 
+				supermercado.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
+			
+		// Pongo en la lista todos los posibles ámbitos.
+		sucursal= new ListBox();
+		for (Sucursal s : filtrar_sucursales_por_super(Util.mapear_supermercado_por_nombre("COTO").obtener_id())) 
+			sucursal.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
+		
+		//****************
 		
 		if(es_update) {
 			this.setText("Actualizar lista");
@@ -98,6 +128,11 @@ public class WidgetAgregarLista extends DialogBox {
 			panel.add(lblpagado);
 			panel.add(pagado);
 		}
+		
+		
+		panel.add(supermercado);
+		panel.add(sucursal);
+		
 		panel.add(botones);
 		this.add(panel);
 	}
@@ -143,7 +178,7 @@ public class WidgetAgregarLista extends DialogBox {
 					
 					
 				} else
-				  parent.agregar_lista(comentario.getText());
+				  parent.agregar_lista(comentario.getText(),Integer.parseInt(sucursal.getValue(sucursal.getSelectedIndex())));
 			hide();
 			}
 		});
@@ -174,6 +209,16 @@ public class WidgetAgregarLista extends DialogBox {
 			 popup.show();
 			} 
 		 });
+		
+		supermercado.addChangeHandler(new ChangeHandler(){
+			
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				cargar_sucursales_asociadas(Integer.parseInt(supermercado.getValue(supermercado.getSelectedIndex())));
+				
+			}
+		});
 	}
 
 	/**
@@ -206,4 +251,41 @@ public class WidgetAgregarLista extends DialogBox {
 	 };
 	 s.execute();
 	}
+	
+	/** Devuelve el listado de las sucursales dentro del super indicado.
+	 * 
+	 * @param id_super id del super del cual se quieren obtener las sucursales.
+	 * @return Ídem.
+	 */
+	private List<Sucursal> filtrar_sucursales_por_super(int id_super) {
+		List<Sucursal> res= new ArrayList<Sucursal>();
+		List<Sucursal>  sucursales;
+		sucursales= BuscadorDatosEstaticos.sucursales;
+
+		for (Sucursal sucursal: sucursales){
+			if (sucursal.id_super() == id_super)
+				res.add(sucursal);
+		}
+		return res;
+	}
+	
+	/** Carga las subcategorías de una categoría indicada.
+	 * 
+	 * @param index El id de la categoría seleccionada.
+	 */
+	private void cargar_sucursales_asociadas(int index) {
+		sucursal.clear();
+
+		List<Sucursal> suc= filtrar_sucursales_por_super(index);
+		for (Sucursal s: suc) {
+
+//			ambito.addItem(a.obtener_descripcion(), 
+//					Integer.toString(a.obtener_id()));
+			
+			sucursal.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
+
+		}
+	}
+	
+	
 }

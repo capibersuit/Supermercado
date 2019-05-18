@@ -32,6 +32,7 @@ public class WidgetMostrarProductos extends Composite {
 	private FlexTable lista_prod;
 	private Label titulo_label;
 	private Label fecha_compra_lablel;
+	private Label id_compra_lablel;
 	private Label cant_prod_label;
 	private Label subtotal_literal_label;
 	private Label subtotal_compra_label;
@@ -101,8 +102,13 @@ public class WidgetMostrarProductos extends Composite {
 		
 		hp.add(titulo_label);
 		if(fecha_compra != null) {
-			fecha_compra_lablel= new Label("-" + fecha_compra.toString());
+			fecha_compra_lablel= new Label(" _ " + fecha_compra.toString());
 			fecha_compra_lablel.addStyleName("LabelDistinguido");
+			
+			id_compra_lablel= new Label("_n° " + num_compra);
+			id_compra_lablel.addStyleName("LabelDistinguido");
+			
+			hp.add(id_compra_lablel);
 			hp.add(fecha_compra_lablel);
 		}
 //		if(titulo.equalsIgnoreCase("Vista de compra")) {
@@ -181,15 +187,21 @@ public class WidgetMostrarProductos extends Composite {
 		lista_prod.setWidget(0, next_col, borrar_label);
 
 		//		if(!titulo.equalsIgnoreCase("Vista de compra")) {
-		lista_prod.setWidget(0, next_col, borrar_label);
-		next_col++;
 		//		}
+		
+		
+		if(titulo.equalsIgnoreCase("Vista de compra")) {
+
+			lista_prod.setWidget(0, next_col, marcar_label);
+     		next_col++;
+		}
+
+		
 		lista_prod.setWidget(0, next_col, actualizar_label);
 		next_col++;
 		
-		if(titulo.equalsIgnoreCase("Vista de compra")) 
+		lista_prod.setWidget(0, next_col, borrar_label);
 
-			lista_prod.setWidget(0, next_col, marcar_label);
 
 		next_row= 1; 
 		int tamanio_lista= lista_productos.size();
@@ -526,14 +538,16 @@ public class WidgetMostrarProductos extends Composite {
 			lista_prod.setText(next_row, next_col, String.valueOf(Mate.poner_dos_decimales(precio_total)));
 			next_col++;
 		}
-		lista_prod.setWidget(next_row, next_col, btn_borrar);
-		next_col++;
-
+		
+		if(titulo.equalsIgnoreCase("Vista de compra")) {
+			lista_prod.setWidget(next_row, next_col, btn_marcar);
+			next_col++;
+		}
+		
 		lista_prod.setWidget(next_row, next_col, btn_actualizar);
 		next_col++;
-		
-		if(titulo.equalsIgnoreCase("Vista de compra"))
-			lista_prod.setWidget(next_row, next_col, btn_marcar);
+
+		lista_prod.setWidget(next_row, next_col, btn_borrar);
 
 
 		//		lista_lineas.setText(next_row, 4, prod.obtener_nro_serie());
@@ -750,6 +764,26 @@ public Set<String> marcar_todos(){
 			cb.setValue(true);
 		else 
 			cb.setValue(false);
+	}
+	return res;
+}
+
+public Set<String> deshabilitar_todos_los_botones(boolean botones_habilitados){
+	HashSet<String> res= new HashSet<String>();
+	for (int i= 1; i < lista_prod.getRowCount()-4; i++){
+		PushButton btn_borrar= (PushButton) lista_prod.getWidget(i, 8);
+		PushButton btn_act= (PushButton) lista_prod.getWidget(i, 7);
+		PushButton btn_marcar= (PushButton) lista_prod.getWidget(i, 6);
+
+		if(botones_habilitados) {
+			btn_borrar.setEnabled(true);
+			btn_act.setEnabled(true);
+			btn_marcar.setEnabled(true);
+		} else { 
+			btn_borrar.setEnabled(false);
+			btn_act.setEnabled(false);
+			btn_marcar.setEnabled(false);
+		}
 	}
 	return res;
 }

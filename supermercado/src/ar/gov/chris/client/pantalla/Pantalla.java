@@ -1,7 +1,6 @@
 package ar.gov.chris.client.pantalla;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
@@ -11,6 +10,7 @@ import ar.gov.chris.client.clases.NombreProdComparator;
 import ar.gov.chris.client.clases.NombreProdPrecioComparator;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.datos.DatosReprtePrecios;
+import ar.gov.chris.client.interfaces.Constantes;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -25,6 +25,11 @@ public abstract class Pantalla extends Composite {
 //	private final Image imagen_espera= new Image("imagenes/loading.gif");
 //	private final HTML msj_espera= new HTML();
 //	private FlowPanel panel_espera= null;
+	
+	private Constantes anios = (Constantes) GWT.create(Constantes.class);
+	
+	protected int anio_actual= anios.anio_actual();
+	protected int primer_anio_de_compras= anios.primer_anio_de_compras();
 	
 	/** Constructor sin par�metros.
 	 */

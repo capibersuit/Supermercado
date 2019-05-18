@@ -3,19 +3,14 @@ package ar.gov.chris.client.pantalla;
 import java.util.LinkedList;
 import java.util.Set;
 
-import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.widgets.MensajeAlerta;
-import ar.gov.chris.client.widgets.WidgetAgregarProducto;
-import ar.gov.chris.client.widgets.WidgetMostrarProductos;
 import ar.gov.chris.client.widgets.WidgetMostrarVencimientos;
-import ar.gov.chris.client.widgets.WidgetMostrarVencimientosOrd;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 
 public class PantallaVencimientos extends PantallaInicio {
@@ -48,6 +43,8 @@ boolean tildado= true; //NO SE POR QUE SI LO DEJO EN TRUE PARA QUE DE ENTRADA ME
 	private void obtener_datos_vencimientos(boolean solo_existentes) {
 		proxy_prod.buscar_vencimientos(solo_existentes, new AsyncCallback<Set<DatosProducto>>(){
 			public void onFailure(Throwable caught) {
+				History.newItem("PantallaLoguearseSimple-Vencimientos");
+
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
 						"los vencimientos: " + caught.getMessage());
 			}

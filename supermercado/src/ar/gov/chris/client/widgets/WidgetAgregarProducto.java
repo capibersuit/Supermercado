@@ -183,6 +183,13 @@ public class WidgetAgregarProducto extends DialogBox {
 		precio.addKeyPressHandler(new KeyPressHandler() {
 			 @Override
 			 public void onKeyPress(KeyPressEvent event) {
+				 //Esto era para no permitir escribir otra cosa que no sea un numero
+				 //pero asi tal cual no me sirve porque tampoco me deja "borrar"
+				 //o sea, apreto la tecla de backspace y no hace nada...
+				 
+//				 if (!Character.isDigit(event.getCharCode())) {
+//			          ((TextBox) event.getSource()).cancelKey();
+//			        }
 			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
 				  agregar.click();
 			 }
@@ -191,6 +198,13 @@ public class WidgetAgregarProducto extends DialogBox {
 		cantidad.addKeyPressHandler(new KeyPressHandler() {
 			 @Override
 			 public void onKeyPress(KeyPressEvent event) {
+				//Esto era para no permitir escribir otra cosa que no sea un numero
+				 //pero asi tal cual no me sirve porque tampoco me deja "borrar"
+				 //o sea, apreto la tecla de backspace y no hace nada...
+				 
+//				 if (!Character.isDigit(event.getCharCode())) {
+//			          ((TextBox) event.getSource()).cancelKey();
+//			        }
 			  if (KeyCodes.KEY_ENTER == event.getNativeEvent().getKeyCode())
 				  agregar.click();
 			 }

@@ -2,14 +2,10 @@ package ar.gov.chris.bin;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
-
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
-import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 import ar.gov.chris.server.excepciones.ExcepcionYaExiste;
 import ar.gov.chris.shared.Sanitizador;
 

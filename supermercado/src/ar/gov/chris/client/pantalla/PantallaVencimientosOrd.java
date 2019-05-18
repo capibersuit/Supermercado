@@ -9,6 +9,7 @@ import ar.gov.chris.client.widgets.WidgetMostrarVencimientosOrd;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -43,6 +44,8 @@ boolean tildado= true; //NO SE POR QUE SI LO DEJO EN TRUE PARA QUE DE ENTRADA ME
 	private void obtener_datos_vencimientos(boolean solo_existentes) {
 		proxy_prod.buscar_vencimientos(solo_existentes, new AsyncCallback<Set<DatosProducto>>(){
 			public void onFailure(Throwable caught) {
+				History.newItem("PantallaLoguearseSimple-VencimientosOrd");
+
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar buscar " +
 						"los vencimientos: " + caught.getMessage());
 			}
