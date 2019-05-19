@@ -9,26 +9,24 @@ import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionYaExiste;
-
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
-import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
 import ar.gov.chris.server.excepciones.ExcepcionYaExiste;
+import ar.gov.chris.server.genericos.contexto.ContextoDeSeguridad;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
 
 @SuppressWarnings("serial")
 public class ProxyPantallaProductosImpl extends ProxyPantallaCHRISImpl implements
 ProxyPantallaProductos {
-	
+
 	public void init(ServletConfig config) throws ServletException {
 		this.unica_conexion= false;
 		try {
@@ -41,20 +39,20 @@ ProxyPantallaProductos {
 		}
 	}
 
-	
+
 	public DatosProducto agregar_producto(DatosProducto datos_prod) throws GWT_ExcepcionBD, GWT_ExcepcionYaExiste{
-		
+
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;
 
 		try {
-			
-			
+
+
 			Producto prod= new Producto(datos_prod.getNombre(), datos_prod.getPrecio());
 			prod.grabar(con, true);
 			datos_prod.setId(prod.getId());
 			commit= true;
-		
+
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionYaExiste e) {
@@ -63,13 +61,13 @@ ProxyPantallaProductos {
 			this.cerrar_transaccion(con, commit);
 		}
 		return datos_prod;
-		
-		
+
+
 	}
-	
+
 	@Override
 	public void borrar_producto(String nombre) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
-		
+
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;
 
@@ -77,7 +75,7 @@ ProxyPantallaProductos {
 			Producto prod= new Producto(con, nombre);
 			prod.borrar(con);
 			commit= true;
-		
+
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionNoExiste e) {
@@ -87,49 +85,59 @@ ProxyPantallaProductos {
 			this.cerrar_transaccion(con, commit);
 		}		
 	}
-	
+
 	@Override
 	public void borra_producto_de_lista(DatosProducto produ, int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;	
-		
-			try {
-				Producto prod= new Producto(con, produ.getNombre());
-				
-				con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + " AND id_prod = "+ prod.getId());
-				
-				commit= true;
-				
-			} catch (ExcepcionBD e) {
-				throw new GWT_ExcepcionBD(e);
-			} catch (ExcepcionNoExiste e) {
-				throw new GWT_ExcepcionNoExiste(e);
-			}finally {
-				this.cerrar_transaccion(con, commit);
-			}
+
+		try {
+			Producto prod= new Producto(con, produ.getNombre());
+
+			con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + " AND id_prod = "+ prod.getId());
+
+			commit= true;
+
+		} catch (ExcepcionBD e) {
+			throw new GWT_ExcepcionBD(e);
+		} catch (ExcepcionNoExiste e) {
+			throw new GWT_ExcepcionNoExiste(e);
+		}finally {
+			this.cerrar_transaccion(con, commit);
+		}
 	}
 
 
 
 	@Override
-	public Set<DatosProducto> buscar_productos() throws GWT_ExcepcionBD{
+	public Set<DatosProducto> buscar_productos(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= true;	
 
-		
+
 		try {
-			ResultSet rs= con.select("SELECT * FROM productos ORDER BY nombre");
 			
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
+			String query= "select * from productos";
+			
+			if(id_compra!= 0)
+				query+= "  where id_super in ( select id_super from sucursales where id in ( select id_sucursal from listas where id ="+ id_compra + "))";
+			ResultSet rs= con.select(query);
+
 			while (rs.next()) {
 				DatosProducto datos= new DatosProducto();
 
 				datos.setId(rs.getInt("id"));
 				datos.setNombre(rs.getString("nombre"));
 				datos.setPrecio(rs.getFloat("precio"));
+				datos.setId_super(rs.getInt("id_super"));
+				
 				datos_conj.add(datos);
 			}
-			
+
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
 
@@ -141,30 +149,31 @@ ProxyPantallaProductos {
 		}
 		return datos_conj;
 	}
-	
+
 	@Override
 	public Set<DatosProducto> buscar_productos_lista(int id_lista) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste{
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
-		
+
 		boolean commit= true;	
-//		Lista l = new Lista(comentario, fecha);
+		//		Lista l = new Lista(comentario, fecha);
 		try {
 			ResultSet rs= con.select("SELECT * FROM rel_listas_productos where id_compra = " + id_lista);
-			
+
 			while (rs.next()) {
-				
+
 				Producto p = new Producto(con, rs.getInt("id_prod"));
 				DatosProducto datos= new DatosProducto();
-				
+
 				datos.setId(rs.getInt("id_prod"));
 				datos.setNombre(p.getNombre());
 				datos.setPrecio(rs.getFloat("precio"));
 				datos.setCantidad(rs.getInt("cant"));
 				datos.setEsta_marcada(rs.getBoolean("esta_marcada"));
+				datos.setFecha_venc(rs.getDate("fecha_venc"));
 				datos_conj.add(datos);
 			}
-			
+
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
 		} catch (SQLException e) {
@@ -172,6 +181,49 @@ ProxyPantallaProductos {
 			throw new GWT_ExcepcionBD(e);
 		} catch (ExcepcionNoExiste e) {
 			throw new GWT_ExcepcionNoExiste(e);
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}
+		return datos_conj;
+	}
+
+	@Override
+	public Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
+		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
+		ConexionBD con= this.obtener_transaccion();
+		boolean commit= true;	
+
+
+
+		try {
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
+			
+			String query= "SELECT p.id, p.nombre, rlp.fecha_venc, rlp.existe_todavia, rlp.id_compra, l.fecha "
+					+ " FROM rel_listas_productos rlp, productos p, listas l "
+					+ "where rlp.id_prod = p.id AND rlp.id_compra= l.id and fecha_venc is not null "+ (solo_existentes? " and existe_todavia":"") +"  order by fecha_venc";
+			ResultSet rs= con.select(query);
+
+			while (rs.next()) {
+				DatosProducto datos= new DatosProducto();
+
+				datos.setId(rs.getInt("id"));
+				datos.setNombre(rs.getString("nombre"));
+				datos.setFecha_venc(rs.getDate("fecha_venc"));
+				datos.setFecha_compra(rs.getDate("fecha"));
+				datos.setExiste(rs.getBoolean("existe_todavia"));
+				datos.setId_compra(rs.getInt("id_compra"));
+
+				datos_conj.add(datos);
+			}
+
+		} catch (ExcepcionBD e) {
+			throw new GWT_ExcepcionBD(e);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
@@ -187,14 +239,14 @@ ProxyPantallaProductos {
 		try {
 			Producto prod= new Producto(con, datos_prod.getNombre());
 			int id_prod= prod.getId();
-			
+
 			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, precio, esta_marcada) VALUES (" +
-			id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() +"," +datos_prod.isEsta_marcada() + ")");
-			
+					id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() +"," +datos_prod.isEsta_marcada() + ")");
+
 			datos_prod.setId(id_prod);
 			datos_prod.setPrecio(prod.getPrecio());
 			datos_prod.setCantidad(cant);
-			
+
 			commit= true;
 
 		} catch (ExcepcionBD e) {
@@ -217,8 +269,8 @@ ProxyPantallaProductos {
 			Producto prod= new Producto(con, datos_prod.getId());
 			int id_prod= prod.getId();
 			String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() +", nombre= '"+ datos_prod.getNombre() + "' WHERE id = " + id_prod;
-//			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
-//			+ prod.getNombre() + " WHERE id = " + id_prod);
+			//			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
+			//			+ prod.getNombre() + " WHERE id = " + id_prod);
 			con.ejecutar_update(query);
 			commit= true;
 
@@ -233,20 +285,72 @@ ProxyPantallaProductos {
 		}		
 	}
 	
+	public void marcar_desmarcar_productos(String id_compra, Set<String> ids,
+			boolean marcar) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+		boolean commit= false;
+		ConexionBD con = this.obtener_transaccion();
+		
+		String IN_DE_IDS= "(";
+
+		try {
+			for(int i=0;i<ids.size();i++)
+
+			for (String id_prod :ids) {
+				Producto prod= new Producto(con, Integer.valueOf(id_prod));
+
+				IN_DE_IDS+=id_prod;
+				if(i!= ids.size()-1)
+					IN_DE_IDS+=", ";
+			}
+				String UPDATE= "UPDATE rel_listas_productos SET esta_marcada= " + marcar +" where id_compra= " + id_compra +
+						"AND id_prod IN " + IN_DE_IDS + ")";  
+
+				con.ejecutar_sql(UPDATE);
+				commit= true;
+
+			
+			
+		} catch (ExcepcionBD e) {
+			throw new GWT_ExcepcionBD(e);
+		}catch (ExcepcionNoExiste e) {
+			e.printStackTrace();
+			throw new GWT_ExcepcionNoExiste(e);
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}
+	}
+
 	@Override
-	public void actualizar_producto_a_lista(DatosProducto datos_prod, String id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+	public void actualizar_producto_a_lista(DatosProducto datos_prod, String id_compra, 
+			boolean cambiar_existencia) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
 		try {
 			Producto prod= new Producto(con, datos_prod.getId());
-//			int id_prod= prod.getId();
-			
-			con.ejecutar_sql("UPDATE rel_listas_productos SET precio= "+ datos_prod.getPrecio() +", esta_marcada= " + datos_prod.isEsta_marcada()
-					+" WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId());
-			
-			verificar_si_cambiar_precio_global(con, datos_prod, id_compra);
-			
+			//			int id_prod= prod.getId();
+			Object f_venc= datos_prod.getFechaVenc();
+			String fecha_venc= f_venc!= null ? ", fecha_venc= '" + f_venc + "' ": "";
+
+			String UPDATE= "UPDATE rel_listas_productos SET";
+
+			if(cambiar_existencia) {
+				boolean existe_prod= datos_prod.isExiste();
+				UPDATE+= " existe_todavia= "+ existe_prod;
+			} else {
+				UPDATE+= " precio= "+ datos_prod.getPrecio() + 
+						", esta_marcada= " + datos_prod.isEsta_marcada() + " , cant= "
+						+ datos_prod.getCantidad() + fecha_venc;
+			}
+
+			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId();
+			UPDATE+= WHERE;
+
+			con.ejecutar_sql(UPDATE);
+
+			if(!cambiar_existencia)
+				verificar_si_cambiar_precio_global(con, datos_prod, id_compra);
+
 			commit= true;
 
 		} catch (ExcepcionBD e) {
@@ -257,33 +361,47 @@ ProxyPantallaProductos {
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
-		
-		
+
+
 	}
 
 
 	private void verificar_si_cambiar_precio_global(ConexionBD con,
 			DatosProducto datos_prod, String id_compra) throws ExcepcionBD {
-			
-		Date fecha = null;
-		Date fecha2 = null;
+
+		int id_prod= datos_prod.getId();
+		float precio= datos_prod.getPrecio();
+		Date fecha_de_prod_en_compra_actual = null;
+		Date fecha_de_prod_en_otras_compras = null;
+		Date aux= null;
 		ResultSet rs= con.select("select fecha from listas where id =" + id_compra);
-		ResultSet rs2= con.select("select max(fecha) from listas");
+		//		ResultSet rs2= con.select("select max(fecha) from listas");
+
+		ResultSet rs2= con.select("select l.fecha from listas l , rel_listas_productos rlp where l.id= rlp.id_compra and rlp.id_prod=" + id_prod);
+
 		try {
-			
+
 			if(rs.next()) 
-			 fecha= rs.getDate("fecha");
-			if(rs2.next()) 
-			 fecha2= rs2.getDate("max");
-			
-			if(!fecha2.after(fecha)) {
-				String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() + " WHERE id = " + datos_prod.getId();
+				fecha_de_prod_en_compra_actual= rs.getDate("fecha");
+			aux= fecha_de_prod_en_compra_actual;
+			while(rs2.next())  {
+				fecha_de_prod_en_otras_compras= rs2.getDate("fecha");
+				if(fecha_de_prod_en_otras_compras.after(aux))
+					aux= fecha_de_prod_en_otras_compras;
+			}
+
+			if(!aux.after(fecha_de_prod_en_compra_actual)) {
+				String query= "UPDATE productos SET precio= "+ precio + " WHERE id = " + id_prod;
 
 				con.ejecutar_update(query);
 			}
-				
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
+
+	
+
 }

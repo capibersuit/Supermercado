@@ -11,7 +11,7 @@ public interface ProxyPantallaProductosAsync {
 	void agregar_producto(DatosProducto datos_prod,
 			AsyncCallback<DatosProducto> asyncCallback);
 
-	void buscar_productos(AsyncCallback<Set <DatosProducto>> asyncCallback);
+	void buscar_productos(int id_compra, AsyncCallback<Set <DatosProducto>> asyncCallback);
 
 	void agregar_producto_a_lista(DatosProducto datos_prod, int id_compra,
 			int cant, AsyncCallback<DatosProducto> asyncCallback);
@@ -28,6 +28,11 @@ public interface ProxyPantallaProductosAsync {
 			AsyncCallback<Void> asyncCallback);
 
 	void actualizar_producto_a_lista(DatosProducto datos_prod,
-			String id_compra, AsyncCallback<Void> callback);
+			String id_compra, boolean cambiar_existencia, AsyncCallback<Void> callback);
+
+	void buscar_vencimientos(boolean solo_existentes, AsyncCallback<Set<DatosProducto>> asyncCallback);
+
+	void marcar_desmarcar_productos(String valueOf, Set<String> ids, boolean marcar,
+			AsyncCallback<Void> asyncCallback);
 
 }

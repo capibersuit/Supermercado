@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 
 public class PantallaListas extends Pantalla {
 	
@@ -22,6 +23,9 @@ public class PantallaListas extends Pantalla {
 
 	
 	private WidgetAgregarLista agregar_lista;
+	
+	protected DisclosurePanel panel_desplegable;
+
 	
 
 	public PantallaListas() {

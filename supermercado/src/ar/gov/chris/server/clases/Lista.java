@@ -13,9 +13,11 @@ public class Lista extends PersistenteEnBD {
 	
 	String comentario;
 	Date fecha;
+	private int id_sucursal;
 	private boolean ver_marcados;
 	private float pagado;
 	private float desc_coto;
+	private boolean botones_hab;
 	
 	
 	public Lista() {
@@ -41,10 +43,11 @@ public class Lista extends PersistenteEnBD {
 		this.pagado = pagado;
 	}
 
-	public Lista(String comentario, Date fecha) {
+	public Lista(String comentario, Date fecha, int id_sucursal) {
 		super();
 		this.comentario = comentario;
 		this.fecha = fecha;
+		this.id_sucursal= id_sucursal;
 	}
 	
 	public int getId() {
@@ -76,9 +79,27 @@ public class Lista extends PersistenteEnBD {
 	public void setVer_marcados(boolean ver_marcados) {
 		this.ver_marcados = ver_marcados;
 	}
+	
+	
 
 	
 	
+	public int getId_sucursal() {
+		return id_sucursal;
+	}
+
+	public void setId_sucursal(int id_sucursal) {
+		this.id_sucursal = id_sucursal;
+	}
+
+	public boolean isBotones_hab() {
+		return botones_hab;
+	}
+
+	public void setBotones_hab(boolean botones_hab) {
+		this.botones_hab = botones_hab;
+	}
+
 	@Override
 	public String toString() {
 		return "Lista [comentario=" + comentario + ", fecha=" + fecha
@@ -104,6 +125,7 @@ public class Lista extends PersistenteEnBD {
 				 this.fecha= rs.getDate("fecha");
 				 this.ver_marcados= rs.getBoolean("ver_marcados");
 				 this.pagado= rs.getFloat("pagado");
+				 this.botones_hab= rs.getBoolean("botones_hab");
 				 this.desc_coto= rs.getFloat("desc_coto");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
@@ -120,6 +142,7 @@ public class Lista extends PersistenteEnBD {
 		 lista_campos.put("comentario", this.comentario);
 		 lista_campos.put("fecha", this.fecha);
 		 lista_campos.put("pagado", this.pagado);
+		 lista_campos.put("id_sucursal", this.id_sucursal);
 
 		super.grabar(con, lista_campos, "public.listas", "public.listas", true, "", id, false);
 	}

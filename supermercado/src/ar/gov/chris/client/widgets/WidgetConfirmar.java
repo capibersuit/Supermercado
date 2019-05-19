@@ -2,9 +2,6 @@ package ar.gov.chris.client.widgets;
 
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.pantalla.Pantalla;
-import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
-import ar.gov.chris.client.pantalla.PantallaProductos;
-import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
 import ar.gov.chris.client.util.JavaScript;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,7 +50,7 @@ public class WidgetConfirmar extends DialogBox {
 		HorizontalPanel botones= new HorizontalPanel();
 		botones.add(aceptar);
 		botones.add(cancelar);
-		agregar_listeners();
+//		agregar_listeners();
 		
 //		aceptar.setFocus(true);
 		

@@ -4,20 +4,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
+import ar.gov.chris.client.clases.Sucursal;
+import ar.gov.chris.client.clases.Super;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
+import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.server.bd.ConexionBD;
 import ar.gov.chris.server.bd.PoolDeConexiones;
+import ar.gov.chris.server.clases.FabricaSucursales;
+import ar.gov.chris.server.clases.FabricaSuper;
 import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
+import ar.gov.chris.server.genericos.contexto.ContextoDeSeguridad;
 import ar.gov.chris.shared.Sanitizador;
 
 @SuppressWarnings("serial")
@@ -49,7 +56,7 @@ ProxyPantallaListas {
 		try {
 			
 			
-			Lista l= new Lista(datos_list.getComentario(), new Date());
+			Lista l= new Lista(datos_list.getComentario(), new Date(), datos_list.getId_sucursal());
 			l.grabar(con);
 			commit= true;
 		
@@ -63,12 +70,15 @@ ProxyPantallaListas {
 	}
 
 	@Override
-	public Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD{
+	public Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado{
 		Set <DatosLista> datos_conj= new HashSet<DatosLista>();
 		ConexionBD con= this.obtener_transaccion();
 		Boolean commit= false;
 		
 		try {
+			
+			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
+
 			ResultSet rs= con.select("SELECT * FROM listas");
 			
 			while (rs.next()) {
@@ -77,7 +87,9 @@ ProxyPantallaListas {
 				datos.setComentario(rs.getString("comentario"));
 				datos.setFecha(rs.getDate("fecha"));
 				datos.setVer_marcados(rs.getBoolean("ver_marcados"));
+				datos.setBotones_habilitados(rs.getBoolean("botones_hab"));
 				datos.setPagado(rs.getFloat("pagado"));
+				datos.setId_sucursal(rs.getInt("id_sucursal"));
 
 				datos_conj.add(datos);
 			}
@@ -196,16 +208,21 @@ ProxyPantallaListas {
 	}
 
 	@Override
-	public int lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+	public DatosLista lista_esta_visible(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		ConexionBD con;
 		Lista l;
 		Boolean commit= false;
 		con = this.obtener_transaccion();
-
+		DatosLista dl;
 		try {
 			l = new Lista(con, id_compra);
 //			existe= true;
 //			existe= l  != null;
+			
+			dl= new DatosLista();
+			dl.setFecha(l.getFecha());
+			dl.setVer_marcados(l.isVer_marcados());
+			dl.setBotones_habilitados(l.isBotones_hab());
 			commit = true;
 		} catch (ExcepcionBD e) {
 				throw new GWT_ExcepcionBD(e);
@@ -214,7 +231,7 @@ ProxyPantallaListas {
 			} finally {
 				this.cerrar_transaccion(con, commit);
 			}		
-		return l.isVer_marcados() ? 1 : 0;
+		return dl;
 	}
 
 	@Override
@@ -237,6 +254,115 @@ ProxyPantallaListas {
 				this.cerrar_transaccion(con, commit);
 			}		
 		return l.getDesc_coto();
+	}
+
+	@Override
+public void hab_deshab_botones(String id_compra, boolean botones_habilitados) throws GWT_ExcepcionBD {
+		
+		boolean commit= false;
+		ConexionBD con = this.obtener_transaccion();
+		
+
+		try {
+			
+				String UPDATE= "UPDATE public.listas SET botones_hab= " + botones_habilitados +" where id= " + id_compra ;
+						  
+
+				con.ejecutar_sql(UPDATE);
+				commit= true;
+
+			
+			
+		} catch (ExcepcionBD e) {
+			throw new GWT_ExcepcionBD(e);
+		} finally {
+			this.cerrar_transaccion(con, commit);
+		}
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	public int [] buscar_anios_primera_y_ultima_compra() throws GWT_ExcepcionBD {
+		
+		ConexionBD con;
+		Boolean commit= false;
+		con = this.obtener_transaccion();
+		int [] res = new int[2];
+		
+		Date hoy= new Date();
+		res[0]= hoy.getYear();
+		res[1]= hoy.getYear();
+
+		try {
+//			ResultSet rs= con.select("SELECT extract(YEAR FROM fecha) as fecha FROM listas order by fecha limit 1");
+//			ResultSet rs2= con.select("SELECT extract(YEAR FROM fecha) as fecha FROM listas order by fecha desc limit 1");
+			
+			ResultSet rs= con.select("SELECT fecha FROM listas order by fecha limit 1");
+			ResultSet rs2= con.select("SELECT fecha FROM listas order by fecha desc limit 1");
+
+			while (rs.next()) {
+				
+				
+				int primer_anio=(rs.getDate("fecha").getYear());
+				res[0]=primer_anio +1900;
+				
+			}
+			while (rs2.next()) {
+				
+				
+				int ultimo_anio=(rs2.getDate("fecha").getYear());
+				res[1]=ultimo_anio +1900;;
+			}
+			
+			
+				
+				
+				
+			commit = true;
+		} catch (ExcepcionBD e) {
+				throw new GWT_ExcepcionBD(e);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new GWT_ExcepcionBD(e);
+			} finally {
+				this.cerrar_transaccion(con, commit);
+			}		
+		return res;
+		
+	}
+
+	@Override
+		 
+				
+		public List<Sucursal> buscar_sucursales() 
+				throws GWT_ExcepcionBD {
+					//No se llama a autenticar_y_autorizar porque se obtienen datos de un enumerado.
+					ConexionBD con= this.obtener_transaccion();
+					try {
+						return (new FabricaSucursales()).cargar_todos(con, false);
+					} catch (ExcepcionBD ex) {
+						throw new GWT_ExcepcionBD(ex);
+					} catch (RuntimeException e) {
+						throw new GWT_ExcepcionBD(e);
+					} finally {
+						cerrar_transaccion(con, false);
+					}
+				}
+				
+
+	@Override
+	public List<Super> buscar_supermercados() throws GWT_ExcepcionBD {
+		//No se llama a autenticar_y_autorizar porque se obtienen datos de un enumerado.
+		ConexionBD con= this.obtener_transaccion();
+		try {
+			return (new FabricaSuper()).cargar_todos(con, false);
+		} catch (ExcepcionBD ex) {
+			throw new GWT_ExcepcionBD(ex);
+		} catch (RuntimeException e) {
+			throw new GWT_ExcepcionBD(e);
+		} finally {
+			cerrar_transaccion(con, false);
+		}
 	}
 
 //	@Override
