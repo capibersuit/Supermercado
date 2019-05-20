@@ -25,7 +25,6 @@
     <servlet-name>ProxyPantallaProductos</servlet-name>
     <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaProductos</url-pattern>
   </servlet-mapping>
-  
        
     <servlet>
     <servlet-name>ProxyPantallaListas</servlet-name>
@@ -37,19 +36,26 @@
     <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaListas</url-pattern>
   </servlet-mapping>
   
-  <!-- 
   <servlet>
-    <servlet-name>ProxyPantallaListas2</servlet-name>
-    <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaListas2Impl</servlet-class>
+    <servlet-name>ProxyPantallaPrecios</servlet-name>
+    <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaPreciosImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>ProxyPantallaListas2</servlet-name>
-    <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaListas2</url-pattern>
+    <servlet-name>ProxyPantallaPrecios</servlet-name>
+    <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaPrecios</url-pattern>
   </servlet-mapping>
   
-  -->
+  <servlet>
+    <servlet-name>ProxyPantallaLoguearse</servlet-name>
+    <servlet-class>ar.gov.chris.server.proxies_pantallas.ProxyPantallaLoguearseImpl</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+    <servlet-name>ProxyPantallaLoguearse</servlet-name>
+    <url-pattern>/supermercado/proxies_pantallas/ProxyPantallaLoguearse</url-pattern>
+  </servlet-mapping>
+    
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Supermercado.html</welcome-file>
