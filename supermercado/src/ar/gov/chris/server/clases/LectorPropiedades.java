@@ -16,7 +16,7 @@ public class LectorPropiedades {
 	 private static Properties propiedades = new Properties();
 //	 private static String ARCH_CONF="/supermercado/src/ar/gov/chris/server/clases/archivo.properties";
 
-	 private static String ARCH_CONF_WIN="D:\\supermercado.properties";
+	 private static String ARCH_CONF_WIN="C:\\supermercado.properties";
 	 
 	 private static String ARCH_CONF_LINUX="/usr/local/supermercado/bin/supermercado.properties";
 	 
