@@ -8,6 +8,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/STUART/Downloads/postgresql-9.1-903.jdbc3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/postgresql-9.1-903.jdbc3.jar"/>
+	<classpathentry kind="con" path="com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/componentes_mecon.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/genericos.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gnu-crypto.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mail.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
