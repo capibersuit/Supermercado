@@ -34,7 +34,7 @@
 	</target>
 	
 	<target name="env.check" unless="gwt.home.present">
-		<fail message="Asegúrese que GWT_2_1_0_HOME esté seteada apuntando al directorio de instalación de GWT."/>
+		<fail message="Asegúrese que GWT_2_7_0_HOME esté seteada apuntando al directorio de instalación de GWT."/>
     </target>
 
 	<!-- Armo el classpath con las bibliotecas necesarias para compilar -->
