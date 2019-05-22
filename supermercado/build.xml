@@ -2,9 +2,11 @@
     
 <project basedir="." name="supermercado">
 	
-	
+	<!--
 	<property name="gwt.home" value="/home/christian-pc1052136/Descargas/gwt-2.6.0" />
-	<!-- <property name="gwt.home" value="${env.GWT_2_1_0_HOME}" /> -->
+	 <property name="gwt.home" value="${env.GWT_2_1_0_HOME}" /> -->
+	
+	<property name="gwt.home" value="C:\gwt-2.7.0" />
 
 	<property name="pmd.home" value="${env.PMD_HOME}" />
 	<property name="chs.home" value="${env.CHS_HOME}" />	
