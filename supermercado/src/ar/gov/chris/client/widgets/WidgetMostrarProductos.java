@@ -40,6 +40,8 @@ public class WidgetMostrarProductos extends Composite {
 
 	private Label desc_coto_decripcion= new Label("Ingrese su descuento y presione tab");
 	private TextBox desc_coto= new TextBox();
+	private Label porcentaje_desc_decripcion= new Label("Porcentaje de descuento que tiene esta compra");
+	private TextBox porcentaje_desc= new TextBox();
 	
 	private Label desc_tarj_literal_label;
 	private Label desc_tarj_label;
