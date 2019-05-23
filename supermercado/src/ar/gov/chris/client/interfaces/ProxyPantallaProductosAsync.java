@@ -2,6 +2,7 @@ package ar.gov.chris.client.interfaces;
 
 import java.util.Set;
 
+import ar.gov.chris.client.datos.DatosListaProdCompleta;
 import ar.gov.chris.client.datos.DatosProducto;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -17,7 +18,7 @@ public interface ProxyPantallaProductosAsync {
 			int cant, AsyncCallback<DatosProducto> asyncCallback);
 
 	void buscar_productos_lista(int id_lista,
-			AsyncCallback<Set<DatosProducto>> callback);
+			AsyncCallback<DatosListaProdCompleta> asyncCallback);
 
 	void borrar_producto(String nombre, AsyncCallback<Void> asyncCallback);
 

@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.Label;
 
 import ar.gov.chris.client.Supermercado;
 import ar.gov.chris.client.datos.DatosLista;
+import ar.gov.chris.client.datos.DatosListaProdCompleta;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.OraculoConComodin;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
@@ -61,6 +62,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	protected Button boton_imprimir= new Button("Imprimir");
 	
 	private float descuento_coto;
+	private int porcentaje_de_descuento;
 	
 	private Button btn_deshabilitar_botones;
 	protected boolean botones_habilitados;
@@ -206,12 +208,14 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	}
 
 	protected void mostrar_pantalla() {
-		proxy_prod.buscar_productos_lista(id_compra, new AsyncCallback<Set<DatosProducto>>() {
+		proxy_prod.buscar_productos_lista(id_compra, new AsyncCallback<DatosListaProdCompleta>() {
 		 
-		 public void onSuccess(Set<DatosProducto> lista_prod) {
+		 public void onSuccess(DatosListaProdCompleta lista_prod_completa) {
 		  
 			 
 //			 Collections.sort(lista_prod);
+			 
+		   Set<DatosProducto> lista_prod= lista_prod_completa.getLista_prod();
 		   lista_productos= ordenar_productos(lista_prod);
 		   
 		   
@@ -246,8 +250,43 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		   // y efectivamente YO NO veo donde corno uso esta variable... PERO, si comento/borro esta linea
 		   // cuando cargo la pantalla de vista de una compra, no se dibuja la pantalla mas alla del texbox
 		   // del descuento, justamente
+		   //TODO: Hoy 23/05/2019 me doy cuenta que no hacia falta guardara el resultado en una variable local ya que
+		   //el valor del descuento lo guardé en la variable privada de la clase descuento_coto !!!!
 		   
-		   float desc_coto= get_descuento_coto(id_compra);
+//		   float desc_coto=
+		   
+//		   get_descuento_coto(id_compra);
+		   
+		   
+		   descuento_coto= lista_prod_completa.getDescuento_del_super();
+			
+			prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this,
+					descuento_coto, fecha_compra, lista_prod_completa.getPorcentaje_de_descuento());
+			  
+				HorizontalPanel hp = new HorizontalPanel();
+				
+				hp.add(btn_marcar_productos);
+
+				hp.add(btn_desmarcar_productos);
+
+
+				hp.add(boton_imprimir);
+				hp.add(btn_ver_marcados);
+				
+				hp.add(btn_deshabilitar_botones);
+				hp.add(btn_agregar_prod);
+
+//			   panel.add(boton_imprimir);
+//			   panel.add(btn_ver_marcados);
+//			   panel.add(btn_agregar_prod);
+//			   
+			   panel.add(hp);
+			   
+			   panel.add(prod);
+			   
+			   deshabilitar_botones(botones_habilitados);
+
+			   agregar_handlers();
 		   
 		 //***************************************************************************************************************************************
 //		   prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, desc_coto);
@@ -606,7 +645,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 			public void onSuccess(Float result){
 				descuento_coto=result;
 				
-				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto, fecha_compra);
+				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto, fecha_compra, 20);
 				  
 					HorizontalPanel hp = new HorizontalPanel();
 					

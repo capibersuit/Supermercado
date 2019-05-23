@@ -18,6 +18,7 @@ public class Lista extends PersistenteEnBD {
 	private float pagado;
 	private float desc_coto;
 	private boolean botones_hab;
+	private int porcentaje_de_descuento;
 	
 	
 	public Lista() {
@@ -35,6 +36,14 @@ public class Lista extends PersistenteEnBD {
 
 
 	
+	public int getPorcentaje_de_descuento() {
+		return porcentaje_de_descuento;
+	}
+
+	public void setPorcentaje_de_descuento(int porcentaje_de_descuento) {
+		this.porcentaje_de_descuento = porcentaje_de_descuento;
+	}
+
 	public float getPagado() {
 		return pagado;
 	}
@@ -127,6 +136,7 @@ public class Lista extends PersistenteEnBD {
 				 this.pagado= rs.getFloat("pagado");
 				 this.botones_hab= rs.getBoolean("botones_hab");
 				 this.desc_coto= rs.getFloat("desc_coto");
+				 this.porcentaje_de_descuento=rs.getInt("porcentaje_desc");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
 		 } catch(SQLException ex) {

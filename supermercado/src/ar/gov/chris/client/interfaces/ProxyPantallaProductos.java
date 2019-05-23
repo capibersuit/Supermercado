@@ -2,6 +2,7 @@ package ar.gov.chris.client.interfaces;
 
 import java.util.Set;
 
+import ar.gov.chris.client.datos.DatosListaProdCompleta;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
@@ -16,7 +17,7 @@ public interface ProxyPantallaProductos extends RemoteService {
 
 	Set<DatosProducto> buscar_productos(int id_compra) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado;
 
-	Set<DatosProducto> buscar_productos_lista(int id_lista)
+	DatosListaProdCompleta buscar_productos_lista(int id_lista)
 			throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
 	void borrar_producto(String nombre) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;

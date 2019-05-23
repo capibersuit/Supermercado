@@ -84,7 +84,7 @@ public class PantallaProductos extends PantallaInicio {
 		menu.add(btn_productos);
 		
 		agregar_prod= new WidgetAgregarProducto(this, null);	
-		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this, 0, null);
+		productos= new WidgetMostrarProductos(datos_prod, "Lista de productos", 0, this, 0, null,0);
 		panel.add(productos);
 		agregar_handlers();
 

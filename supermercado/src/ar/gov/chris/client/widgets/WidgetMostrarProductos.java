@@ -75,6 +75,8 @@ public class WidgetMostrarProductos extends Composite {
 	
 	private CheckBox cb_marcar_desmarcar_todos;
 	
+	private int porcentaje_de_descuento;
+	
 
 
 	/** Crea un {@link WidgetMostrarProductos} a partir de los par�metros.
@@ -84,13 +86,14 @@ public class WidgetMostrarProductos extends Composite {
 	 * @param fecha_compra 
 	 */
 	public WidgetMostrarProductos(final LinkedList<DatosProducto> lista_productos, 
-			String titulo, final int num_compra, final Pantalla parent, final float descuento_coto, Date fecha_compra) {
+			String titulo, final int num_compra, final Pantalla parent, final float descuento_coto, Date fecha_compra, final int porcentaje_descuento) {
 			
 //		cant_prod= lista_productos.size();
 
 		this.parent= parent;
 		this.desc_coto.setText(String.valueOf(Mate.poner_dos_decimales(descuento_coto)));
 		this.desc_coto_float= descuento_coto;
+		this.porcentaje_de_descuento=porcentaje_descuento;
 		principal= new FlowPanel();
 		lista_prod= new FlexTable();
 		HorizontalPanel hp = new HorizontalPanel();
@@ -128,7 +131,7 @@ public class WidgetMostrarProductos extends Composite {
 		desc_coto_label= new Label();
 		desc_coto_label.addStyleName("LabelDistinguido");
 		
-		desc_tarj_literal_label= new Label("Desc Tarj 20%");
+		desc_tarj_literal_label= new Label("Desc Tarj " + porcentaje_de_descuento + "%");
 		desc_tarj_literal_label.addStyleName("LabelDistinguido");
 		desc_tarj_label= new Label();
 		desc_tarj_label.addStyleName("LabelDistinguido");
@@ -308,7 +311,7 @@ public class WidgetMostrarProductos extends Composite {
 						
 						float tot_aux= (subtotal_compra-desc_coto_float);
 						total= tot_aux;
-						float desc_tarj=tot_aux/100*20;
+						float desc_tarj=tot_aux/100*porcentaje_de_descuento;
 						total= total -(desc_tarj);
 						
 						
@@ -376,7 +379,7 @@ public class WidgetMostrarProductos extends Composite {
 		
 		float tot_aux= (subtotal_compra-desc_coto_float);
 		total= tot_aux;
-		float desc_tarj=tot_aux/100*20;
+		float desc_tarj=tot_aux/100*porcentaje_de_descuento;
 		total= total -(desc_tarj);
 
 		lista_prod.setWidget(next_row, 2, desc_tarj_literal_label);
@@ -625,7 +628,7 @@ public class WidgetMostrarProductos extends Composite {
 						
 						float tot_aux= (subtotal_compra-desc_coto_float);
 						total= tot_aux;
-						float desc_tarj=tot_aux/100*20;
+						float desc_tarj=tot_aux/100*porcentaje_de_descuento;
 						total= total -(desc_tarj);
 
 						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
@@ -720,7 +723,7 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 
 						float tot_aux= (subtotal_compra-desc_coto_float);
 						total= tot_aux;
-						float desc_tarj=tot_aux/100*20;
+						float desc_tarj=tot_aux/100*porcentaje_de_descuento;
 						total= total -(desc_tarj);
 
 						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));

@@ -9,12 +9,14 @@ import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
+import ar.gov.chris.client.datos.DatosListaProdCompleta;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionBD;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoAutorizado;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionNoExiste;
 import ar.gov.chris.client.gwt.excepciones.GWT_ExcepcionYaExiste;
 import ar.gov.chris.client.interfaces.ProxyPantallaProductos;
+import ar.gov.chris.server.clases.Lista;
 import ar.gov.chris.server.clases.Producto;
 import ar.gov.chris.server.excepciones.ExcepcionBD;
 import ar.gov.chris.server.excepciones.ExcepcionNoExiste;
@@ -151,13 +153,17 @@ ProxyPantallaProductos {
 	}
 
 	@Override
-	public Set<DatosProducto> buscar_productos_lista(int id_lista) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste{
+	public DatosListaProdCompleta buscar_productos_lista(int id_lista) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste{
+		
+		DatosListaProdCompleta lista_completa= new DatosListaProdCompleta();
 		Set <DatosProducto> datos_conj= new HashSet<DatosProducto>();
 		ConexionBD con= this.obtener_transaccion();
 
 		boolean commit= true;	
-		//		Lista l = new Lista(comentario, fecha);
+		
 		try {
+			Lista l = new Lista(con, id_lista);
+
 			ResultSet rs= con.select("SELECT * FROM rel_listas_productos where id_compra = " + id_lista);
 
 			while (rs.next()) {
@@ -173,6 +179,10 @@ ProxyPantallaProductos {
 				datos.setFecha_venc(rs.getDate("fecha_venc"));
 				datos_conj.add(datos);
 			}
+			
+			lista_completa.setDescuento_del_super(l.getDesc_coto());
+			lista_completa.setPorcentaje_de_descuento(l.getPorcentaje_de_descuento());
+			lista_completa.setLista_prod(datos_conj);
 
 		} catch (ExcepcionBD e) {
 			throw new GWT_ExcepcionBD(e);
@@ -184,7 +194,7 @@ ProxyPantallaProductos {
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
-		return datos_conj;
+		return lista_completa;
 	}
 
 	@Override
