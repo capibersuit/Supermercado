@@ -169,6 +169,7 @@ ProxyPantallaListas {
 			Boolean ver_marcad= datos_lista.isVer_marcados();
 			float pagado= datos_lista.getPagado();
 			float desc_coto= datos_lista.getDesc_coto();
+			int porcentaje= datos_lista.getPorcentaje_descuento();
 
 			
 			String query= "UPDATE listas SET ";
@@ -180,7 +181,7 @@ ProxyPantallaListas {
 				query+=	", pagado = "+ pagado; 
 //			if(desc_coto !=0)
 			if(actualizar_desc)
-				query+= ", desc_coto = "+ desc_coto;
+				query+= ", desc_coto = "+ desc_coto + ", porcentaje_desc= " + porcentaje;
 			query+= " WHERE id = " + id_lista;
 			
 //			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "

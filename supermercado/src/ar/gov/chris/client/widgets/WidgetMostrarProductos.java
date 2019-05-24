@@ -94,6 +94,7 @@ public class WidgetMostrarProductos extends Composite {
 
 		this.parent= parent;
 		this.desc_coto.setText(String.valueOf(Mate.poner_dos_decimales(descuento_coto)));
+		this.porcentaje_desc.setText(String.valueOf(porcentaje_descuento));
 		this.desc_coto_float= descuento_coto;
 		this.porcentaje_de_descuento=porcentaje_descuento;
 		principal= new FlowPanel();
@@ -128,7 +129,7 @@ public class WidgetMostrarProductos extends Composite {
 		subtotal_compra_label= new Label();
 		subtotal_compra_label.addStyleName("LabelDistinguido");
 		
-		desc_coto_literal_label= new Label("Desc Coto");
+		desc_coto_literal_label= new Label("Desc del super");
 		desc_coto_literal_label.addStyleName("LabelDistinguido");
 		desc_coto_label= new Label();
 		desc_coto_label.addStyleName("LabelDistinguido");
@@ -291,6 +292,7 @@ public class WidgetMostrarProductos extends Composite {
 		}
 		
 		if(titulo.equalsIgnoreCase("Vista de compra")) {
+			
 			desc_coto.addBlurHandler(new BlurHandler(){
 				public void onBlur(BlurEvent event) {
 					String aux= desc_coto.getText();
@@ -307,8 +309,6 @@ public class WidgetMostrarProductos extends Composite {
 						desc_coto_label.setText(desc_coto_str);
 						lista_prod.setWidget(next_row-2, 3, desc_coto_label);
 //						lista_prod.setText(next_row-2, 3, String.valueOf(Mate.poner_dos_decimales(desc_coto_float)));
-
-						//***
 						
 						
 						float tot_aux= (subtotal_compra-desc_coto_float);
@@ -316,28 +316,63 @@ public class WidgetMostrarProductos extends Composite {
 						float desc_tarj=tot_aux/100*porcentaje_de_descuento;
 						total= total -(desc_tarj);
 						
-						
-						
-						//***
-						
+												
 						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
 						desc_tarj_label.setText(desc_tarj_str);
 						lista_prod.setWidget(next_row-1, 3, desc_tarj_label);
-						
-						
-						//****
-						
 						
 						
 						String total_str= String.valueOf(Mate.poner_dos_decimales(total));
 						total_final_label.setText(total_str);
 						lista_prod.setWidget(next_row, 3, total_final_label);
 						
-						((PantallaVistaDeCompra)parent).set_descuento_coto(num_compra, desc_coto_float);
+						((PantallaVistaDeCompra)parent).set_descuento_o_porcentaje(num_compra, desc_coto_float, porcentaje_de_descuento);
 						
 				}}});
 			
+			//***********************************************************************************************************************************
+			porcentaje_desc.addBlurHandler(new BlurHandler(){
+				public void onBlur(BlurEvent event) {
+					String aux= porcentaje_desc.getText();
+					if (!aux.isEmpty()) {
+						try {
+							porcentaje_de_descuento= Integer.parseInt(aux);
+						} catch (NumberFormatException e){
+							porcentaje_desc.setText(String.valueOf(porcentaje_descuento));
+							MensajeAlerta.mensaje_error("Error: debe ingresar un porcentaje valido");
+							return;
+						}
+						//***
+						String desc_coto_str= String.valueOf(Mate.poner_dos_decimales(desc_coto_float));
+						desc_coto_label.setText(desc_coto_str);
+						lista_prod.setWidget(next_row-2, 3, desc_coto_label);
+//						lista_prod.setText(next_row-2, 3, String.valueOf(Mate.poner_dos_decimales(desc_coto_float)));
+						
+						
+						float tot_aux= (subtotal_compra-desc_coto_float);
+						total= tot_aux;
+						float desc_tarj=tot_aux/100*porcentaje_de_descuento;
+						total= total -(desc_tarj);
+						
+												
+						String desc_tarj_str= String.valueOf(Mate.poner_dos_decimales(desc_tarj));
+						desc_tarj_label.setText(desc_tarj_str);
+						lista_prod.setWidget(next_row-1, 3, desc_tarj_label);
+						
+						String desc_tarj_literal_label_str= String.valueOf("Desc Tarj " + porcentaje_de_descuento + "%");
+						
+						desc_tarj_literal_label.setText(desc_tarj_literal_label_str);
+						lista_prod.setWidget(next_row-1, 2, desc_tarj_literal_label);						
+						
+						String total_str= String.valueOf(Mate.poner_dos_decimales(total));
+						total_final_label.setText(total_str);
+						lista_prod.setWidget(next_row, 3, total_final_label);
+						
+						((PantallaVistaDeCompra)parent).set_descuento_o_porcentaje(num_compra, desc_coto_float, porcentaje_de_descuento);
+						
+				}}});
 			
+			//***********************************************************************************************************************************
 			insertar_final(tamanio_lista);
 			
 		}
@@ -354,6 +389,8 @@ public class WidgetMostrarProductos extends Composite {
 //		principal.add(fecha_compra_lablel);	
 		principal.add(desc_coto_decripcion);
 		principal.add(desc_coto);
+		principal.add(porcentaje_desc_decripcion);
+		principal.add(porcentaje_desc);
 		}
 		principal.add(cant_prod_label);
 		principal.add(lista_prod);

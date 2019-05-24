@@ -14,6 +14,7 @@ public class DatosLista implements IsSerializable {
 	private float pagado;
 	private float desc_coto;
 	private boolean botones_habilitados;
+	private int porcentaje_descuento;
 
 	
 	
@@ -28,6 +29,13 @@ public class DatosLista implements IsSerializable {
 	}
 	public void setDesc_coto(float desc_coto) {
 		this.desc_coto = desc_coto;
+	}
+	
+	public int getPorcentaje_descuento() {
+		return porcentaje_descuento;
+	}
+	public void setPorcentaje_descuento(int porcentaje_descuento) {
+		this.porcentaje_descuento = porcentaje_descuento;
 	}
 	public boolean isVer_marcados() {
 		return ver_marcados;

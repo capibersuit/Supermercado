@@ -259,9 +259,10 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		   
 		   
 		   descuento_coto= lista_prod_completa.getDescuento_del_super();
+		   porcentaje_de_descuento= lista_prod_completa.getPorcentaje_de_descuento();
 			
 			prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this,
-					descuento_coto, fecha_compra, lista_prod_completa.getPorcentaje_de_descuento());
+					descuento_coto, fecha_compra, porcentaje_de_descuento);
 			  
 				HorizontalPanel hp = new HorizontalPanel();
 				
@@ -615,15 +616,16 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		this.ver_marcados = ver_marcados;
 	}
 
-	public void set_descuento_coto(int num_compra, float desc) {
+	public void set_descuento_o_porcentaje(int num_compra, float desc, int porcentaje) {
 		
 		DatosLista dl= new DatosLista();
 		dl.setId(num_compra);
 		dl.setDesc_coto(desc);
+		dl.setPorcentaje_descuento(porcentaje);
 		proxy_listas.actualizar_lista(dl, true, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
-						"el descuento a la compra: " + caught.getMessage());
+						"el descuento ó el porcentaje de descuento a la compra: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
 //				Window.Location.reload();
@@ -632,50 +634,68 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		});		
 	}
 	
-	public float get_descuento_coto(final int id_compra) {
-		
-		proxy_listas.buscar_desc_coto(id_compra, new AsyncCallback<Float> (){
-
-			@Override
-			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());					
-			}
-
-			@Override
-			public void onSuccess(Float result){
-				descuento_coto=result;
-				
-				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto, fecha_compra, 20);
-				  
-					HorizontalPanel hp = new HorizontalPanel();
-					
-					hp.add(btn_marcar_productos);
-
-					hp.add(btn_desmarcar_productos);
-
-
-					hp.add(boton_imprimir);
-					hp.add(btn_ver_marcados);
-					
-					hp.add(btn_deshabilitar_botones);
-					hp.add(btn_agregar_prod);
-
-//				   panel.add(boton_imprimir);
-//				   panel.add(btn_ver_marcados);
-//				   panel.add(btn_agregar_prod);
+	
+//public void set_porcentaje_de_descuento(int num_compra, int porcentaje, float descuento) {
+//		
+//		DatosLista dl= new DatosLista();
+//		dl.setId(num_compra);
+//		dl.setPorcentaje_descuento(porcentaje);
+//		proxy_listas.actualizar_lista(dl, true, new AsyncCallback<Void>(){
+//			public void onFailure(Throwable caught) {
+//				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
+//						"el porcentaje de descuento a la compra: " + caught.getMessage());
+//			}
+//			public void onSuccess(Void result) {
+////				Window.Location.reload();
+//			}
+//			
+//		});		
+//	}
+	
+//	public float get_descuento_coto(final int id_compra) {
+//		
+//		proxy_listas.buscar_desc_coto(id_compra, new AsyncCallback<Float> (){
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());					
+//			}
+//
+//			@Override
+//			public void onSuccess(Float result){
+//				descuento_coto=result;
+//				
+//				prod= new WidgetMostrarProductos(lista_productos, "Vista de compra", id_compra, PantallaVistaDeCompra.this, descuento_coto, fecha_compra, 20);
+//				  
+//					HorizontalPanel hp = new HorizontalPanel();
+//					
+//					hp.add(btn_marcar_productos);
+//
+//					hp.add(btn_desmarcar_productos);
+//
+//
+//					hp.add(boton_imprimir);
+//					hp.add(btn_ver_marcados);
+//					
+//					hp.add(btn_deshabilitar_botones);
+//					hp.add(btn_agregar_prod);
+//
+////				   panel.add(boton_imprimir);
+////				   panel.add(btn_ver_marcados);
+////				   panel.add(btn_agregar_prod);
+////				   
+//				   panel.add(hp);
 //				   
-				   panel.add(hp);
-				   
-				   panel.add(prod);
-				   
-				   deshabilitar_botones(botones_habilitados);
-
-				   agregar_handlers();
-			}
-		
-	});
-		return descuento_coto;
-}
+//				   panel.add(prod);
+//				   
+//				   deshabilitar_botones(botones_habilitados);
+//
+//				   agregar_handlers();
+//			}
+//		
+//	});
+//		return descuento_coto;
+//}
 	
 	/** Quita a las personas afectadas indicadas del caso.
 	 * 
