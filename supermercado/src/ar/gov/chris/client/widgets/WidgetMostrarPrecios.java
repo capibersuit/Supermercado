@@ -368,7 +368,7 @@ public class WidgetMostrarPrecios extends Composite {
 		//		Label precios_label= new Label("Precios");
 		//		Label fechas_label= new Label("Fechas");
 		
-		Label porcentaje_label= new Label("% Aumento");
+		Label porcentaje_label= new Label("Aumento");
 
 
 		Label ene_label= new Label("Ene");
