@@ -30,6 +30,7 @@ public class WidgetMostrarProductos extends Composite {
 	private FlexTable lista_prod;
 	private Label titulo_label;
 	private Label fecha_compra_lablel;
+	private Label fecha_compra_literal_lablel;
 	private Label id_compra_lablel;
 	private Label cant_prod_label;
 	private Label subtotal_literal_label;
@@ -99,22 +100,28 @@ public class WidgetMostrarProductos extends Composite {
 		this.porcentaje_de_descuento=porcentaje_descuento;
 		principal= new FlowPanel();
 		lista_prod= new FlexTable();
-		HorizontalPanel hp = new HorizontalPanel();
+		FlexTable resumen = new FlexTable();
 		
 		titulo_label= new Label(titulo);
 		titulo_label.addStyleName("LabelDistinguido");
 		
-		hp.add(titulo_label);
+		resumen.setWidget(1,1,titulo_label);
 		if(fecha_compra != null) {
-			fecha_compra_lablel= new Label(" _ " + fecha_compra.toString());
+			fecha_compra_literal_lablel= new Label(" Fecha de compra " );
+			fecha_compra_literal_lablel.addStyleName("LabelDistinguido");
+			fecha_compra_lablel= new Label("  " + fecha_compra.toString());
 			fecha_compra_lablel.addStyleName("LabelDistinguido");
 			
-			id_compra_lablel= new Label("_n° " + num_compra);
+			id_compra_lablel= new Label("n° " + num_compra);
 			id_compra_lablel.addStyleName("LabelDistinguido");
 			
-			hp.add(id_compra_lablel);
-			hp.add(fecha_compra_lablel);
-		}
+			resumen.setWidget(1,2, id_compra_lablel);
+			resumen.setWidget(1,3, fecha_compra_literal_lablel);
+			resumen.setWidget(1,4, fecha_compra_lablel);
+			
+			resumen.getRowFormatter().setStyleName(1,"ContenidoTablas");
+
+			
 //		if(titulo.equalsIgnoreCase("Vista de compra")) {
 //			cant_prod_label= new Label("Esta compra tiene: " + cant_prod + " productos.");
 //		} else 
@@ -382,7 +389,7 @@ public class WidgetMostrarProductos extends Composite {
 
 //		principal.add(titulo_label);
 		
-		principal.add(hp);
+		principal.add(resumen);
 		
 //		principal.add(desc_coto_decripcion);
 		if(parent instanceof PantallaVistaDeCompra) {
@@ -395,6 +402,7 @@ public class WidgetMostrarProductos extends Composite {
 		principal.add(cant_prod_label);
 		principal.add(lista_prod);
 		initWidget(principal);
+		}
 	}
 
 

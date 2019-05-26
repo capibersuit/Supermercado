@@ -56,7 +56,8 @@ ProxyPantallaListas {
 		try {
 			
 			
-			Lista l= new Lista(datos_list.getComentario(), new Date(), datos_list.getId_sucursal());
+			Lista l= new Lista(datos_list.getComentario(),
+					new Date(), datos_list.getId_sucursal(), datos_list.getPorcentaje_descuento());
 			l.grabar(con);
 			commit= true;
 		

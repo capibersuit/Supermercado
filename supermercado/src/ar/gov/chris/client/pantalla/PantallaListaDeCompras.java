@@ -24,28 +24,9 @@ import com.google.gwt.user.client.ui.Label;
 public class PantallaListaDeCompras extends PantallaInicio {
 	
 	
-	private Button btn_agregar_lista;
-//	private Button btn_ir_a_prod;
-
-
-//	private ProxyPantallaListasAsync proxy_listas;
-
-	
+	private Button btn_agregar_lista;	
 	private WidgetAgregarLista agregar_lista;
-	private WidgetMostrarListas listas;
-	private WidgetMostrarListas listas2;
-	private WidgetMostrarListas listas3;
-
-
-
-	protected Set<DatosLista> datos_lista;
-	
-	
-	private DisclosurePanel panel_16;
-	private DisclosurePanel panel_17;
-	private DisclosurePanel panel_18;
-
-
+	protected Set<DatosLista> datos_lista;	
 
 	public PantallaListaDeCompras() {
 		super();
@@ -68,15 +49,16 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	}
 	
 	
-	public void agregar_lista(String comentario, int id_sucursal) {
+	public void agregar_lista(String comentario, int id_sucursal, int porcentaje) {
 		DatosLista datos_list= new DatosLista();
 		datos_list.setComentario(comentario);
 		datos_list.setId_sucursal(id_sucursal);
+		datos_list.setPorcentaje_descuento(porcentaje);
 	
 		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurri� un error al intentar agregar " +
-						"el producto: " + caught.getMessage());
+				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
+						"la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {
 				Window.Location.reload();

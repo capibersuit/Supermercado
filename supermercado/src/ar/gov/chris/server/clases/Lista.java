@@ -52,11 +52,12 @@ public class Lista extends PersistenteEnBD {
 		this.pagado = pagado;
 	}
 
-	public Lista(String comentario, Date fecha, int id_sucursal) {
+	public Lista(String comentario, Date fecha, int id_sucursal, int porcentaje) {
 		super();
 		this.comentario = comentario;
 		this.fecha = fecha;
 		this.id_sucursal= id_sucursal;
+		this.porcentaje_de_descuento= porcentaje;
 	}
 	
 	public int getId() {
@@ -153,6 +154,8 @@ public class Lista extends PersistenteEnBD {
 		 lista_campos.put("fecha", this.fecha);
 		 lista_campos.put("pagado", this.pagado);
 		 lista_campos.put("id_sucursal", this.id_sucursal);
+		 lista_campos.put("porcentaje_desc", this.porcentaje_de_descuento);
+
 
 		super.grabar(con, lista_campos, "public.listas", "public.listas", true, "", id, false);
 	}

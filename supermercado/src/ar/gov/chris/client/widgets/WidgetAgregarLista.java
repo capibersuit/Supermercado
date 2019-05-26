@@ -40,6 +40,8 @@ public class WidgetAgregarLista extends DialogBox {
 	private Label lblcomentario;
 	private Label lblfecha;
 	private Label lblpagado;
+	private Label lblporcentaje;
+
 
 	private TextBox comentario;
 	private TextBox fecha;
@@ -53,11 +55,13 @@ public class WidgetAgregarLista extends DialogBox {
 	
 	private ListBox sucursal;
 	private ListBox supermercado;
+	
+	private TextBox porcentaje;
 
 
 	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
-	 * un CUDAP.
+	 * un lista.
 	 * 
 	 * @param pantallaListaDeCompras La pantalla parent.
 	 * @param id_widget Id para el widget que se agrega.
@@ -72,9 +76,11 @@ public class WidgetAgregarLista extends DialogBox {
 		
 		lblcomentario= new Label("Comentario/Descripcion");
 		lblfecha= new Label("Fecha");
+		lblporcentaje= new Label("% de desc");
+		
 		comentario= new TextBox();
 		fecha= new TextBox();
-		
+		porcentaje= new TextBox();
 //		DisplayTituloWidget cudap= new DisplayTituloWidget("CUDAP: ", box_cudap);
 		
 		agregar= new Button("Agregar");
@@ -132,6 +138,9 @@ public class WidgetAgregarLista extends DialogBox {
 		
 		panel.add(supermercado);
 		panel.add(sucursal);
+		panel.add(lblporcentaje);
+		panel.add(porcentaje);
+
 		
 		panel.add(botones);
 		this.add(panel);
@@ -178,7 +187,8 @@ public class WidgetAgregarLista extends DialogBox {
 					
 					
 				} else
-				  parent.agregar_lista(comentario.getText(),Integer.parseInt(sucursal.getValue(sucursal.getSelectedIndex())));
+				  parent.agregar_lista(comentario.getText(),
+						  Integer.parseInt(sucursal.getValue(sucursal.getSelectedIndex())), Integer.parseInt(porcentaje.getText()));
 			hide();
 			}
 		});
