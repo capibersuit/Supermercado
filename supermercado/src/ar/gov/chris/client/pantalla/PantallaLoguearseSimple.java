@@ -92,7 +92,7 @@ public class PantallaLoguearseSimple extends Pantalla {
 		inicial_sesion= new Label("INICIO DE SESIÓN");
 		inicial_sesion.setStyleName("cabecera");
 		
-		footer= new Label("SCLS - VERSIÓN: v3.1");
+		footer= new Label("SCLS - VERSIÓN: v3.2");
 		footer.setStyleName("footer");
 		
 		header= new Label("Sistema de control de listas de supermercado");
