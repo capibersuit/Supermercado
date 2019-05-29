@@ -240,7 +240,7 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	}
 
 	public void actualizar_producto(DatosLista datos_lista) {
-		proxy_listas.actualizar_lista(datos_lista, false, new AsyncCallback<Void>(){
+		proxy_listas.actualizar_lista(datos_lista, true, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar actualizar " +
 						"la lista: " + caught.getMessage());
