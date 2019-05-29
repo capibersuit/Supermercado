@@ -110,6 +110,7 @@ public class WidgetAgregarLista extends DialogBox {
 //			precio.setText(String.valueOf((prod.getPrecio())));
 			fecha.setText(datos_lista.getFecha().toString());
 			fecha.setEnabled(false);
+			porcentaje.setText(String.valueOf(datos_lista.getPorcentaje_descuento()));
 			agregar.setText("Actualizar");
 			lblpagado= new Label("Importe pagado");
 //			pagado= new TextBox();
@@ -171,6 +172,14 @@ public class WidgetAgregarLista extends DialogBox {
 					Date fecha_act= new Date(anionum, mesnum, dianum);
 					datos_lista.setComentario(comentario.getText());
 					datos_lista.setFecha(fecha_act);
+					datos_lista.setId_sucursal(Integer.parseInt(sucursal.getValue(sucursal.getSelectedIndex())));
+					try {
+					datos_lista.setPorcentaje_descuento(Integer.parseInt(porcentaje.getText()));
+				} catch (NumberFormatException e) {
+					MensajeAlerta.mensaje_error("Error: " + e.getMessage() + ". Ingrese un porcentaje de descuento valido.");
+//					throw new GWT_ExcepcionFormatoInvalido(e);
+				}
+					
 					if(!pagado.getText().isEmpty()) {
 						
 						try {

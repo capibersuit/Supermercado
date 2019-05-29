@@ -91,6 +91,7 @@ ProxyPantallaListas {
 				datos.setBotones_habilitados(rs.getBoolean("botones_hab"));
 				datos.setPagado(rs.getFloat("pagado"));
 				datos.setId_sucursal(rs.getInt("id_sucursal"));
+				datos.setPorcentaje_descuento(rs.getInt("porcentaje_desc"));
 
 				datos_conj.add(datos);
 			}
@@ -171,13 +172,14 @@ ProxyPantallaListas {
 			float pagado= datos_lista.getPagado();
 			float desc_coto= datos_lista.getDesc_coto();
 			int porcentaje= datos_lista.getPorcentaje_descuento();
+			int id_suc= datos_lista.getId_sucursal();
 
 			
 			String query= "UPDATE listas SET ";
 			if(comen != null && fech != null)
 				query+=	"comentario= '"+ comen + "', fecha= '"+ fech +"',";
 			
-			query+=	" ver_marcados = "+ ver_marcad;
+			query+=	" ver_marcados = "+ ver_marcad + ", id_sucursal= " + id_suc;
 			if(pagado !=0)
 				query+=	", pagado = "+ pagado; 
 //			if(desc_coto !=0)
