@@ -58,6 +58,7 @@ public class WidgetMostrarListas extends Composite {
 		Label id_compra_label= new Label("Id");
 		Label comentario_label= new Label("Comentario");
 		Label super_label= new Label("Super");
+		Label desc_label= new Label("Desc");
 		Label suc_label= new Label("Sucursal");
 
 		Label fecha_label= new Label("Fecha");
@@ -73,17 +74,19 @@ public class WidgetMostrarListas extends Composite {
 
 		listas.setWidget(0, 1, comentario_label);
 		
-		listas.setWidget(0, 2, super_label);
+		listas.setWidget(0, 2, desc_label);
 
-		listas.setWidget(0, 3, suc_label);
+		listas.setWidget(0, 3, super_label);
 
-		listas.setWidget(0, 4, fecha_label);
+		listas.setWidget(0, 4, suc_label);
+
+		listas.setWidget(0, 5, fecha_label);
 		
-		listas.setWidget(0, 5, pagado_literal_label);
-		listas.setWidget(0, 6, id_lista_label);
+		listas.setWidget(0, 6, pagado_literal_label);
+		listas.setWidget(0, 7, id_lista_label);
 		
-		listas.setWidget(0, 7, borrar_label);
-		listas.setWidget(0, 8, actualizar_label);
+		listas.setWidget(0, 8, borrar_label);
+		listas.setWidget(0, 9, actualizar_label);
 
 		next_row= 1; 
 
@@ -145,12 +148,14 @@ public class WidgetMostrarListas extends Composite {
 				listas.setText(next_row, 0, String.valueOf(list.getId()));
 				listas.setText(next_row, 1, list.getComentario());
 				
+				listas.setText(next_row, 2, String.valueOf(list.getPorcentaje_descuento()));
+				
 				String id_suc= String.valueOf(list.getId_sucursal());
 				
-				listas.setText(next_row, 2, Util.obtener_supermercado_de_sucursal(id_suc).obtener_descripcion());
-				listas.setText(next_row, 3, Util.mapear_sucursal_por_id(id_suc).obtener_descripcion());
+				listas.setText(next_row, 3, Util.obtener_supermercado_de_sucursal(id_suc).obtener_descripcion());
+				listas.setText(next_row, 4, Util.mapear_sucursal_por_id(id_suc).obtener_descripcion());
 
-				listas.setText(next_row, 4, list.getFecha().toString());
+				listas.setText(next_row, 5, list.getFecha().toString());
 
 				Label pagado_label =new Label();
 				pagado_label.addStyleName("ComplejidadMedia");
@@ -159,12 +164,12 @@ public class WidgetMostrarListas extends Composite {
 
 				pagado_label.setText(pagado_str);
 
-				listas.setWidget(next_row, 5,  pagado_label);
+				listas.setWidget(next_row, 6,  pagado_label);
 
 
-				listas.setWidget(next_row, 6, btn_ir);
-				listas.setWidget(next_row, 7, btn_borrar);
-				listas.setWidget(next_row, 8, btn_actualizar);
+				listas.setWidget(next_row, 7, btn_ir);
+				listas.setWidget(next_row, 8, btn_borrar);
+				listas.setWidget(next_row, 9, btn_actualizar);
 
 				//		lista_lineas.setText(next_row, 2, prod.obtener_marca());
 				//		lista_lineas.setText(next_row, 3, prod.obtener_modelo());
