@@ -97,8 +97,8 @@ public class Producto extends PersistenteEnBD {
 				+ ", id_super=" + id_super + "]";
 	}
 	public void grabar(ConexionBD con, boolean solo_sino_existe) throws ExcepcionBD, ExcepcionYaExiste {
-		 if (this.nombre==null /*|| (this.precio) == 0*/)
-			throw new ExcepcionBug("No se puede grabar un producto sin su nombre");
+		 if (this.nombre==null || (this.id_super) == 0)
+			throw new ExcepcionBug("No se puede grabar un producto sin su nombre o sin su supermercado o con un id_super=0.");
 		
 		 HashMapSQL lista_campos= new HashMapSQL();
 		 lista_campos.put("nombre", this.nombre);
