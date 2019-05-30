@@ -51,6 +51,7 @@ ProxyPantallaProductos {
 
 
 			Producto prod= new Producto(datos_prod.getNombre(), datos_prod.getPrecio());
+			prod.setId_super(datos_prod.getId_super());
 			prod.grabar(con, true);
 			datos_prod.setId(prod.getId());
 			commit= true;
@@ -278,7 +279,8 @@ ProxyPantallaProductos {
 		try {
 			Producto prod= new Producto(con, datos_prod.getId());
 			int id_prod= prod.getId();
-			String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() +", nombre= '"+ datos_prod.getNombre() + "' WHERE id = " + id_prod;
+			String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() +
+			", nombre= '"+ datos_prod.getNombre() + "', "+"id_super=" + datos_prod.getId_super() +" WHERE id = " + id_prod;
 			//			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
 			//			+ prod.getNombre() + " WHERE id = " + id_prod);
 			con.ejecutar_update(query);
