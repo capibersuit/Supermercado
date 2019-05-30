@@ -179,7 +179,10 @@ ProxyPantallaListas {
 			if(comen != null && fech != null)
 				query+=	"comentario= '"+ comen + "', fecha= '"+ fech +"',";
 			
-			query+=	" ver_marcados = "+ ver_marcad + ", id_sucursal= " + id_suc;
+			query+=	" ver_marcados = "+ ver_marcad;
+			
+			if(datos_lista.getId_sucursal()!=0)
+				query+=	", id_sucursal= " + id_suc;
 			if(pagado !=0)
 				query+=	", pagado = "+ pagado; 
 //			if(desc_coto !=0)
