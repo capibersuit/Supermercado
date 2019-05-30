@@ -1,7 +1,10 @@
 package ar.gov.chris.client.widgets;
 
 import java.util.Date;
+import java.util.List;
 
+import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
+import ar.gov.chris.client.clases.Super;
 import ar.gov.chris.client.datos.DatosProducto;
 import ar.gov.chris.client.gwt.PopupCalendario;
 import ar.gov.chris.client.pantalla.Pantalla;
@@ -9,6 +12,7 @@ import ar.gov.chris.client.pantalla.PantallaProductos;
 import ar.gov.chris.client.pantalla.PantallaVistaDeCompra;
 import ar.gov.chris.client.util.JavaScript;
 import ar.gov.chris.client.util.Mate;
+import ar.gov.chris.client.util.Util;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,6 +27,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class WidgetAgregarProducto extends DialogBox {
@@ -36,6 +41,7 @@ public class WidgetAgregarProducto extends DialogBox {
 	private TextBox fecha_venc;
 	private Label lblfecha_venc;
 	private Button calendario;
+	private ListBox supermercado;
 
 	private Pantalla parent;
 	
@@ -67,6 +73,17 @@ public class WidgetAgregarProducto extends DialogBox {
 		calendario= new Button("Vencimiento");
 		lblfecha_venc= new Label("Fecha");
 		fecha_venc= new TextBox();
+		
+		
+		//***************
+				supermercado= new ListBox();
+						
+				List<Super>  supermercados;
+				supermercados= BuscadorDatosEstaticos.supermercados;
+				
+					for (Super s : supermercados) 
+						supermercado.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
+					
 		if(es_update) {
 			this.setText("Actualizar Producto");
 			nombre.setText(prod.getNombre());
@@ -90,6 +107,7 @@ public class WidgetAgregarProducto extends DialogBox {
 		panel= new FlowPanel();
 		panel.add(nombre);
 		panel.add(precio);
+		panel.add(supermercado);
 		if(parent instanceof PantallaVistaDeCompra) {
 			panel.add(cantidad);
 			panel.add(lblfecha_venc);
@@ -112,6 +130,7 @@ public class WidgetAgregarProducto extends DialogBox {
 				
 				datos_prod.setNombre(nombre.getText().trim());
 				datos_prod.setPrecio(Float.parseFloat(precio.getText()));
+				datos_prod.setId_super((Util.mapear_supermercado_por_nombre(supermercado.getSelectedItemText())).obtener_id());
 				
 				if(parent instanceof PantallaProductos) {
 
