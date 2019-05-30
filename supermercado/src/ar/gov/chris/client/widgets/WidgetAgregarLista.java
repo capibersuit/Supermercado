@@ -72,60 +72,75 @@ public class WidgetAgregarLista extends DialogBox {
 		this.es_update= datos_lista != null;
 		if(es_update)
 			this.datos_lista= datos_lista;
-//		this.setText("Agregar Nueva Lista");
-		
+
 		lblcomentario= new Label("Comentario/Descripcion");
 		lblfecha= new Label("Fecha");
 		lblporcentaje= new Label("% de desc");
-		
+
 		comentario= new TextBox();
 		fecha= new TextBox();
 		porcentaje= new TextBox();
-//		DisplayTituloWidget cudap= new DisplayTituloWidget("CUDAP: ", box_cudap);
-		
+
 		agregar= new Button("Agregar");
 		cancelar= new Button("Cancelar");
 		cal= new Button("Consultar fecha");
-		
-		
-		//***************
+
 		supermercado= new ListBox();
-				
+		sucursal= new ListBox();
+
 		List<Super>  supermercados;
 		supermercados= BuscadorDatosEstaticos.supermercados;
-		
-			for (Super s : supermercados) 
-				supermercado.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
-			
-		// Pongo en la lista todos los posibles ámbitos.
-		sucursal= new ListBox();
-		for (Sucursal s : filtrar_sucursales_por_super(Util.mapear_supermercado_por_nombre("COTO").obtener_id())) 
-			sucursal.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
-		
-		//****************
-		
+
+		for (Super s : supermercados) 
+			supermercado.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));			
+
+		if(!es_update)
+			for (Sucursal s : filtrar_sucursales_por_super(Util.mapear_supermercado_por_nombre("COTO").obtener_id())) 
+				sucursal.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));	
+
 		if(es_update) {
 			this.setText("Actualizar lista");
 			comentario.setText(datos_lista.getComentario());
-//			precio.setText(String.valueOf((prod.getPrecio())));
 			fecha.setText(datos_lista.getFecha().toString());
 			fecha.setEnabled(false);
 			porcentaje.setText(String.valueOf(datos_lista.getPorcentaje_descuento()));
 			agregar.setText("Actualizar");
-			lblpagado= new Label("Importe pagado");
-//			pagado= new TextBox();
+			lblpagado= new Label("Importe pagado");			
+
+			int id_suc= datos_lista.getId_sucursal();
+
+			Sucursal suc= Util.mapear_sucursal_por_id(String.valueOf(id_suc));
+			Super sup= Util.mapear_supermercado_por_id(String.valueOf(suc.id_super()));
+			String nombre_suc= suc.obtener_descripcion();
+
+			String nombre_super= sup.obtener_descripcion();
+
+			for (Sucursal s : filtrar_sucursales_por_super(sup.obtener_id())) 
+				sucursal.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));
+
+			for (int i= 0; i < sucursal.getItemCount(); i++) {
+				if (sucursal.getItemText(i).equals(nombre_suc)) {
+					sucursal.setSelectedIndex(i);					
+					for (int j= 0; j < supermercado.getItemCount(); j++) {
+						if (supermercado.getItemText(j).equals(nombre_super)) {
+							supermercado.setSelectedIndex(j);
+						}
+					}
+
+				}
+			}						
 		} else
 			this.setText("Agregar Nueva Lista");
-		
+
 		agregar_listeners();
 		HorizontalPanel botones= new HorizontalPanel();
-		
+
 		botones.add(agregar);
 		if(es_update)
 			botones.add(cal);
 
 		botones.add(cancelar);
-		
+
 		panel= new FlowPanel();
 		panel.add(lblcomentario);
 		panel.add(comentario);
@@ -135,14 +150,13 @@ public class WidgetAgregarLista extends DialogBox {
 			panel.add(lblpagado);
 			panel.add(pagado);
 		}
-		
-		
+
 		panel.add(supermercado);
 		panel.add(sucursal);
 		panel.add(lblporcentaje);
 		panel.add(porcentaje);
 
-		
+
 		panel.add(botones);
 		this.add(panel);
 	}
