@@ -30,7 +30,7 @@ public interface ProxyPantallaProductos extends RemoteService {
 			String id_compra, boolean cambiar_existencia) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
 	DatosProducto agregar_producto_a_lista(DatosProducto datos_prod,
-			int id_compra, int cant) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
+			int id_compra, int cant, int cant_en_gramos) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
 	Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado;
 

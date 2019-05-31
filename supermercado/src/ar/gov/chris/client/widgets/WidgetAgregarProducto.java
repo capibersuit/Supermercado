@@ -37,6 +37,7 @@ public class WidgetAgregarProducto extends DialogBox {
 	private Button cancelar;
 	private TextBox nombre;
 	private TextBox precio;
+	private TextBox precio_kg;
 	private TextBox cantidad;
 	private TextBox fecha_venc;
 	private Label lblfecha_venc;
@@ -48,6 +49,12 @@ public class WidgetAgregarProducto extends DialogBox {
 	private boolean es_update;
 	
 	private DatosProducto datos_prod = new DatosProducto();
+	
+	private Label lblnombre;
+	private Label lblprecio;
+	private Label lblprecio_kg;
+	private Label lblsupermercado;
+	private Label lblporcentaje;
 	
 	/** Constructor para generar un popup con un campo de texto que permite agregar 
 	 *  o modificar un producto.
@@ -67,6 +74,7 @@ public class WidgetAgregarProducto extends DialogBox {
 	    }
 		nombre= new TextBox();
 		precio= new TextBox();
+		precio_kg= new TextBox();
 		cantidad = new TextBox();
 		agregar= new Button("Agregar");
 		cancelar= new Button("Cancelar");
@@ -74,6 +82,12 @@ public class WidgetAgregarProducto extends DialogBox {
 		lblfecha_venc= new Label("Fecha");
 		fecha_venc= new TextBox();
 		
+		lblnombre= new Label("Nombre");
+		lblprecio= new Label("Precio");
+		lblprecio_kg= new Label("Precio x Kg");
+		lblsupermercado= new Label("Super");
+
+
 		
 		//***************
 				supermercado= new ListBox();
@@ -88,6 +102,7 @@ public class WidgetAgregarProducto extends DialogBox {
 			this.setText("Actualizar Producto");
 			nombre.setText(prod.getNombre());
 			precio.setText(String.valueOf((Mate.poner_dos_decimales(prod.getPrecio()))));
+			precio_kg.setText(String.valueOf((Mate.poner_dos_decimales(prod.getPrecio_kg()))));
 			cantidad.setText(String.valueOf(prod.getCantidad()));
 			fecha_venc.setText((prod.getFecha_venc()!= null)? prod.getFecha_venc().toString():"");
 			agregar.setText("Actualizar");
@@ -100,13 +115,18 @@ public class WidgetAgregarProducto extends DialogBox {
 		agregar_listeners();
 		HorizontalPanel botones= new HorizontalPanel();
 		botones.add(agregar);
-		if(es_update)
+		if(es_update && parent instanceof PantallaVistaDeCompra)
 			botones.add(calendario);
 		botones.add(cancelar);
 		
 		panel= new FlowPanel();
+		panel.add(lblnombre);
 		panel.add(nombre);
+		panel.add(lblprecio);
 		panel.add(precio);
+		panel.add(lblprecio_kg);
+		panel.add(precio_kg);
+		panel.add(lblsupermercado);
 		panel.add(supermercado);
 		if(parent instanceof PantallaVistaDeCompra) {
 			panel.add(cantidad);
@@ -130,6 +150,8 @@ public class WidgetAgregarProducto extends DialogBox {
 				
 				datos_prod.setNombre(nombre.getText().trim());
 				datos_prod.setPrecio(Float.parseFloat(precio.getText()));
+				if(!precio_kg.getText().matches(" *"))
+					datos_prod.setPrecio_kg(Float.parseFloat(precio_kg.getText()));
 				datos_prod.setId_super((Util.mapear_supermercado_por_nombre(supermercado.getSelectedItemText())).obtener_id());
 				
 				if(parent instanceof PantallaProductos) {

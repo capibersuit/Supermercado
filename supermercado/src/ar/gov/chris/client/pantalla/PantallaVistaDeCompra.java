@@ -515,7 +515,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		final DatosProducto datos_prod= new DatosProducto();
 		datos_prod.setNombre(sb_productos.getText());
 		int cant= cant_prod.getSelectedIndex()+1;
-		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, new AsyncCallback<DatosProducto>(){
+		proxy_prod.agregar_producto_a_lista(datos_prod, id_compra, cant, 0, new AsyncCallback<DatosProducto>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrio un error al intentar agregar " +
 						"el producto en la lista: " + caught.getMessage());

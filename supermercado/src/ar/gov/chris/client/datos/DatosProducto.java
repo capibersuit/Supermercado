@@ -12,9 +12,15 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	//String descripcion;
 	float precio;
 	float precio_anterior;
+	float precio_kg;
+	float precio_kg_anterior;
 	int cantidad;
 	int cantidad_anterior;
+	int cant_en_gramos;
+	int cant_en_gramos_anterior;
+
 	boolean esta_marcada;
+	private Date fecha_venc;
 	int id_super;
 	
 	
@@ -27,7 +33,35 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	public void setCantidad_anterior(int cantidad_anterior) {
 		this.cantidad_anterior = cantidad_anterior;
 	}
+	
+	
 
+	public int getCant_en_gramos() {
+		return cant_en_gramos;
+	}
+
+
+	public void setCant_en_gramos(int cant_en_gramos) {
+		this.cant_en_gramos = cant_en_gramos;
+	}
+
+
+	public int getCant_en_gramos_anterior() {
+		return cant_en_gramos_anterior;
+	}
+
+
+	public void setCant_en_gramos_anterior(int cant_en_gramos_anterior) {
+		this.cant_en_gramos_anterior = cant_en_gramos_anterior;
+	}
+
+
+	public float getPrecio() {
+		return precio;
+	}
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
 	
 	public float getPrecio_anterior() {
 		return precio_anterior;
@@ -37,9 +71,27 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	public void setPrecio_anterior(float precio_anterior) {
 		this.precio_anterior = precio_anterior;
 	}
+	
+	public float getPrecio_kg() {
+		return precio_kg;
+	}
 
 
-	private Date fecha_venc;
+	public void setPrecio_kg(float precio_kg) {
+		this.precio_kg = precio_kg;
+	}
+
+
+	public float getPrecio_kg_anterior() {
+		return precio_kg_anterior;
+	}
+
+
+	public void setPrecio_kg_anterior(float precio_kg_anterior) {
+		this.precio_kg_anterior = precio_kg_anterior;
+	}
+
+
 	
 	private boolean existe;
 	public Date getFecha_compra() {
@@ -74,12 +126,7 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public float getPrecio() {
-		return precio;
-	}
-	public void setPrecio(float precio) {
-		this.precio = precio;
-	}
+	
 	public boolean isEsta_marcada() {
 		return esta_marcada;
 	}
@@ -92,7 +139,6 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
 	
 	
 	
@@ -115,16 +161,6 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 		this.id_compra = id_compra;
 	}
 
-	
-
-//	@Override
-//	public String toString() {
-//		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", fecha_venc=" + fecha_venc + ", precio="
-//				+ precio + "]";
-//	}
-	
-	
-
 
 	public int getId_super() {
 		return id_super;
@@ -140,22 +176,6 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 		this.fecha_venc= fecha_venc;
 	}
 
-
-
-
-
-	@Override
-	public String toString() {
-		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio="
-				+ precio + ", precio_anterior=" + precio_anterior
-				+ ", cantidad=" + cantidad + ", cantidad_anterior="
-				+ cantidad_anterior + ", esta_marcada=" + esta_marcada
-				+ ", id_super=" + id_super + ", fecha_venc=" + fecha_venc
-				+ ", existe=" + existe + ", id_compra=" + id_compra
-				+ ", fecha_compra=" + fecha_compra + "]";
-	}
-
-
 	public Object getFechaVenc() {
 		// TODO Auto-generated method stub
 		return fecha_venc;
@@ -170,17 +190,17 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	public void setFecha_venc(Date fecha_venc) {
 		this.fecha_venc = fecha_venc;
 	}
+
+
+	@Override
+	public String toString() {
+		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", precio_anterior="
+				+ precio_anterior + ", precio_kg=" + precio_kg + ", precio_kg_anterior=" + precio_kg_anterior
+				+ ", cantidad=" + cantidad + ", cantidad_anterior=" + cantidad_anterior + ", esta_marcada="
+				+ esta_marcada + ", fecha_venc=" + fecha_venc + ", id_super=" + id_super + ", existe=" + existe
+				+ ", id_compra=" + id_compra + ", fecha_compra=" + fecha_compra + "]";
+	}
 	
-	
-	
-	
-//	@Override
-//	public int compareTo(DatosProducto datos) {
-////		//puedo hacer esto porque String implementa Comparable
-//	    return nombre.compareTo(datos.getNombre());
-//	}
-	
-	
-	
+
 
 }
