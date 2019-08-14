@@ -10,12 +10,14 @@ import ar.gov.chris.client.interfaces.ProxyPantallaProductosAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 
 public class PantallaInicio extends Pantalla {
 	
@@ -25,6 +27,7 @@ public class PantallaInicio extends Pantalla {
 
 
 	protected HorizontalPanel menu;
+	protected HorizontalPanel menu_version;
 	
 	Button btn_productos;
 	Button btn_listas;
@@ -34,7 +37,7 @@ public class PantallaInicio extends Pantalla {
 	Button btn_precios_constantes;
 	Button btn_logueo;
 
-
+	protected final Label label_version= new Label("SCLS - VERSIÓN: v"+ VERSION);
 	
 	public PantallaInicio() {
 		super();
@@ -49,6 +52,7 @@ public class PantallaInicio extends Pantalla {
 	//@Override
 	protected void pantalla_principal() {
 		menu= new HorizontalPanel();
+		menu_version= new HorizontalPanel();
 		btn_productos= new Button("<u>P</u>roductos");
 		btn_listas= new Button("<u>L</u>istas");
 		btn_venc= new Button("<u>V</u>encimientos");
@@ -64,12 +68,22 @@ public class PantallaInicio extends Pantalla {
 		menu.add(btn_precios);
 		menu.add(btn_precios_constantes);
 		menu.add(btn_logueo);
+		
+		menu.setStyleName("menu-fijo");
+		
+//		label_version.setStyleName("version");
+		
+		menu_version.add(label_version);
+		menu_version.setStyleName("version");
+		menu_version.getElement().getStyle().setDisplay(Display.BLOCK);
+
 
 
 
 //		panel.add(btn_productos);
 //		panel.add(btn_listas);
 		panel.add(menu);
+		panel.add(menu_version);
 		agregar_listener();
 	}
 
