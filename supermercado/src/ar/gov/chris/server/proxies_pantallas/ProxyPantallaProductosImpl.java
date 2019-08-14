@@ -52,6 +52,7 @@ ProxyPantallaProductos {
 
 			Producto prod= new Producto(datos_prod.getNombre(), datos_prod.getPrecio());
 			prod.setId_super(datos_prod.getId_super());
+			prod.setPrecio_kg(datos_prod.getPrecio_kg());
 			prod.grabar(con, true);
 			datos_prod.setId(prod.getId());
 			commit= true;
@@ -136,6 +137,7 @@ ProxyPantallaProductos {
 				datos.setId(rs.getInt("id"));
 				datos.setNombre(rs.getString("nombre"));
 				datos.setPrecio(rs.getFloat("precio"));
+				datos.setPrecio_kg(rs.getFloat("precio_x_kg_venta_al_peso"));
 				datos.setId_super(rs.getInt("id_super"));
 				
 				datos_conj.add(datos);
@@ -176,6 +178,7 @@ ProxyPantallaProductos {
 				datos.setNombre(p.getNombre());
 				datos.setPrecio(rs.getFloat("precio"));
 				datos.setCantidad(rs.getInt("cant"));
+				datos.setCant_en_gramos(rs.getInt("cant_en_gramos"));
 				datos.setEsta_marcada(rs.getBoolean("esta_marcada"));
 				datos.setFecha_venc(rs.getDate("fecha_venc"));
 				datos_conj.add(datos);
@@ -243,7 +246,7 @@ ProxyPantallaProductos {
 
 
 	@Override
-	public DatosProducto agregar_producto_a_lista(DatosProducto datos_prod, int id_compra, int cant) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+	public DatosProducto agregar_producto_a_lista(DatosProducto datos_prod, int id_compra, int cant, int cant_en_gramos) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
@@ -251,12 +254,14 @@ ProxyPantallaProductos {
 			Producto prod= new Producto(con, datos_prod.getNombre());
 			int id_prod= prod.getId();
 
-			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, precio, esta_marcada) VALUES (" +
-					id_compra+"," + id_prod +"," +cant  +","+ prod.getPrecio() +"," +datos_prod.isEsta_marcada() + ")");
+			con.ejecutar_sql("INSERT INTO rel_listas_productos (id_compra, id_prod, cant, cant_en_gramos, precio_x_kg_venta_al_peso, precio, esta_marcada) VALUES (" +
+					id_compra+"," + id_prod +"," +cant + "," +cant_en_gramos  +","+prod.getPrecio_kg()+","+prod.getPrecio() +"," +datos_prod.isEsta_marcada() + ")");
 
 			datos_prod.setId(id_prod);
 			datos_prod.setPrecio(prod.getPrecio());
 			datos_prod.setCantidad(cant);
+			datos_prod.setPrecio_kg(prod.getPrecio_kg());
+			datos_prod.setCant_en_gramos_anterior(cant_en_gramos);
 
 			commit= true;
 
@@ -279,7 +284,7 @@ ProxyPantallaProductos {
 		try {
 			Producto prod= new Producto(con, datos_prod.getId());
 			int id_prod= prod.getId();
-			String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() +
+			String query= "UPDATE productos SET precio= "+ datos_prod.getPrecio() + ", precio_x_kg_venta_al_peso= "+ datos_prod.getPrecio_kg() +
 			", nombre= '"+ datos_prod.getNombre() + "', "+"id_super=" + datos_prod.getId_super() +" WHERE id = " + id_prod;
 			//			con.ejecutar_sql("UPDATE productos SET precio= "+ prod.getPrecio() +", nombre= "
 			//			+ prod.getNombre() + " WHERE id = " + id_prod);

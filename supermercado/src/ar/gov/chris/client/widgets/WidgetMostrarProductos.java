@@ -159,7 +159,9 @@ public class WidgetMostrarProductos extends Composite {
 
 			Label nombre_prod_label= new Label("Producto");
 			Label precio_label= new Label("Precio");
+			Label precio_kg_label= new Label("Precio x KG");
 			Label cant_label= new Label("Cantidad");
+			Label cant_gramos_label= new Label("grs");
 			Label total_label= new Label("Precio total");
 			Label borrar_label= new Label("Borrar");
 			Label actualizar_label= new Label("Actualizar");
@@ -176,9 +178,13 @@ public class WidgetMostrarProductos extends Composite {
 			next_col++;
 			lista_prod.setWidget(0, next_col, precio_label);
 			next_col++;
+			lista_prod.setWidget(0, next_col, precio_kg_label);
+			next_col++;
 
 			if(titulo.equalsIgnoreCase("Vista de compra")) {
 				lista_prod.setWidget(0, next_col, cant_label);
+				next_col++;
+				lista_prod.setWidget(0, next_col, cant_gramos_label);
 				next_col++;
 				lista_prod.setWidget(0, next_col, total_label);
 				next_col++;
@@ -479,13 +485,23 @@ public class WidgetMostrarProductos extends Composite {
 		
 		precio = Mate.poner_dos_decimales(precio);
 		
+		float precio_kg= prod.getPrecio_kg();
+		
+		precio_kg = Mate.poner_dos_decimales(precio_kg);
+		
 //		subtotal_compra+= precio;
 		
 		lista_prod.setText(next_row, next_col, String.valueOf(precio));
 		next_col++;
 		
+		lista_prod.setText(next_row, next_col, String.valueOf(precio_kg));
+		next_col++;
+		
 		if(titulo.equalsIgnoreCase("Vista de compra")) {
 			lista_prod.setText(next_row, next_col, ((prod.getCantidad()!=0) ? String.valueOf(prod.getCantidad()) : "NA"));
+			next_col++;
+			
+			lista_prod.setText(next_row, next_col, ((prod.getCant_en_gramos()!=0) ? String.valueOf(prod.getCant_en_gramos()) : "NA"));
 			next_col++;
 
 			float precio_total= prod.getPrecio() * prod.getCantidad();
@@ -729,9 +745,9 @@ public Set<String> marcar_todos(){
 public Set<String> deshabilitar_todos_los_botones(boolean botones_habilitados){
 	HashSet<String> res= new HashSet<String>();
 	for (int i= 1; i < lista_prod.getRowCount()-4; i++){
-		PushButton btn_borrar= (PushButton) lista_prod.getWidget(i, 8);
-		PushButton btn_act= (PushButton) lista_prod.getWidget(i, 7);
-		PushButton btn_marcar= (PushButton) lista_prod.getWidget(i, 6);
+		PushButton btn_borrar= (PushButton) lista_prod.getWidget(i, 10);
+		PushButton btn_act= (PushButton) lista_prod.getWidget(i, 9);
+		PushButton btn_marcar= (PushButton) lista_prod.getWidget(i, 8);
 
 		if(botones_habilitados) {
 			btn_borrar.setEnabled(true);
