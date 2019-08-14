@@ -39,6 +39,8 @@ public class WidgetAgregarProducto extends DialogBox {
 	private TextBox precio;
 	private TextBox precio_kg;
 	private TextBox cantidad;
+	private TextBox cantidad_gramos;
+
 	private TextBox fecha_venc;
 	private Label lblfecha_venc;
 	private Button calendario;
@@ -53,6 +55,8 @@ public class WidgetAgregarProducto extends DialogBox {
 	private Label lblnombre;
 	private Label lblprecio;
 	private Label lblprecio_kg;
+	private Label lblcantidad;
+	private Label lblcantidad_gramos;
 	private Label lblsupermercado;
 	private Label lblporcentaje;
 	
@@ -70,12 +74,13 @@ public class WidgetAgregarProducto extends DialogBox {
 			datos_prod= prod;
 			datos_prod.setPrecio_anterior(prod.getPrecio());
 			datos_prod.setCantidad_anterior(prod.getCantidad());
-			
+			datos_prod.setCant_en_gramos_anterior(prod.getCant_en_gramos());
 	    }
 		nombre= new TextBox();
 		precio= new TextBox();
 		precio_kg= new TextBox();
-		cantidad = new TextBox();
+		cantidad= new TextBox();
+		cantidad_gramos= new TextBox();
 		agregar= new Button("Agregar");
 		cancelar= new Button("Cancelar");
 		calendario= new Button("Vencimiento");
@@ -85,6 +90,8 @@ public class WidgetAgregarProducto extends DialogBox {
 		lblnombre= new Label("Nombre");
 		lblprecio= new Label("Precio");
 		lblprecio_kg= new Label("Precio x Kg");
+		lblcantidad= new Label("Cantidad");
+		lblcantidad_gramos= new Label("Cant gramos");
 		lblsupermercado= new Label("Super");
 
 
@@ -104,7 +111,22 @@ public class WidgetAgregarProducto extends DialogBox {
 			precio.setText(String.valueOf((Mate.poner_dos_decimales(prod.getPrecio()))));
 			precio_kg.setText(String.valueOf((Mate.poner_dos_decimales(prod.getPrecio_kg()))));
 			cantidad.setText(String.valueOf(prod.getCantidad()));
+			cantidad_gramos.setText(String.valueOf(prod.getCant_en_gramos()));
 			fecha_venc.setText((prod.getFecha_venc()!= null)? prod.getFecha_venc().toString():"");
+			
+			int id_super= prod.getId_super();
+			
+			if(id_super != 0) {
+			Super sup= Util.mapear_supermercado_por_id(String.valueOf(id_super));
+
+			String nombre_super= sup.obtener_descripcion();
+			
+			for (int i= 0; i < supermercado.getItemCount(); i++) {
+				if (supermercado.getItemText(i).equals(nombre_super)) {
+					supermercado.setSelectedIndex(i);
+				}
+			}
+			}
 			agregar.setText("Actualizar");
 		} else
 			this.setText("Agregar Nuevo Producto");
@@ -126,10 +148,16 @@ public class WidgetAgregarProducto extends DialogBox {
 		panel.add(precio);
 		panel.add(lblprecio_kg);
 		panel.add(precio_kg);
-		panel.add(lblsupermercado);
-		panel.add(supermercado);
+		if( !(parent instanceof PantallaVistaDeCompra)) {
+			panel.add(lblsupermercado);
+			panel.add(supermercado);
+		}
 		if(parent instanceof PantallaVistaDeCompra) {
+			
+			panel.add(lblcantidad);
 			panel.add(cantidad);
+			panel.add(lblcantidad_gramos);
+			panel.add(cantidad_gramos);
 			panel.add(lblfecha_venc);
 			panel.add(fecha_venc);
 		}
@@ -164,6 +192,9 @@ public class WidgetAgregarProducto extends DialogBox {
 					if(parent instanceof PantallaVistaDeCompra)
 						if(es_update) {
 							datos_prod.setCantidad(Integer.parseInt(cantidad.getText()));
+							datos_prod.setCant_en_gramos_anterior(datos_prod.getCant_en_gramos());
+							datos_prod.setCant_en_gramos(Integer.parseInt(cantidad_gramos.getText()));
+
 							String venc_text= fecha_venc.getText();
 							//---------------------------
 							if(!venc_text.isEmpty()) {

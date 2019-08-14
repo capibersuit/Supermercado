@@ -98,7 +98,8 @@ ProxyPantallaProductos {
 		try {
 			Producto prod= new Producto(con, produ.getNombre());
 
-			con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + " AND id_prod = "+ prod.getId());
+			con.ejecutar_sql("DELETE FROM rel_listas_productos WHERE id_compra = " + id_compra + " AND id_prod = "+ prod.getId()
+			+ " AND cant_en_gramos= "+ produ.getCant_en_gramos());
 
 			commit= true;
 
@@ -177,6 +178,7 @@ ProxyPantallaProductos {
 				datos.setId(rs.getInt("id_prod"));
 				datos.setNombre(p.getNombre());
 				datos.setPrecio(rs.getFloat("precio"));
+				datos.setPrecio_kg(rs.getFloat("precio_x_kg_venta_al_peso"));
 				datos.setCantidad(rs.getInt("cant"));
 				datos.setCant_en_gramos(rs.getInt("cant_en_gramos"));
 				datos.setEsta_marcada(rs.getBoolean("esta_marcada"));
@@ -355,12 +357,13 @@ ProxyPantallaProductos {
 				boolean existe_prod= datos_prod.isExiste();
 				UPDATE+= " existe_todavia= "+ existe_prod;
 			} else {
-				UPDATE+= " precio= "+ datos_prod.getPrecio() + 
+				UPDATE+= " precio= "+ datos_prod.getPrecio() + ", precio_x_kg_venta_al_peso= "+ datos_prod.getPrecio_kg() +
 						", esta_marcada= " + datos_prod.isEsta_marcada() + " , cant= "
-						+ datos_prod.getCantidad() + fecha_venc;
+						+ datos_prod.getCantidad() + " , cant_en_gramos= "
+								+ datos_prod.getCant_en_gramos() + fecha_venc;
 			}
 
-			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId();
+			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId() +" AND cant_en_gramos= " + datos_prod.getCant_en_gramos_anterior();
 			UPDATE+= WHERE;
 
 			con.ejecutar_sql(UPDATE);
@@ -388,6 +391,7 @@ ProxyPantallaProductos {
 
 		int id_prod= datos_prod.getId();
 		float precio= datos_prod.getPrecio();
+		float precio_kg= datos_prod.getPrecio_kg();
 		Date fecha_de_prod_en_compra_actual = null;
 		Date fecha_de_prod_en_otras_compras = null;
 		Date aux= null;
@@ -408,7 +412,7 @@ ProxyPantallaProductos {
 			}
 
 			if(!aux.after(fecha_de_prod_en_compra_actual)) {
-				String query= "UPDATE productos SET precio= "+ precio + " WHERE id = " + id_prod;
+				String query= "UPDATE productos SET precio= "+ precio + ", precio_x_kg_venta_al_peso= "+ precio_kg + " WHERE id = " + id_prod;
 
 				con.ejecutar_update(query);
 			}

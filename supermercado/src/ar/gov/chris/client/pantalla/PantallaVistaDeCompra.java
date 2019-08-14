@@ -550,7 +550,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 //				Window.Location.reload();
 
 				
-				prod.remover_producto(produ.getNombre());
+				prod.remover_producto(produ.getNombre(), produ.getCant_en_gramos());
 				
 							
 				boolean pudo_borrar=lista_productos.remove(produ);

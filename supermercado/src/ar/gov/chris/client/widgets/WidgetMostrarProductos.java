@@ -26,6 +26,13 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class WidgetMostrarProductos extends Composite {
 
+	//***************************************************************
+	private static final int NUMERO_DE_COLUMNA_PRECIO_TOTAL = 7; // VER DE MODIFICAR ESTAS COSAS para que todo quede bien luego de incorporar 
+	//las columans de cant_gramos y etcs !!!!
+	
+	private static final int NUMERO_DE_COLUMNA_CANT_GRAMOS = 6;
+	
+	//***************************************************************
 	private FlowPanel principal;
 	private FlexTable lista_prod;
 	private Label titulo_label;
@@ -566,7 +573,7 @@ public class WidgetMostrarProductos extends Composite {
 //		return (float) (Math.round(precio_total*100)/100.0d);
 //	}
 
-	public void remover_producto(String nombre) {
+	public void remover_producto(String nombre, int cant_gramos) {
 
 		//Esto es para evitar que me tire error cuando el metodo se ejecuta 2 veces... QUE NO SE PORQUE CORNO PASA...
 		if(!nombre_prod_ant.equalsIgnoreCase(nombre)) {
@@ -580,15 +587,16 @@ public class WidgetMostrarProductos extends Composite {
 
 				try {
 					String nombre_prod= lista_prod.getText(i, 2);
+					String gramos= lista_prod.getText(i, NUMERO_DE_COLUMNA_CANT_GRAMOS);
 										
 					int fila = 0;
-					if(nombre.equalsIgnoreCase(nombre_prod)) {
+					if(nombre.equalsIgnoreCase(nombre_prod) && (gramos.equalsIgnoreCase("NA")|| Integer.parseInt(gramos)== cant_gramos)) {
 						fila= i; 
 						
 						if(parent instanceof PantallaVistaDeCompra) {
 						//--------------------------------------------------------------
 
-						String precio_prod_total= lista_prod.getText(i, 5);
+						String precio_prod_total= lista_prod.getText(i, NUMERO_DE_COLUMNA_PRECIO_TOTAL);
 
 
 						subtotal_compra= subtotal_compra- Float.parseFloat(precio_prod_total);
@@ -646,8 +654,14 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 			
 			int fila = 0;
 			int col = POS_COL_ID_PROD + 1;
+			
+			//EXPLOTA ACA CUANDO QUIERO ACTUALIZAR UN PROD !!!!!!!!!!!!!!!!!!!!
+			int id_prod_aux=(Integer.parseInt(id_prod));
+			
+			String cant_gramos_str= lista_prod.getText(i, NUMERO_DE_COLUMNA_CANT_GRAMOS);
+			int cant_gramos_aux= !cant_gramos_str.equalsIgnoreCase("NA") ? Integer.parseInt(cant_gramos_str) : 0; //(a > b) ? a : b;
 
-			if(datos.getId()==(Integer.parseInt(id_prod))) {
+			if(datos.getId()== id_prod_aux && cant_gramos_aux==datos.getCant_en_gramos_anterior()) {
 				fila= i; 
 				
 				lista_prod.setText(fila, col, datos.getNombre());
@@ -656,16 +670,24 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 				float precio= datos.getPrecio();
 				
 				precio = Mate.poner_dos_decimales(precio);
-				
-//				subtotal_compra+= precio;
-				
+							
 				lista_prod.setText(fila, col, String.valueOf(precio));
 				col++;
 				
 				if(parent instanceof PantallaVistaDeCompra) { 
 
 //				if(titulo.equalsIgnoreCase("Vista de compra")) {
+					
+					
+					float precio_kg= datos.getPrecio_kg();
+					
+					precio_kg = Mate.poner_dos_decimales(precio_kg);
+								
+					lista_prod.setText(fila, col, String.valueOf(precio_kg));
+					col++;
 					lista_prod.setText(fila, col, ((datos.getCantidad()!=0) ? String.valueOf(datos.getCantidad()) : "NA"));
+					col++;
+					lista_prod.setText(fila, col, ((datos.getCant_en_gramos()!=0) ? String.valueOf(datos.getCant_en_gramos()) : "NA"));
 					col++;
 
 					float precio_total_anterior= datos.getPrecio_anterior() * datos.getCantidad_anterior();
@@ -682,7 +704,7 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 					//***************-------------------------------
 					if(!es_marcar) {
 
-						String precio_prod_total= lista_prod.getText(i, 5);
+						String precio_prod_total= lista_prod.getText(i, 7);
 
 						subtotal_compra= subtotal_compra- precio_total_anterior;
 

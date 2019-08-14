@@ -145,7 +145,7 @@ public class PantallaProductos extends PantallaInicio {
 			}
 			public void onSuccess(Void result) {
 				
-				productos.remover_producto(nombre);
+				productos.remover_producto(nombre, 0);
 //				Window.Location.reload();
 //				agregar_item_historial_cliente(datos_item);
 //				recargar_personas();
