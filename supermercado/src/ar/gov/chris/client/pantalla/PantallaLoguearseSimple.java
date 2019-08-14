@@ -58,6 +58,9 @@ public class PantallaLoguearseSimple extends Pantalla {
 		this.pantalla_a_redireccionar= pantalla_a_redireccionar;
 		inicializar();
 //		validacion_previa(proxy, FUNCIONALIDAD, true);
+		
+		 this.panel.setStyleName("PanelPrincipalLogueo");
+
 		pantalla_principal();
 		
 	}
@@ -92,7 +95,7 @@ public class PantallaLoguearseSimple extends Pantalla {
 		inicial_sesion= new Label("INICIO DE SESIÓN");
 		inicial_sesion.setStyleName("cabecera");
 		
-		footer= new Label("SCLS - VERSIÓN: v3.2");
+		footer= new Label("SCLS - VERSIÓN: v"+ VERSION);
 		footer.setStyleName("footer");
 		
 		header= new Label("Sistema de control de listas de supermercado");
