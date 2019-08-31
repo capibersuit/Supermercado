@@ -105,7 +105,8 @@ public class WidgetAgregarLista extends DialogBox {
 			fecha.setEnabled(false);
 			porcentaje.setText(String.valueOf(datos_lista.getPorcentaje_descuento()));
 			agregar.setText("Actualizar");
-			lblpagado= new Label("Importe pagado");			
+			lblpagado= new Label("Importe pagado");
+			pagado.setText(String.valueOf(datos_lista.getPagado()));
 
 			int id_suc= datos_lista.getId_sucursal();
 
