@@ -158,9 +158,14 @@ public class WidgetMostrarListas extends Composite {
 				listas.setText(next_row, 5, list.getFecha().toString());
 
 				Label pagado_label =new Label();
-				pagado_label.addStyleName("ComplejidadMedia");
+				pagado_label.addStyleName("Pagado");
 
 				String pagado_str= String.valueOf(Mate.poner_dos_decimales(list.getPagado()));
+				
+				if (!list.isBotones_habilitados() && list.getPagado()!= 0)
+					pagado_label.addStyleName("PagadoYControlado");
+				else if (list.getPagado()== 0)
+					pagado_label.addStyleName("SinNetoApagarIngresado");
 
 				pagado_label.setText(pagado_str);
 
