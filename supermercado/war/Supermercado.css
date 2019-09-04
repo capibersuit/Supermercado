@@ -61,7 +61,7 @@ h1 {
 
 /**** LINK-tag style sheet estilos.css ****/
 body {
-	background-color: #FFF6EE;
+	background-color: #c9d6f5;
 	color: black;
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -102,14 +102,15 @@ width: 960px; margin-left: auto; margin-right: auto;
 	font-weight: bold;
 }
 
-.ComplejidadBaja {
+.Pagado {
 	color: #3E3BFF;	
 	font-weight: bold;
 }
 
-.ComplejidadMedia {
+.PagadoYControlado {
 	color: #30B762;	
 	font-weight: bold;
+	background-color: #EEEEEE;
 }
 
 .ComplejidadAlta {
@@ -117,7 +118,7 @@ width: 960px; margin-left: auto; margin-right: auto;
 	font-weight: bold;
 }
 
-.ComplejidadProyecto {
+.SinNetoApagarIngresado {
 	color: Red;	
 	font-weight: bold;
 }
@@ -156,7 +157,8 @@ width: 960px; margin-left: auto; margin-right: auto;
 
 .WidgetPreviewCasosSoporte {
 	color: #55331C;
-	background-color: #FFE8D9;
+	/*background-color: #FFE8D9;*/
+		background-color: #dffffe;
 	border: 2px solid #FFD5AF;
 	border-collapse: collapse;
 	width: 100%;
@@ -425,7 +427,7 @@ box-shadow: 0 0 5px rgba(230,95,0,1);border:1px solid rgba(230,95,0,0.8);
 .PanelConBordes {
 	border: 2px solid #FFD5AF;
 	border-collapse: collapse;
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 	width: 100%;
 }
 
@@ -437,20 +439,20 @@ box-shadow: 0 0 5px rgba(230,95,0,1);border:1px solid rgba(230,95,0,0.8);
 .PanelConBordesExternos {
 	border: 2px solid #FFD5AF;
 	border-collapse: collapse;
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 	width: 100%;
 }
 
 .PanelConBordesExpandido {
 	border: 2px solid #FFD5AF;
 	border-collapse: collapse;
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 	width: 100%;
 	height: 100%;
 }
 
 .PanelConBordesExpandido td {
-	border: 2px solid #FFD5AF;
+	border: 2px solid #00bbbb;
 	border-collapse: collapse;
 }
 
@@ -468,7 +470,7 @@ box-shadow: 0 0 5px rgba(230,95,0,1);border:1px solid rgba(230,95,0,0.8);
 	position: fixed;
 	top: 40%;
 	right: 35%;
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 	width: 300px;
 	border: 3px solid #FFD5AF;
 	border-collapse: collapse;
@@ -497,7 +499,7 @@ box-shadow: 0 0 5px rgba(230,95,0,1);border:1px solid rgba(230,95,0,0.8);
 }
 
 .ItemEditorAcciones {
-/* 	background-color: #FFEEDF; */
+/* 	background-color: #dffffe; */
 	background-color: #249140;
 	
 	width: 100%;
@@ -588,7 +590,7 @@ box-shadow: 0 0 5px rgba(230,95,0,1);border:1px solid rgba(230,95,0,0.8);
 .EditorAcciones {
 	border: 2px solid #FFA160;
 	border-collapse: collapse;
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 	color: #55331C;
 	width: 100%;
 }
@@ -700,35 +702,35 @@ color: Blue;
 	-moz-background-clip: border;
 	-moz-background-inline-policy: continuous;
 	-moz-background-origin: padding;
-	background: #FFDDBF none repeat scroll 0 0;
+	background: #13a5ac none repeat scroll 0 0;
 	color: #55331C;
 }
 
 .gwt-PushButton-up {
 	color: #55331C;
 	border: 1px outset #BF8660;
-	background-color: #FFD5AF;
+	background-color: #328f96;
 	cursor: pointer;
 }
 
 .gwt-PushButton-up-hovering {
 	color: #55331C;
 	border: 1px outset #BF8660;
-	background-color: #FFD5AF;
+	background-color: #328f96;
 	cursor: pointer;
 }
 
 .gwt-PushButton-down {
 	color: #55331C;
 	border: 1px inset #BF8660;
-	background-color: #FFD5AF;
+	background-color: #0080ff;
 	cursor: pointer;
 }
 
 .gwt-PushButton-down-hovering {
 	color: #55331C;
 	border: 1px inset #BF8660;
-	background-color: #FFD5AF;
+	background-color: #0080ff;
 	cursor: pointer;
 }
 
@@ -741,11 +743,11 @@ color: Red;
 }
 
 .gwt-DialogBox {
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 }
 
 .gwt-DialogBox .Caption {
-	background: url(bg_tit.png) repeat-x #FFEEDF;
+	background: url(bg_tit.png) repeat-x #dffffe;
 	padding: 2px;
 	margin: 0px;
 	text-align: center;
@@ -767,7 +769,7 @@ color: Red;
 }
 
 .gwt-MenuBar {
-	background-color: #FFEEDF;
+	background-color: #dffffe;
 	cursor: default;
 }
 
@@ -811,12 +813,13 @@ color: Red;
 
 .Calendario {
 	border: 2px solid #FFD5AF;
-	background-color: #FFEEDF;
+	/*background-color: #dffffe;*/
+	background-color: #dffffe;
 }
 
 .Calendario .navbar {
 	color: #55331C;
-	background: url(bg_tit.png) repeat-x #FFEEDF;
+	background: url(bg_tit.png) repeat-x #dffffe;
 	width: 100%;
 	vertical-align: middle;
 	border-bottom: 1px solid #FFD5AF;
@@ -834,7 +837,7 @@ color: Red;
 
 .Calendario .weekheader {
 	color: #55331C;
-	background: url(bg_tit.png) repeat-x #FFEEDF;
+	background: url(bg_tit.png) repeat-x #dffffe;
 }
 
 .Calendario .weekheader .days {
@@ -846,7 +849,7 @@ color: Red;
 }
 
 .Calendario .cell .gwt-HTML {
-	border: 1px solid #FFD5AF;
+	border: 1px solid #6cfffc;
 }
 
 .Calendario .cell .gwt-HTML span {
@@ -857,7 +860,7 @@ color: Red;
 
 .Calendario .today .gwt-HTML {
 	color: white;
-	background-color: #F0995A;
+	background-color: #5291f8;
 }
 
 .Calendario .day .gwt-HTML {
@@ -890,7 +893,7 @@ color: Red;
 }
 
 .gwt-DisclosurePanel .header {
-	border: 3px solid #FFD5AF;
+	border: 3px solid #317b97;
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
 	-webkit-border-top-left-radius: 5px;
@@ -898,11 +901,11 @@ color: Red;
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	background:#FFD5AF none repeat scroll 0 0;
+	background:#328f96 none repeat scroll 0 0;
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 48px;
 	vertical-align: center;
-	width: 300;
+	width: 99%;
 	height:100%;
 	text-decoration:none;
 }
@@ -913,11 +916,11 @@ color: Red;
 
 /**********************************************************************/
 .gwt-DialogBox .Caption {
-	background: url(bg_tit.png) repeat-x #FFEEDF;
+	background: url(bg_tit.png) repeat-x #dffffe;
 	padding: 4px 4px 4px 8px;
 	cursor: default;
 	border-bottom: 1px solid #bbbbbb;
-	border-top: 5px solid #FFD4AE;
+	border-top: 5px solid #1848ef;
 }
 
 .gwt-DialogBox .dialogContent {
@@ -926,7 +929,7 @@ color: Red;
 
 .gwt-DialogBox .dialogMiddleCenter {
 	padding: 3px;
-	background: #FFEEDF;
+	background: #dffffe;
 }
 
 .gwt-DialogBox .dialogBottomCenter {
@@ -1125,7 +1128,7 @@ gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
 }
 
 .gwt-SuggestBoxPopup .suggestPopupContent {
- background: #FFEEDF;
+ background: #dffffe;
 }
 
 /* ---------creo que lo que sigue no lo uso por ahora --------- */
