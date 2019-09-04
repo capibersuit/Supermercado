@@ -99,7 +99,7 @@ public class WidgetAgregarLista extends DialogBox {
 				sucursal.addItem(s.obtener_descripcion(), String.valueOf(s.obtener_id()));	
 
 		if(es_update) {
-			this.setText("Actualizar lista");
+			this.setText("Actualizar compra");
 			comentario.setText(datos_lista.getComentario());
 			fecha.setText(datos_lista.getFecha().toString());
 			fecha.setEnabled(false);
@@ -131,7 +131,7 @@ public class WidgetAgregarLista extends DialogBox {
 				}
 			}						
 		} else
-			this.setText("Agregar Nueva Lista");
+			this.setText("Agregar Nueva Compra");
 
 		agregar_listeners();
 		HorizontalPanel botones= new HorizontalPanel();
