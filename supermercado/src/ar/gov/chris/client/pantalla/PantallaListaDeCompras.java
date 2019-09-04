@@ -99,38 +99,10 @@ public class PantallaListaDeCompras extends PantallaInicio {
 		});
 				
 	}
-	
-	
-	
-	@SuppressWarnings({ "deprecation", "deprecation", "deprecation", "deprecation", "deprecation", "deprecation" })
+		
+	@SuppressWarnings({ "deprecation" })
 	protected void armar_pantalla() {
-	//******************************************************************************************
-		
-//	Date fecha_actual= new Date();	
-//	
-//	fecha_actual.getYear();
 	
-//	Calendar fecha_actual = Calendar.getInstance();
-//	
-//	int anio_actual= fecha_actual.get(Calendar.YEAR);
-//	int primer_anio_de_compras= 2016;
-//		
-//	int anio_actual = 2020;
-//	int primer_anio_de_compras = 2016;
-	
-//	int anio_actual = BuscadorDatosEstaticos.anios_listas[1];
-//	int primer_anio_de_compras = BuscadorDatosEstaticos.anios_listas[0];
-
-//	Constantes anios = (Constantes) GWT.create(Constantes.class);
-//	
-//	int anio_actual= anios.anio_actual();
-//	int primer_anio_de_compras= anios.primer_anio_de_compras();
-
-
-	
-	
-//	int cant_anios= anio_actual - primer_anio_de_compras;
-		
 			
 	for(int i= anio_actual; i >= primer_anio_de_compras; i--) {
 
@@ -153,56 +125,6 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	
 	agregar_handlers();		
 
-
-		
-	//******************************************************************************************	
-		/*
-		Label anio_16= new Label("Año 2016");
-		
-		panel_16= new DisclosurePanel();
-		panel_16.setHeader(anio_16);
-		
-	   Label anio_17= new Label("Año 2017");
-		
-		panel_17= new DisclosurePanel();
-		panel_17.setHeader(anio_17);
-		
-		Label anio_18= new Label("Año 2018");
-		
-		panel_18= new DisclosurePanel();
-		panel_18.setHeader(anio_18);
-		
-//		HorizontalPanel hp = new HorizontalPanel();
-		btn_agregar_lista= new Button("Nueva List<u>a</u>");
-//		btn_ir_a_prod= new Button("Ir a productos");
-//		hp.add(btn_ir_a_prod);
-//		hp.add(btn_agregar_lista);
-		menu.add(btn_agregar_lista);
-
-//		panel.add(btn_ir_a_prod);
-//		panel.add(btn_agregar_lista);
-//		panel.add(hp);
-		
-		agregar_lista= new WidgetAgregarLista(this, null);
-		listas= new WidgetMostrarListas(datos_lista, "Listas de compras", this, new Date(2016-1900,1-1,01), new Date(2016-1900,12-1,31));
-		listas2= new WidgetMostrarListas(datos_lista, "Listas de compras", this, new Date(2017-1900,1-1,01), new Date(2017-1900,12-1,31));
-		listas3= new WidgetMostrarListas(datos_lista, "Listas de compras", this, new Date(2018-1900,1-1,01), new Date(2018-1900,12-1,31));
-
-		
-		panel_16.setContent(listas);
-		panel_17.setContent(listas2);
-		panel_18.setContent(listas3);
-
-//		panel_16.setOpen(true);
-//		panel_17.setOpen(true);
-		panel_18.setOpen(true);
-
-		
-		panel.add(panel_18);
-		panel.add(panel_17);
-		panel.add(panel_16);
-		agregar_handlers();	
-		*/
 	}
 
 	private void agregar_handlers() {
@@ -214,15 +136,6 @@ public class PantallaListaDeCompras extends PantallaInicio {
 			}
 		});
 		btn_agregar_lista.setAccessKey('a');
-
-//		btn_ir_a_prod.addClickHandler(new ClickHandler() {
-//			
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				History.newItem("PantallaProductos");
-//				History.fireCurrentHistoryState();
-//			}
-//		});
 	}
 
 	public void borrar_lista(int id) {
