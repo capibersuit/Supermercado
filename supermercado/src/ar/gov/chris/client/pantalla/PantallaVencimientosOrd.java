@@ -42,6 +42,7 @@ boolean tildado= true; //NO SE POR QUE SI LO DEJO EN TRUE PARA QUE DE ENTRADA ME
 	}
 	
 	private void obtener_datos_vencimientos(boolean solo_existentes) {
+		mostrar_senal_espera("Consultando, por favor espere...");
 		proxy_prod.buscar_vencimientos(solo_existentes, new AsyncCallback<Set<DatosProducto>>(){
 			public void onFailure(Throwable caught) {
 				History.newItem("PantallaLoguearseSimple-VencimientosOrd");
@@ -51,6 +52,7 @@ boolean tildado= true; //NO SE POR QUE SI LO DEJO EN TRUE PARA QUE DE ENTRADA ME
 			}
 			public void onSuccess(Set<DatosProducto> result) {
 //				datos_prod= ordenar_productos(result);
+				 eliminar_senal_espera();
 				datos_prod= ordenar_vemcimientos(result);
 				armar_pantalla();			
 			}

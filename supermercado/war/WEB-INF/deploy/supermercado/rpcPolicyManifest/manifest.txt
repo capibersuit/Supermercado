@@ -1,6 +1,6 @@
 # Module supermercado
 # RPC service class, partial path of RPC policy file
-ar.gov.chris.client.interfaces.ProxyPantallaProductos, 048DC68D60B3BE022D8BA535832D385A.gwt.rpc
+ar.gov.chris.client.interfaces.ProxyPantallaProductos, 85A72F1B51FB98CB75844D13798F1692.gwt.rpc
 ar.gov.chris.client.interfaces.ProxyPantallaListas, 8DF7E24EF12C049E032B962D838A3DF5.gwt.rpc
 ar.gov.chris.client.interfaces.ProxyPantallaPrecios, 99F4C709A494F3FD4FDEE73AAA9E865A.gwt.rpc
 ar.gov.chris.client.interfaces.ProxyPantallaLoguearse, 60B2005974924439E9D5D51133A6637D.gwt.rpc

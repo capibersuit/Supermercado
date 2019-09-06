@@ -216,7 +216,7 @@ ProxyPantallaProductos {
 			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
 
 			
-			String query= "SELECT p.id, p.nombre, rlp.fecha_venc, rlp.existe_todavia, rlp.id_compra, l.fecha "
+			String query= "SELECT p.id, p.nombre, rlp.fecha_venc, rlp.existe_todavia, rlp.id_compra, rlp.cant_en_gramos, l.fecha "
 					+ " FROM rel_listas_productos rlp, productos p, listas l "
 					+ "where rlp.id_prod = p.id AND rlp.id_compra= l.id and fecha_venc is not null "+ (solo_existentes? " and existe_todavia":"") +"  order by fecha_venc";
 			ResultSet rs= con.select(query);
@@ -229,6 +229,7 @@ ProxyPantallaProductos {
 				datos.setFecha_venc(rs.getDate("fecha_venc"));
 				datos.setFecha_compra(rs.getDate("fecha"));
 				datos.setExiste(rs.getBoolean("existe_todavia"));
+				datos.setCant_en_gramos(rs.getInt("cant_en_gramos"));
 				datos.setId_compra(rs.getInt("id_compra"));
 
 				datos_conj.add(datos);
@@ -363,7 +364,7 @@ ProxyPantallaProductos {
 								+ datos_prod.getCant_en_gramos() + fecha_venc;
 			}
 
-			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId() +" AND cant_en_gramos= " + datos_prod.getCant_en_gramos_anterior();
+			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId() +" AND cant_en_gramos= " + (cambiar_existencia ? datos_prod.getCant_en_gramos() : datos_prod.getCant_en_gramos_anterior());
 			UPDATE+= WHERE;
 
 			con.ejecutar_sql(UPDATE);

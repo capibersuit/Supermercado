@@ -86,61 +86,11 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 		}
 		}
 	
-//	@Override
-//	protected void pantalla_principal2() {
-//		panel.clear();
 
-//		btn_agregar_lista= new Button("Nueva Lista");
-//		panel.add(btn_agregar_lista);
-//		
-//		agregar_lista= new WidgetAgregarLista(this);
-//		agregar_handlers();
-		
-//		super.pantalla_principal();
-//		try {
-//			id_compra= Integer.parseInt(id_compra_str);
-//			existe_lista(id_compra);
-//			} catch (NumberFormatException e){
-//				MensajeAlerta.mensaje_error("Error: id de compra mal formado");
-//				History.newItem(Supermercado.PANTALLA_INICIO);
-//			}
-//	}
-
-	
-//	private void existe_lista(final int id_compra) {
-//		proxy_listas.existe_lista(id_compra, new AsyncCallback<Void> (){
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				MensajeAlerta.mensaje_error("Error: " + caught.getMessage());	
-//				History.newItem(Supermercado.PANTALLA_INICIO);
-//			}
-//
-//			@Override
-//			public void onSuccess(Void result) {
-//				
-//				proxy_listas.lista_esta_visible(id_compra, new AsyncCallback<Integer> (){
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						MensajeAlerta.mensaje_error("Error: " + caught.getMessage());	
-//						History.newItem(Supermercado.PANTALLA_INICIO);
-//					}
-//
-//					@Override
-//					public void onSuccess(Integer result) {
-//						ver_marcados= result==1;
-//						armar_pantalla_principal();
-//						
-//					}
-//					
-//				});
-//			}
-//			
-//		});
-//	}
-	
 	private void existe_lista(final int id_compra) {
+		
+		mostrar_senal_espera("Consultando, por favor espere...");
+
 		proxy_listas.existe_lista(id_compra, new AsyncCallback<Void> (){
 
 			@Override
@@ -162,6 +112,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 
 					@Override
 					public void onSuccess(DatosLista result) {
+						eliminar_senal_espera();
 						ver_marcados= result.isVer_marcados();
 						fecha_compra= result.getFecha();
 						botones_habilitados= result.isBotones_habilitados();

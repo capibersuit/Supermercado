@@ -30,23 +30,6 @@ public class WidgetMostrarVencimientos extends Composite {
 		
 		lista_prod= new FlexTable();
 		principal= new FlowPanel();
-		//		HorizontalPanel hp = new HorizontalPanel();
-		//		
-		//		titulo_label= new Label(titulo);
-		//		titulo_label.addStyleName("LabelDistinguido");
-		//		
-		//		hp.add(titulo_label);
-		//		
-		////		if(titulo.equalsIgnoreCase("Vista de compra")) {
-		////			cant_prod_label= new Label("Esta compra tiene: " + cant_prod + " productos.");
-		////		} else 
-		////			cant_prod_label= new Label("Cantidad de productos registrados: " + cant_prod);
-		////		
-		//		cant_prod_label= new Label();
-		//		
-		//		cant_prod_label.setStyleName("HeaderTablas");
-		//	
-
 
 		Label id_prod_label= new Label("ID");
 
@@ -116,6 +99,7 @@ public class WidgetMostrarVencimientos extends Composite {
 				}
 					
 					prod.setExiste(!existe);
+					prod.setCant_en_gramos_anterior(4);
 					((PantallaVencimientos)parent).actualizar_producto(prod);
 					
 			}});

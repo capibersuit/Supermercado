@@ -28,6 +28,9 @@ private int CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
 	@Override
 	protected void pantalla_principal() {
 		panel.clear();
+		
+		mostrar_senal_espera("Consultando, por favor espere...");
+
 
 		super.pantalla_principal();
 		obtener_datos_precios();
@@ -51,6 +54,7 @@ private int CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
 						"los precios: " + caught.getMessage());
 			}
 			public void onSuccess(Set<DatosReprtePrecios> result) {
+
 				datos_precios= ordenar_productos_con_precio(result);
 				arreglo.add(datos_precios);
 				CANT_ANIOS--;
@@ -66,6 +70,9 @@ private int CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
 	}
 
 	protected void armar_pantalla() {
+		
+		 eliminar_senal_espera();
+
 		
 		for(int i= anio_actual; i >= primer_anio_de_compras; i--) {
 

@@ -46,6 +46,9 @@ public class PantallaProductos extends PantallaInicio {
 //	@Override
 	protected void pantalla_principal() {
 		panel.clear();
+		
+		mostrar_senal_espera("Consultando, por favor espere...");
+
 //		proxy_prod.buscar_productos();
 //		btn_productos= new Button("Nuevo Producto");
 //		panel.add(btn_productos);
@@ -67,6 +70,9 @@ public class PantallaProductos extends PantallaInicio {
 
 			}
 			public void onSuccess(Set<DatosProducto> result) {
+				
+				 eliminar_senal_espera();
+
 				datos_prod= ordenar_productos(result);
 				armar_pantalla();			
 			}
@@ -137,7 +143,7 @@ public class PantallaProductos extends PantallaInicio {
 	}
 	
 	public void borrar_producto(final String nombre) {
-		
+
 		proxy_prod.borrar_producto(nombre, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar borrar " +

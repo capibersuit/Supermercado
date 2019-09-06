@@ -44,6 +44,8 @@ public class PantallaListaDeCompras extends PantallaInicio {
 //		agregar_lista= new WidgetAgregarLista(this);
 //		agregar_handlers();
 		
+
+		
 		super.pantalla_principal();
 		obtener_datos_listas();
 	}
@@ -71,6 +73,10 @@ public class PantallaListaDeCompras extends PantallaInicio {
 	}
 	
 	 protected void obtener_datos_listas() {
+		 
+			mostrar_senal_espera("Consultando, por favor espere...");
+
+		 
 		proxy_listas.buscar_listas(new AsyncCallback<Set<DatosLista>>(){
 			public void onFailure(Throwable caught) {
 				History.newItem("PantallaLoguearseSimple-Compras");
@@ -79,6 +85,9 @@ public class PantallaListaDeCompras extends PantallaInicio {
 						"las listas de compras: " + caught.getMessage());
 			}
 			public void onSuccess(Set<DatosLista> result) {
+				
+				 eliminar_senal_espera();
+
 				datos_lista= result;
 				
 				proxy_listas.buscar_anios_primera_y_ultima_compra(new AsyncCallback<int []>(){

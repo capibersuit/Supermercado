@@ -40,6 +40,9 @@ public class PantallaPrecios extends PantallaInicio {
 	protected void pantalla_principal() {
 		panel.clear();
 //		CANT_ANIOS=2;
+		
+		mostrar_senal_espera("Consultando, por favor espere...");
+
 
 		super.pantalla_principal();
 		obtener_datos_precios();
@@ -57,6 +60,8 @@ public class PantallaPrecios extends PantallaInicio {
 						"los precios: " + caught.getMessage());
 			}
 			public void onSuccess(Set<DatosReprtePrecios> result) {
+				
+
 				datos_precios16= ordenar_productos_con_precio(result);
 				
 				//***************************************************************************
@@ -76,6 +81,9 @@ public class PantallaPrecios extends PantallaInicio {
 										"los precios: " + caught.getMessage());
 							}
 							public void onSuccess(Set<DatosReprtePrecios> result) {
+								
+								 eliminar_senal_espera();
+
 								datos_precios18= ordenar_productos_con_precio(result);
 								
 								

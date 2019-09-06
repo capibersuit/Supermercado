@@ -15,16 +15,14 @@ import ar.gov.chris.client.interfaces.Constantes;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.*;
 
 
 public abstract class Pantalla extends Composite {
 	protected FlowPanel panel= new FlowPanel();
-//	private final Image imagen_espera= new Image("imagenes/loading.gif");
-//	private final HTML msj_espera= new HTML();
-//	private FlowPanel panel_espera= null;
+	private final Image imagen_espera= new Image("imagenes/loading.gif");
+	private final HTML msj_espera= new HTML();
+	private FlowPanel panel_espera= null;
 	
 	private Constantes anios = (Constantes) GWT.create(Constantes.class);
 	
@@ -121,7 +119,23 @@ public abstract class Pantalla extends Composite {
 		
 	}
 
+	/** Muestra un cartel de espera.
+	 * @param mensaje_espera El mensaje a mostrar.
+	 */
+	protected void mostrar_senal_espera(String mensaje_espera) {
+	 msj_espera.setText(mensaje_espera);
+	 panel_espera= new FlowPanel();
+	 panel_espera.addStyleName("PanelEspera");
+	 panel_espera.add(imagen_espera);
+	 panel_espera.add(msj_espera);
+	 panel.add(panel_espera);
+	}
 
+	/** Elimina el cartel de espera.
+	 */
+	protected void eliminar_senal_espera() {
+	 panel.remove(panel_espera);
+	}
 	
 
 }

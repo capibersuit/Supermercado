@@ -196,10 +196,14 @@ public class DatosProducto implements IsSerializable /*, Comparable<DatosProduct
 	public String toString() {
 		return "DatosProducto [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", precio_anterior="
 				+ precio_anterior + ", precio_kg=" + precio_kg + ", precio_kg_anterior=" + precio_kg_anterior
-				+ ", cantidad=" + cantidad + ", cantidad_anterior=" + cantidad_anterior + ", esta_marcada="
+				+ ", cantidad=" + cantidad + ", cantidad_anterior=" + cantidad_anterior + ", cant_en_gramos="
+				+ cant_en_gramos + ", cant_en_gramos_anterior=" + cant_en_gramos_anterior + ", esta_marcada="
 				+ esta_marcada + ", fecha_venc=" + fecha_venc + ", id_super=" + id_super + ", existe=" + existe
 				+ ", id_compra=" + id_compra + ", fecha_compra=" + fecha_compra + "]";
 	}
+
+
+	
 	
 
 
