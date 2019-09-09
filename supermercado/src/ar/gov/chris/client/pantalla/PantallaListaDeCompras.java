@@ -1,6 +1,7 @@
 package ar.gov.chris.client.pantalla;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
 import ar.gov.chris.client.clases.FechaListaComparator;
+import ar.gov.chris.client.clases.IdListaComparator;
 import ar.gov.chris.client.datos.DatosLista;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetAgregarLista;
@@ -183,7 +185,17 @@ public class PantallaListaDeCompras extends PantallaInicio {
 			lista_para_ordenar.add(compra);
 		}	
 		//Ordeno por nombre del producto la lista con los datos de los productos que obtuve.
-		Collections.sort(lista_para_ordenar, new FechaListaComparator());
+		
+		FechaListaComparator c= new FechaListaComparator();
+		IdListaComparator c2= new IdListaComparator();
+
+//		Collections.sort(lista_para_ordenar, ((Comparator<DatosLista>)c).thenComparing(c2));
+		
+		Collections.sort(lista_para_ordenar, c);
+
+		
+//		((DeportistaInterface) iniesta).entrenar();
+		
 		return lista_para_ordenar;
 	}
 
