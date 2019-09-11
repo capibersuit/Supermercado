@@ -189,9 +189,9 @@ public class PantallaListaDeCompras extends PantallaInicio {
 		FechaListaComparator c= new FechaListaComparator();
 		IdListaComparator c2= new IdListaComparator();
 
-//		Collections.sort(lista_para_ordenar, ((Comparator<DatosLista>)c).thenComparing(c2));
+		Collections.sort(lista_para_ordenar, c.thenComparing(c2));
 		
-		Collections.sort(lista_para_ordenar, c);
+//		Collections.sort(lista_para_ordenar, c);
 
 		
 //		((DeportistaInterface) iniesta).entrenar();
