@@ -80,6 +80,9 @@ public class WidgetMostrarPrecios extends Composite {
 				String[] fechas_split =precios.getFechas().split("_");
 				
 				String[] precios_split =precios.getPrecios().split("_");
+
+				String[] precios_x_kg_split =precios.getPrecios_x_kg().split("_");
+
 				
 				
 				float precio_inicial= Float.parseFloat(precios_split[0]);
@@ -88,8 +91,20 @@ public class WidgetMostrarPrecios extends Composite {
 				float aux1= precio_final-precio_inicial;
 				float aux2= aux1/precio_inicial;
 				
+				
+				float precio_x_kg_inicial= Float.parseFloat(precios_x_kg_split[0]);
+				float precio_x_kg_final= Float.parseFloat(precios_x_kg_split[precios_split.length-1]);
+				
+				float aux3= precio_x_kg_final-precio_x_kg_inicial;
+				float aux4= aux3/precio_x_kg_inicial;
+				
+				
+				
 				float porcentaje_de_aumento= aux2*100;
 				porcentaje_de_aumento=Mate.poner_dos_decimales(porcentaje_de_aumento);
+				
+				float porcentaje_de_aumento_x_kg= aux4*100;
+				porcentaje_de_aumento_x_kg=Mate.poner_dos_decimales(porcentaje_de_aumento_x_kg);
 				
 				listas.setText(next_row, nex_col,  String.valueOf(porcentaje_de_aumento));
 				nex_col++;

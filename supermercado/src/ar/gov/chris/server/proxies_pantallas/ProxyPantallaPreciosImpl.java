@@ -45,7 +45,7 @@ ProxyPantallaPrecios {
 			ContextoDeSeguridad cs = autenticar_y_autorizar(con, "zarazz");
 
 			
-			String query= "select p.id, nombre as producto, string_agg(rlp.precio::text,'_' order by fecha) as precios, string_agg(l.fecha::Date::text, '_' order by fecha) as fechas  from rel_listas_productos rlp, productos p, listas l"
+			String query= "select p.id, nombre as producto, string_agg(rlp.precio::text,'_' order by fecha) as precios, string_agg(rlp.precio_x_kg_venta_al_peso::text,'_' order by fecha) as precios_x_kg, string_agg(l.fecha::Date::text, '_' order by fecha) as fechas  from rel_listas_productos rlp, productos p, listas l"
 					+ " where l.id= rlp.id_compra and p.id= rlp.id_prod and l.fecha > '" + desde +"'and l.fecha < '" + hasta +"' group by nombre, p.id";
 					
 			ResultSet rs= con.select(query);
@@ -55,6 +55,7 @@ ProxyPantallaPrecios {
 				datos.setId_prod(rs.getString("id"));
 				datos.setNombre_prod(rs.getString("producto"));
 				datos.setPrecios(rs.getString("precios"));
+				datos.setPrecios_x_kg(rs.getString("precios_x_kg"));
 				datos.setFechas(rs.getString("fechas"));
 				datos_conj.add(datos);
 			}

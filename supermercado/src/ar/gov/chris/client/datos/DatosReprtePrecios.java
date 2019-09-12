@@ -7,6 +7,7 @@ public class DatosReprtePrecios implements IsSerializable {
 	String id_prod;
 	String nombre_prod;
 	String precios;
+	String precios_x_kg;
 	String fechas;
 	public String getId_prod() {
 		return id_prod;
@@ -31,6 +32,12 @@ public class DatosReprtePrecios implements IsSerializable {
 	}
 	public void setFechas(String fechas) {
 		this.fechas = fechas;
+	}
+	public String getPrecios_x_kg() {
+		return precios_x_kg;
+	}
+	public void setPrecios_x_kg(String precios_x_kg) {
+		this.precios_x_kg = precios_x_kg;
 	}
 	
 	
