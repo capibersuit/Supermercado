@@ -69,6 +69,20 @@ public class WidgetMostrarPrecios extends Composite {
 
 				//			if(fecha_desde.compareTo(precios.getFechas()) < 0 && fecha_hasta.compareTo(precios.getFechas()) > 0) {
 
+				String[] precios_x_kg_split = null;
+				
+				float porcentaje_de_aumento_x_kg = 0;
+				
+				String Precios_x_kg_aux= precios.getPrecios_x_kg();
+
+				
+				precios_x_kg_split =Precios_x_kg_aux.split("_");
+				
+				boolean tiene_precio_x_kg= !precios_x_kg_split[0].equalsIgnoreCase("0");
+				
+				if(tiene_precio_x_kg)
+					listas.getRowFormatter().setStyleName(next_row, "ProductoConPrecioxKg");
+				
 				int nex_col=0;
 				int indice_precio=0;
 				listas.setText(next_row, nex_col, precios.getId_prod());
@@ -80,10 +94,6 @@ public class WidgetMostrarPrecios extends Composite {
 				String[] fechas_split =precios.getFechas().split("_");
 				
 				String[] precios_split =precios.getPrecios().split("_");
-
-				String[] precios_x_kg_split =precios.getPrecios_x_kg().split("_");
-
-				
 				
 				float precio_inicial= Float.parseFloat(precios_split[0]);
 				float precio_final= Float.parseFloat(precios_split[precios_split.length-1]);
@@ -92,21 +102,38 @@ public class WidgetMostrarPrecios extends Composite {
 				float aux2= aux1/precio_inicial;
 				
 				
-				float precio_x_kg_inicial= Float.parseFloat(precios_x_kg_split[0]);
-				float precio_x_kg_final= Float.parseFloat(precios_x_kg_split[precios_split.length-1]);
 				
-				float aux3= precio_x_kg_final-precio_x_kg_inicial;
-				float aux4= aux3/precio_x_kg_inicial;
+				
+				
+				if(tiene_precio_x_kg) {
+
+//					precios_x_kg_split =precios.getPrecios_x_kg().split("_");
+
+					float precio_x_kg_inicial= Float.parseFloat(precios_x_kg_split[0]);
+					float precio_x_kg_final= Float.parseFloat(precios_x_kg_split[precios_split.length-1]);
+
+					float aux3= precio_x_kg_final-precio_x_kg_inicial;
+					float aux4= aux3/precio_x_kg_inicial;
+
+
+					porcentaje_de_aumento_x_kg= aux4*100;
+					porcentaje_de_aumento_x_kg=Mate.poner_dos_decimales(porcentaje_de_aumento_x_kg);
+				}
+				
 				
 				
 				
 				float porcentaje_de_aumento= aux2*100;
 				porcentaje_de_aumento=Mate.poner_dos_decimales(porcentaje_de_aumento);
 				
-				float porcentaje_de_aumento_x_kg= aux4*100;
-				porcentaje_de_aumento_x_kg=Mate.poner_dos_decimales(porcentaje_de_aumento_x_kg);
+				if(tiene_precio_x_kg)
 				
-				listas.setText(next_row, nex_col,  String.valueOf(porcentaje_de_aumento));
+					listas.setText(next_row, nex_col, String.valueOf(porcentaje_de_aumento_x_kg));
+				
+				else
+					listas.setText(next_row, nex_col, String.valueOf(porcentaje_de_aumento));
+
+//				listas.setText(next_row, nex_col,  tiene_precio_x_kg ? String.valueOf(porcentaje_de_aumento_x_kg) : String.valueOf(porcentaje_de_aumento));
 				nex_col++;
 
 
@@ -132,12 +159,18 @@ public class WidgetMostrarPrecios extends Composite {
 					//************************************ENERO************************************************************************
 					if(mes.equalsIgnoreCase("01") /*&& !ene*/)		{
 						if(!ene) {
-							listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 							nex_col++;
 							ene= true;
 							continue;
 						} else {
-							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 							continue;
 						}
 					}
@@ -151,12 +184,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("02") /*&& !feb*/)	{		
 						if(!feb) {
-							listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));	
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));	
 							nex_col++;
 							feb= true;
 							continue;
 						} else {
-							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));							
 							continue;
 						}
 					}
@@ -169,12 +208,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("03") /*&& !mar*/)		{
 						if(!mar) {
-							listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));							
 							nex_col++;
 							mar=true;
 							continue;
 						} else {
-							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 							continue;
 						}
 					}
@@ -187,12 +232,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("04") )		{	
 						if(!abr) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						nex_col++;
 						abr= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -205,12 +256,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("05") )		{
 						if(!may) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						may= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -223,12 +280,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("06") ){	
 						if(!jun) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						nex_col++;
 						jun= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -243,12 +306,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("07") ){		
 						if(!jul) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						jul= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -263,12 +332,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("08") ){		
 						if(!ago) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						ago=true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -282,12 +357,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("09") ){	
 						if(!sep) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						sep=true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -300,12 +381,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("10") ){		
 						if(!oct) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						oct= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -318,12 +405,18 @@ public class WidgetMostrarPrecios extends Composite {
 
 					if(mes.equalsIgnoreCase("11") ) {	
 						if(!nov) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						nov= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
@@ -334,12 +427,18 @@ public class WidgetMostrarPrecios extends Composite {
 					}
 					if(mes.equalsIgnoreCase("12") ) {	
 						if(!dic) {
-						listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
-						nex_col++;
+							if(tiene_precio_x_kg)
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+							else
+								listas.setText(next_row, nex_col,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+							nex_col++;
 						dic= true;
 						continue;
 					} else {
-						listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
+						if(tiene_precio_x_kg)
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_x_kg_split[indice_precio++]));
+						else
+							listas.setText(next_row, nex_col-1,  Mate.poner_dos_decimales(precios_split[indice_precio++]));
 						continue;
 					}
 					}
