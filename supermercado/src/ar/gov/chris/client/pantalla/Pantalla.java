@@ -29,7 +29,7 @@ public abstract class Pantalla extends Composite {
 	protected int anio_actual= anios.anio_actual();
 	protected int primer_anio_de_compras= anios.primer_anio_de_compras();
 	
-	protected static final String VERSION = "4.0";
+	protected static final String VERSION = "4.1";
 
 	
 	/** Constructor sin parámetros.
