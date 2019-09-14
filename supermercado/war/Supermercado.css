@@ -499,6 +499,19 @@ box-shadow: 0 0 5px rgba(230,95,0,1);border:1px solid rgba(230,95,0,0.8);
 	text-align: center;
 }
 
+
+
+.ProductoConPrecioxKg {
+/* 	background: #FFD5AF; */
+	background: #abd1d3;
+	color: #55331C;
+/* 	border: 1px solid #FFD5AF; */
+	border: 1px solid #249140;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 32px;
+	text-align: center;
+}
+
 .ItemEditorAcciones {
 /* 	background-color: #dffffe; */
 	background-color: #249140;
