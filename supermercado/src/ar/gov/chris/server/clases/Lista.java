@@ -138,6 +138,7 @@ public class Lista extends PersistenteEnBD {
 				 this.botones_hab= rs.getBoolean("botones_hab");
 				 this.desc_coto= rs.getFloat("desc_coto");
 				 this.porcentaje_de_descuento=rs.getInt("porcentaje_desc");
+				 this.id_sucursal= rs.getInt("id_sucursal");
 				 super.cargar_persistente_sin_baja_fisica(rs);
 			 } else throw new ExcepcionNoExiste(texto_error);
 		 } catch(SQLException ex) {
@@ -157,7 +158,7 @@ public class Lista extends PersistenteEnBD {
 		 lista_campos.put("porcentaje_desc", this.porcentaje_de_descuento);
 
 
-		super.grabar(con, lista_campos, "public.listas", "public.listas", true, "", id, false);
+		this.id= super.grabar(con, lista_campos, "public.listas", "public.listas", true, "", id, false);
 	}
 
 	public void borrar(ConexionBD con) throws ExcepcionBD {
