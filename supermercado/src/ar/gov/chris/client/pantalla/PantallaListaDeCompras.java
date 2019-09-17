@@ -184,17 +184,12 @@ public class PantallaListaDeCompras extends PantallaInicio {
 			DatosLista compra = iter.next();
 			lista_para_ordenar.add(compra);
 		}	
-		//Ordeno por nombre del producto la lista con los datos de los productos que obtuve.
+		//Ordeno por fecha la compra y en segunda instancia por el id de la misma.
 		
 		FechaListaComparator c= new FechaListaComparator();
 		IdListaComparator c2= new IdListaComparator();
 
 		Collections.sort(lista_para_ordenar, c.thenComparing(c2));
-		
-//		Collections.sort(lista_para_ordenar, c);
-
-		
-//		((DeportistaInterface) iniesta).entrenar();
 		
 		return lista_para_ordenar;
 	}
