@@ -48,14 +48,13 @@ public class PantallaListas extends Pantalla {
 		DatosLista datos_list= new DatosLista();
 		datos_list.setComentario(comentario);
 	
-		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Void>(){
+		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Integer>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurri� un error al intentar agregar " +
 						"el producto: " + caught.getMessage());
 			}
-			public void onSuccess(Void result) {
-//				agregar_item_historial_cliente(datos_item);
-//				recargar_personas();
+			public void onSuccess(Integer result) {
+
 			}
 			
 		});
