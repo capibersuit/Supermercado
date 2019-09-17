@@ -59,18 +59,14 @@ public class PantallaListaDeCompras extends PantallaInicio {
 		datos_list.setId_sucursal(id_sucursal);
 		datos_list.setPorcentaje_descuento(porcentaje);
 	
-		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Void>(){
+		proxy_listas.agregar_lista(datos_list, new AsyncCallback<Integer>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrió un error al intentar agregar " +
 						"la lista: " + caught.getMessage());
 			}
-			public void onSuccess(Void result) {
+			public void onSuccess(Integer result) {
 				Window.Location.reload();
-
-//				agregar_item_historial_cliente(datos_item);
-//				recargar_personas();
-			}
-			
+			}			
 		});
 	}
 	
