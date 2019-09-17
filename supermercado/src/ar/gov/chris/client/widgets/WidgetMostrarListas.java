@@ -44,6 +44,20 @@ public class WidgetMostrarListas extends Composite {
 	 */
 	public WidgetMostrarListas(final Set<DatosLista> lista, 
 			String titulo, final PantallaListaDeCompras parent, Date fecha_desde, Date fecha_hasta) {
+		
+		String enero= "ENERO";
+		String febrero= "FEBRERO";
+		String marzo= "MARZO";
+		String abril= "ABRIL";
+		String mayo= "MAYO";
+		String junio= "JUNIO";
+		String julio= "JULIO";
+		String agosto= "AGOSTO";
+		String septiembre= "SEPTIEMBRE";
+		String octubre= "OCTUBRE";
+		String noviembre= "NOVIEMBRE";
+		String diciembre= "DICIEMBRE";
+		
 		this.parent= parent;
 
 		principal= new FlowPanel();
@@ -197,19 +211,4 @@ public class WidgetMostrarListas extends Composite {
 		principal.add(listas);
 		initWidget(principal);
 	}
-
-//	private float poner_dos_decimales(float precio_total) {
-//		return (float) (Math.round(precio_total*100)/100.0d);
-//	}
-
-	//	void agregar_handler() {
-	//	btn_ir.addClickHandler(new ClickHandler() {
-	//		
-	//		@Override
-	//		public void onClick(ClickEvent event) {
-	//			History.newItem("PantallaVistaDeCompra-"+ lista.getId());
-	//			History.fireCurrentHistoryState();;
-	//		}
-	//		});
-	//    }
 }
