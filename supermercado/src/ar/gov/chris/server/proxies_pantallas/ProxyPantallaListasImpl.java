@@ -49,14 +49,14 @@ ProxyPantallaListas {
 	 */
 	
 	@Override
-	public void agregar_lista(DatosLista datos_list) throws GWT_ExcepcionBD {
+	public int agregar_lista(DatosLista datos_list) throws GWT_ExcepcionBD {
 		ConexionBD con= this.obtener_transaccion();
 		boolean commit= false;
+		
+		Lista l;
 
-		try {
-			
-			
-			Lista l= new Lista(datos_list.getComentario(),
+		try {		
+			l= new Lista(datos_list.getComentario(),
 					new Date(), datos_list.getId_sucursal(), datos_list.getPorcentaje_descuento());
 			l.grabar(con);
 			commit= true;
@@ -67,7 +67,7 @@ ProxyPantallaListas {
 		} finally {
 			this.cerrar_transaccion(con, commit);
 		}
-				
+		return l.getId();		
 	}
 
 	@Override
@@ -230,6 +230,10 @@ ProxyPantallaListas {
 			dl.setFecha(l.getFecha());
 			dl.setVer_marcados(l.isVer_marcados());
 			dl.setBotones_habilitados(l.isBotones_hab());
+			dl.setComentario(l.getComentario());
+			dl.setDesc_coto(l.getDesc_coto());
+			dl.setPorcentaje_descuento(l.getPorcentaje_de_descuento());
+			dl.setId_sucursal(l.getId_sucursal());
 			commit = true;
 		} catch (ExcepcionBD e) {
 				throw new GWT_ExcepcionBD(e);
