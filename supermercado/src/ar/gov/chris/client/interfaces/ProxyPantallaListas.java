@@ -14,7 +14,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 public interface ProxyPantallaListas extends RemoteService {
 
-	void agregar_lista(DatosLista datos_list) throws GWT_ExcepcionBD;
+	int agregar_lista(DatosLista datos_list) throws GWT_ExcepcionBD;
 
 	Set<DatosLista> buscar_listas() throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado;
 
