@@ -1,5 +1,6 @@
 package ar.gov.chris.client.interfaces;
 
+import java.util.LinkedList;
 import java.util.Set;
 
 import ar.gov.chris.client.datos.DatosListaProdCompleta;
@@ -35,5 +36,7 @@ public interface ProxyPantallaProductos extends RemoteService {
 	Set<DatosProducto> buscar_vencimientos(boolean solo_existentes) throws GWT_ExcepcionBD, GWT_ExcepcionNoAutorizado;
 
 	void marcar_desmarcar_productos(String valueOf, Set<String> ids, boolean marcar) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
+
+	void tomar_base_compra(LinkedList<DatosProducto> lista_productos, Integer id_lista_nueva) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste;
 
 }

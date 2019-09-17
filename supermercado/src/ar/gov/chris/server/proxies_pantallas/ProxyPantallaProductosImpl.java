@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.servlet.ServletConfig;
@@ -420,6 +421,17 @@ ProxyPantallaProductos {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void tomar_base_compra(LinkedList<DatosProducto> lista_productos, Integer id_lista_nueva)
+			throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+
+		for (DatosProducto prod : lista_productos) {
+
+			agregar_producto_a_lista(prod, id_lista_nueva, prod.getCantidad(), prod.getCant_en_gramos());
 		}
 	}
 

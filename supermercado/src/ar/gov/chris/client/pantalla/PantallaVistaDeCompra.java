@@ -66,6 +66,11 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 	
 	private Button btn_deshabilitar_botones;
 	protected boolean botones_habilitados;
+	
+	private Button btn_tomar_base= new Button("Tomar Base");
+	
+	private DatosLista datos_lista;
+
 
 
 	public PantallaVistaDeCompra() {
@@ -113,6 +118,7 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 					@Override
 					public void onSuccess(DatosLista result) {
 						eliminar_senal_espera();
+						datos_lista= result;
 						ver_marcados= result.isVer_marcados();
 						fecha_compra= result.getFecha();
 						botones_habilitados= result.isBotones_habilitados();
@@ -227,6 +233,9 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				
 				hp.add(btn_deshabilitar_botones);
 				hp.add(btn_agregar_prod);
+				
+				hp.add(btn_tomar_base);
+
 
 //			   panel.add(boton_imprimir);
 //			   panel.add(btn_ver_marcados);
@@ -338,8 +347,59 @@ public class PantallaVistaDeCompra extends PantallaInicio {
 				deshabilitar_botones(botones_habilitados);	
 			}
 		});
+	    
+	    btn_tomar_base.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
+				tomar_base_de_compra();	
+			}
+		});
 	}
 	
+protected void tomar_base_de_compra() {
+	
+	DatosLista datos_list= new DatosLista();
+	datos_list.setComentario(datos_lista.getComentario());
+	datos_list.setId_sucursal(datos_lista.getId_sucursal());
+	datos_list.setPorcentaje_descuento(datos_lista.getPorcentaje_descuento());
+	
+	proxy_listas.agregar_lista(datos_list, new AsyncCallback<Integer>(){
+		public void onFailure(Throwable caught) {
+			MensajeAlerta.mensaje_error("Ocurrió un error al intentar tomar base de " +
+					"la lista: " + caught.getMessage());
+		}
+		public void onSuccess(final Integer id_lista_nueva) {
+			//********************************
+			
+			proxy_prod.tomar_base_compra(lista_productos, id_lista_nueva, new AsyncCallback<Void>(){
+				public void onFailure(Throwable caught) {
+					MensajeAlerta.mensaje_error("Ocurrió un error al intentar tomar base de " +
+							"la lista: " + caught.getMessage());
+				}
+				public void onSuccess(Void result) {
+					
+					History.newItem("PantallaVistaDeCompra-"+id_lista_nueva);
+					
+				}			
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			//********************************
+			
+			
+//			Window.Location.reload();
+		}			
+	});
+		
+	}
+
 //	protected void marcar_varios(Set<String> prods_seleccionadas) {
 //		prod.
 //	}

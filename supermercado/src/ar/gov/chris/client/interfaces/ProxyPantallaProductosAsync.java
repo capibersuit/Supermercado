@@ -1,5 +1,6 @@
 package ar.gov.chris.client.interfaces;
 
+import java.util.LinkedList;
 import java.util.Set;
 
 import ar.gov.chris.client.datos.DatosListaProdCompleta;
@@ -34,6 +35,9 @@ public interface ProxyPantallaProductosAsync {
 	void buscar_vencimientos(boolean solo_existentes, AsyncCallback<Set<DatosProducto>> asyncCallback);
 
 	void marcar_desmarcar_productos(String valueOf, Set<String> ids, boolean marcar,
+			AsyncCallback<Void> asyncCallback);
+
+	void tomar_base_compra(LinkedList<DatosProducto> lista_productos, Integer id_lista_nueva,
 			AsyncCallback<Void> asyncCallback);
 
 }
