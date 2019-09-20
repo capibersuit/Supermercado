@@ -1,5 +1,6 @@
 package ar.gov.chris.client.widgets;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
@@ -36,6 +37,20 @@ public class WidgetMostrarListas extends Composite {
 	private PantallaListaDeCompras parent;
 
 	DatosLista lista;
+	
+	String[] meses_str = new String[]{
+			"Enero",
+			"Febebro",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"};
 
 	/** Crea un {@link WidgetMostrarLineas} a partir de los par�metros.
 	 * 
@@ -57,6 +72,54 @@ public class WidgetMostrarListas extends Composite {
 		String octubre= "OCTUBRE";
 		String noviembre= "NOVIEMBRE";
 		String diciembre= "DICIEMBRE";
+		
+		Label ene_label= new Label("Ene");
+		Label feb_label= new Label("Feb");
+		Label mar_label= new Label("Mar");
+		Label abr_label= new Label("Abr");
+		Label may_label= new Label("May");
+		Label jun_label= new Label("Jun");
+		Label jul_label= new Label("Jul");
+		Label ago_label= new Label("Ago");
+		Label sep_label= new Label("Sep");
+		Label oct_label= new Label("Oct");
+		Label nov_label= new Label("Nov");
+		Label dic_label= new Label("Dic");
+		
+		
+//		String[] meses_strasdsad = new String[]{
+//				"Diciembre",
+//				"Noviembre",
+//				"Octubre",
+//				"Septiembre",
+//				"Agosto",
+//				"Julio",
+//				"Junio",
+//				"Mayo",
+//				"Abril",
+//				"Marzo",
+//				"Febebro",
+//				"Enero"};
+//		
+//		String[] meses_str = new String[]{
+//				"Enero",
+//				"Febebro",
+//				"Marzo",
+//				"Abril",
+//				"Mayo",
+//				"Junio",
+//				"Julio",
+//				"Agosto",
+//				"Septiembre",
+//				"Octubre",
+//				"Noviembre",
+//				"Diciembre"};
+		
+		
+		Boolean[] meses_ya_usados = new Boolean[12];
+		Arrays.fill(meses_ya_usados, Boolean.FALSE);
+		
+		int indice_mes=11;
 		
 		this.parent= parent;
 
@@ -111,6 +174,22 @@ public class WidgetMostrarListas extends Composite {
 			//			this.lista= list;
 
 			if(fecha_desde.compareTo(list.getFecha()) < 0 && fecha_hasta.compareTo(list.getFecha()) > 0) {
+				
+				int mes_compra_actual=list.getFecha().getMonth();
+				
+//				if(mes_compra_actual==indice_mes && !meses_ya_usados[indice_mes]) {
+//				if(mes_compra_actual<=indice_mes && !meses_ya_usados[mes_compra_actual]) {
+				if(!meses_ya_usados[mes_compra_actual]) {
+
+//					separador_meses(indice_mes);
+//					meses_ya_usados[indice_mes]= true;
+//					indice_mes--;
+					
+					separador_meses(mes_compra_actual);
+					meses_ya_usados[mes_compra_actual]= true;
+//					indice_mes--;
+					
+				} 
 
 				btn_ir = new PushButton(new Image("/imagenes/boton-ir.jpg"));
 				btn_ir.setTitle("Compra nro. "+ list.getId());
@@ -200,6 +279,7 @@ public class WidgetMostrarListas extends Composite {
 				//		}
 				listas.getRowFormatter().setStyleName(next_row, "ContenidoTablas");
 				next_row++;
+			
 			}
 		}
 		listas.setStyleName("PanelConBordesExpandido");
@@ -210,5 +290,20 @@ public class WidgetMostrarListas extends Composite {
 		principal.add(titulo_label);
 		principal.add(listas);
 		initWidget(principal);
+	}
+	
+	private void separador_meses(int mes) {
+		
+		Label pagado_label =new Label();
+		pagado_label.addStyleName("Pagado");
+		
+//		listas.setText(next_row, 5,  meses_str[mes]);
+		
+		pagado_label.setText(meses_str[mes]);
+
+		listas.setWidget(next_row, 5,  pagado_label);
+
+		
+		next_row++;
 	}
 }
