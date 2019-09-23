@@ -128,7 +128,9 @@ public class WidgetMostrarListas extends Composite {
 		titulo_label= new Label(titulo);
 		titulo_label.addStyleName("LabelDistinguido");
 		//		btn_ir = new PushButton(new Image("C:\Users\STUART\Downloads\boton-ir.png"));
-		Image imagen= new Image("/boton-ir.png");
+	
+//		Image imagen= new Image("/boton-ir.png");
+		
 		//		btn_ir = new PushButton("Ver lista");
 		//		btn_ir = new PushButton(new Image("/supermercado/src/ar/gov/chris/client/widgets/boton-ir.png"));
 
@@ -177,21 +179,14 @@ public class WidgetMostrarListas extends Composite {
 				
 				int mes_compra_actual=list.getFecha().getMonth();
 				
-//				if(mes_compra_actual==indice_mes && !meses_ya_usados[indice_mes]) {
-//				if(mes_compra_actual<=indice_mes && !meses_ya_usados[mes_compra_actual]) {
 				if(!meses_ya_usados[mes_compra_actual]) {
 
-//					separador_meses(indice_mes);
-//					meses_ya_usados[indice_mes]= true;
-//					indice_mes--;
-					
 					separador_meses(mes_compra_actual);
-					meses_ya_usados[mes_compra_actual]= true;
-//					indice_mes--;
-					
+					meses_ya_usados[mes_compra_actual]= true;					
 				} 
-
-				btn_ir = new PushButton(new Image("/imagenes/boton-ir.jpg"));
+				Image imagen_boton_ir= new Image("/supermercado/imagenes/boton-ir.jpg");
+				imagen_boton_ir.setAltText(""+list.getId());
+				btn_ir = new PushButton(imagen_boton_ir);
 				btn_ir.setTitle("Compra nro. "+ list.getId());
 				btn_ir.addClickHandler(new ClickHandler() {
 
@@ -201,9 +196,24 @@ public class WidgetMostrarListas extends Composite {
 						History.fireCurrentHistoryState();;
 					}
 				});
+//				String directorio_imagenes= System.getProperty("user.dir")+ "/imagenes/boton-eliminar.jpg";
+//				String directorio_imagenes=  "/supermercado/imagenes/boton-eliminar.jpg";
+				
+				Image imagen_boton_borrar= new Image("/supermercado/imagenes/boton-eliminar.jpg");
+//				Image imagen_boton_borrar= new Image("/imagenes/boton-eliminar.jpg");
+				
+//				Image imagen_boton_borrar= new Image("../../imagenes/delete.gif");
+				imagen_boton_borrar.setAltText("Borrar");
 
-				btn_borrar= new PushButton(new Image("/imagenes/boton-eliminar.jpg"));
-				btn_actualizar= new PushButton(new Image("/imagenes/boton-actualizar.jpg"));
+				btn_borrar= new PushButton(imagen_boton_borrar);
+
+				Image imagen_boton_actualizar= new Image("/supermercado/imagenes/boton-actualizar.jpg");
+//				Image imagen_boton_actualizar= new Image("../../imagenes/boton-actualizar.jpg");
+				imagen_boton_actualizar.setAltText("Actualizar");
+				
+				btn_actualizar= new PushButton(imagen_boton_actualizar);
+				
+				
 
 				final ClickHandler handler = new ClickHandler(){
 					public void onClick(ClickEvent arg0) {
@@ -294,14 +304,14 @@ public class WidgetMostrarListas extends Composite {
 	
 	private void separador_meses(int mes) {
 		
-		Label pagado_label =new Label();
-		pagado_label.addStyleName("Pagado");
+		Label mes_separador =new Label();
+		mes_separador.addStyleName("MesSeparador");
 		
 //		listas.setText(next_row, 5,  meses_str[mes]);
 		
-		pagado_label.setText(meses_str[mes]);
+		mes_separador.setText(meses_str[mes]);
 
-		listas.setWidget(next_row, 5,  pagado_label);
+		listas.setWidget(next_row, 5,  mes_separador);
 
 		
 		next_row++;
