@@ -6,7 +6,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import ar.gov.chris.client.datos.DatosReprtePrecios;
-import ar.gov.chris.client.pantalla.PantallaListaDeCompras;
 import ar.gov.chris.client.util.Mate;
 
 public class WidgetMostrarPrecios extends Composite {
@@ -29,7 +28,7 @@ public class WidgetMostrarPrecios extends Composite {
 	//	private boolean nov;
 	//	private boolean dic;
 
-	private PantallaListaDeCompras parent;
+//	private PantallaListaDeCompras parent;
 
 	DatosReprtePrecios lista;
 
@@ -40,7 +39,7 @@ public class WidgetMostrarPrecios extends Composite {
 	 */
 	public WidgetMostrarPrecios(LinkedList<DatosReprtePrecios> datos_precios,
 			String titulo, String fecha_desde, String fecha_hasta) {
-		this.parent= parent;
+//		this.parent= parent;
 
 		principal= new FlowPanel();
 		listas= new FlexTable();
