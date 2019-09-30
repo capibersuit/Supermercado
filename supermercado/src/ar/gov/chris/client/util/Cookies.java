@@ -58,4 +58,8 @@ public class Cookies {
 			Date fecha_expiracion) {
 	 com.google.gwt.user.client.Cookies.setCookie(nombre, val, fecha_expiracion);
 	}
+	
+	public static String getCookie(String nombre) {
+		return com.google.gwt.user.client.Cookies.getCookie(nombre);
+	}
 }

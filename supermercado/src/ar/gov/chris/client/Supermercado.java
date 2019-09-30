@@ -79,6 +79,8 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 //		BuscadorDatosEstaticos.obtener_anios_primera_y_ultima_compra();
 		BuscadorDatosEstaticos.obtener_sucursales();
 		BuscadorDatosEstaticos.obtener_supermercados();
+		
+		BuscadorDatosEstaticos.obtener_nombre_maquina_local();
 						
 		//Add history listener
 		History.addValueChangeHandler(this);

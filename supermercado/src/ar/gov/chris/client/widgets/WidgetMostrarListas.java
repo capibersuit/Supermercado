@@ -184,7 +184,7 @@ public class WidgetMostrarListas extends Composite {
 					separador_meses(mes_compra_actual);
 					meses_ya_usados[mes_compra_actual]= true;					
 				} 
-				Image imagen_boton_ir= new Image("/supermercado/imagenes/boton-ir.jpg");
+				Image imagen_boton_ir= new Image("imagenes/boton-ir.jpg");
 				imagen_boton_ir.setAltText(""+list.getId());
 				btn_ir = new PushButton(imagen_boton_ir);
 				btn_ir.setTitle("Compra nro. "+ list.getId());
@@ -199,7 +199,7 @@ public class WidgetMostrarListas extends Composite {
 //				String directorio_imagenes= System.getProperty("user.dir")+ "/imagenes/boton-eliminar.jpg";
 //				String directorio_imagenes=  "/supermercado/imagenes/boton-eliminar.jpg";
 				
-				Image imagen_boton_borrar= new Image("/supermercado/imagenes/boton-eliminar.jpg");
+				Image imagen_boton_borrar= new Image("imagenes/boton-eliminar.jpg");
 //				Image imagen_boton_borrar= new Image("/imagenes/boton-eliminar.jpg");
 				
 //				Image imagen_boton_borrar= new Image("../../imagenes/delete.gif");
@@ -207,7 +207,7 @@ public class WidgetMostrarListas extends Composite {
 
 				btn_borrar= new PushButton(imagen_boton_borrar);
 
-				Image imagen_boton_actualizar= new Image("/supermercado/imagenes/boton-actualizar.jpg");
+				Image imagen_boton_actualizar= new Image("imagenes/boton-actualizar.jpg");
 //				Image imagen_boton_actualizar= new Image("../../imagenes/boton-actualizar.jpg");
 				imagen_boton_actualizar.setAltText("Actualizar");
 				

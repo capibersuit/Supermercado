@@ -8,11 +8,15 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
+import ar.gov.chris.client.interfaces.ProxyPantallaLoguearse;
+import ar.gov.chris.client.interfaces.ProxyPantallaLoguearseAsync;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 
 public class BuscadorDatosEstaticos {
 
 	private static ProxyPantallaListasAsync proxy;
+	private static ProxyPantallaLoguearseAsync proxy_logueo;
+
 	public static int [] anios_listas = new int[2];
 	/** Todos las sucursales posibles.
 	 */
@@ -20,6 +24,8 @@ public class BuscadorDatosEstaticos {
 	/** Todas los supermercados posibles.
 	 */
 	public static List<Super> supermercados;
+	
+	public static String nombre_maquina="";
 	
 	
 	/** Obtiene todas las categorías de problema y las almacena en una constante. 
@@ -77,18 +83,46 @@ public class BuscadorDatosEstaticos {
 		}
 	
 	
+	public static String obtener_nombre_maquina_local() {
+		if (nombre_maquina.equalsIgnoreCase("") ) {
+			inicializar();
+			proxy_logueo.obtener_nombre_maquina_local(new AsyncCallback<String>(){
+				public void onFailure(Throwable caught) {
+					MensajeAlerta.mensaje_error("No se pudo " +
+					"obtener el nombre de la maquina: " + caught.getMessage());
+				}
+				@Override
+				public void onSuccess(String result) {
+					nombre_maquina=result.toLowerCase();					
+				}
+			});
+		}
+		return nombre_maquina;
+		}
+	
+	
 	/** Se crea el proxy para comunicarse con el servidor.
 	 */
 	private static void inicializar() {
 		proxy= (ProxyPantallaListasAsync)
-		GWT.create(ProxyPantallaListas.class);
+				GWT.create(ProxyPantallaListas.class);
 		try {
 			String moduleRelativeURL= GWT.getModuleBaseURL() +
-			"proxies_pantallas/ProxyPantallaListas";
+					"proxies_pantallas/ProxyPantallaListas";
 			((ServiceDefTarget) proxy).setServiceEntryPoint(moduleRelativeURL);
 		} catch (Exception ex) {
 			System.out.println("Excepción: " + ex.getMessage());
 		}
+
+		proxy_logueo= (ProxyPantallaLoguearseAsync)
+				GWT.create(ProxyPantallaLoguearse.class);
+		try {
+			String moduleRelativeURL= GWT.getModuleBaseURL() +
+					"proxies_pantallas/ProxyPantallaLoguearse";
+			((ServiceDefTarget) proxy_logueo).setServiceEntryPoint(moduleRelativeURL);
+		} catch (Exception ex) {
+			System.out.println("Excepción: " + ex.getMessage());
+		}	
 	}
-	
+
 }

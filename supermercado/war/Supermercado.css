@@ -280,10 +280,11 @@ margin-bottom: 1em;
     color:#FFF;
     height:40px;
     line-height:50px;
-    text-align:center;
     background-color:#008080;
-/*     aling: right; */
-    left: 120px;
+/*     aling: right;
+    text-align:center;
+
+    left: 120px; */
     
     
     /*Las 3 líneas siguientes, sirven para el borde redondeado

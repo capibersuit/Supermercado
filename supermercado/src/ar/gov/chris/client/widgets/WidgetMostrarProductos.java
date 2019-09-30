@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextBox;
@@ -180,8 +181,8 @@ public class WidgetMostrarProductos extends Composite {
 			Label cant_label= new Label("Cantidad");
 			Label cant_gramos_label= new Label("grs");
 			Label total_label= new Label("Precio total");
-			Label borrar_label= new Label("Borrar");
-			Label actualizar_label= new Label("Actualizar");
+			Label borrar_label= new Label("B");
+			Label actualizar_label= new Label("A");
 			Label marcar_label= new Label("Marcar");
 
 			//		lista_prod.setWidget(0, next_col, marcar_maviso_label);
@@ -426,9 +427,21 @@ public class WidgetMostrarProductos extends Composite {
 		PushButton btn_actualizar;
 		PushButton btn_marcar;
 		
-		btn_borrar= new PushButton("Borrar");
-		btn_actualizar= new PushButton("Actualizar");
+//		btn_borrar= new PushButton("Borrar");
+//		btn_actualizar= new PushButton("Actualizar");
 		btn_marcar= new PushButton("Marcar");
+		
+		
+		//*********************
+		Image imagen_boton_actualizar= new Image("imagenes/boton-actualizar.jpg");
+		Image imagen_boton_borrar= new Image("imagenes/boton-eliminar.jpg");
+		imagen_boton_actualizar.setAltText("Actualizar");
+		imagen_boton_borrar.setAltText("Borrar");
+
+		btn_borrar= new PushButton(imagen_boton_borrar);	
+		btn_actualizar= new PushButton(imagen_boton_actualizar);
+		
+		//**********************
 
 
 		final ClickHandler handler = new ClickHandler(){
@@ -715,17 +728,19 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 				lista_prod.setText(fila, col, String.valueOf(precio));
 				col++;
 				
+				float precio_kg= datos.getPrecio_kg();
+				
+				precio_kg = Mate.poner_dos_decimales(precio_kg);
+							
+				lista_prod.setText(fila, col, String.valueOf(precio_kg));
+				col++;
+				
 				if(es_pantalla_vista) { 
 
 //				if(titulo.equalsIgnoreCase("Vista de compra")) {
 					
 					
-					float precio_kg= datos.getPrecio_kg();
 					
-					precio_kg = Mate.poner_dos_decimales(precio_kg);
-								
-					lista_prod.setText(fila, col, String.valueOf(precio_kg));
-					col++;
 					lista_prod.setText(fila, col, ((datos.getCantidad()!=0) ? String.valueOf(datos.getCantidad()) : "NA"));
 					col++;
 					lista_prod.setText(fila, col, ((datos.getCant_en_gramos()!=0) ? String.valueOf(datos.getCant_en_gramos()) : "NA"));

@@ -1,6 +1,7 @@
 package ar.gov.chris.client.pantalla;
 
 
+import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
 import ar.gov.chris.client.interfaces.ProxyPantallaListas;
 import ar.gov.chris.client.interfaces.ProxyPantallaListasAsync;
 import ar.gov.chris.client.interfaces.ProxyPantallaPrecios;
@@ -13,9 +14,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
@@ -37,7 +40,10 @@ public class PantallaInicio extends Pantalla {
 	Button btn_precios_constantes;
 	Button btn_logueo;
 
-	protected final Label label_version= new Label("SCLS - VERSIÓN: v"+ VERSION);
+	protected final Label label_version= new Label("SCLS - VERSIÓN: v"+ VERSION + " _");
+	protected Label label_nombre_maquina= new Label();
+	protected Label label_login= new Label();
+
 	
 	public PantallaInicio() {
 		super();
@@ -60,6 +66,11 @@ public class PantallaInicio extends Pantalla {
 		btn_precios= new Button("P<u>r</u>ecios");
 		btn_precios_constantes= new Button("Precios Cons");
 		btn_logueo= new Button("Lo<u>g</u>ueo");
+		
+		label_nombre_maquina.setText("_ "+BuscadorDatosEstaticos.nombre_maquina.toLowerCase());
+//		nombre_maquina.setText("_ "+NOMBRE_MAQUINA.toLowerCase());
+
+		label_login.setText(" __ ¡Bienvenido "+Cookies.getCookie("usr")+ "!");
 
 		menu.add(btn_productos);
 		menu.add(btn_listas);
@@ -73,7 +84,12 @@ public class PantallaInicio extends Pantalla {
 		
 //		label_version.setStyleName("version");
 		
+//		menu_version.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+
+		
 		menu_version.add(label_version);
+		menu_version.add(label_nombre_maquina);
+		menu_version.add(label_login);
 		menu_version.setStyleName("version");
 		menu_version.getElement().getStyle().setDisplay(Display.BLOCK);
 

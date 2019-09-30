@@ -1,10 +1,12 @@
 package ar.gov.chris.client.pantalla;
 
+import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
 import ar.gov.chris.client.datos.DatosAutorizacion;
 import ar.gov.chris.client.interfaces.ProxyPantallaLoguearse;
 import ar.gov.chris.client.interfaces.ProxyPantallaLoguearseAsync;
 import ar.gov.chris.client.util.Cookies;
 //import ar.gov.mecon.componentes.client.clases.Ambito;
+import ar.gov.chris.client.widgets.MensajeAlerta;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -60,8 +62,20 @@ public class PantallaLoguearseSimple extends Pantalla {
 //		validacion_previa(proxy, FUNCIONALIDAD, true);
 		
 		 this.panel.setStyleName("PanelPrincipalLogueo");
+		 proxy.obtener_nombre_maquina_local(new AsyncCallback<String>(){
+				public void onFailure(Throwable caught) {
+					MensajeAlerta.mensaje_error("No se pudo " +
+					"obtener el nombre de la maquina: " + caught.getMessage());
+				}
+				@Override
+				public void onSuccess(String result) {
+					NOMBRE_MAQUINA=result.toLowerCase();	
+					pantalla_principal();
 
-		pantalla_principal();
+				}
+			});
+
+//		pantalla_principal();
 		
 	}
 	
@@ -95,9 +109,9 @@ public class PantallaLoguearseSimple extends Pantalla {
 		inicial_sesion= new Label("INICIO DE SESIÓN");
 		inicial_sesion.setStyleName("cabecera");
 		
-		footer= new Label("SCLS - VERSIÓN: v"+ VERSION);
+		footer= new Label("SCLS - VERSIÓN: v"+ VERSION + " __ "+ NOMBRE_MAQUINA);
 		footer.setStyleName("footer");
-		
+				
 		header= new Label("Sistema de control de listas de supermercado");
 
 		

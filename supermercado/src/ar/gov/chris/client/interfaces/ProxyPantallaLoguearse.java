@@ -17,6 +17,8 @@ public interface ProxyPantallaLoguearse extends ProxyPantalla {
 	 * @throws GWT_ExcepcionRuntime Si hay alguan excepción runtime.
 	 */
 	DatosAutorizacion validar_usuario(String login, String contrasena) 
-		throws GWT_ExcepcionBD, GWT_ExcepcionBD;	
+		throws GWT_ExcepcionBD, GWT_ExcepcionBD;
+
+	String obtener_nombre_maquina_local();	
 }
 

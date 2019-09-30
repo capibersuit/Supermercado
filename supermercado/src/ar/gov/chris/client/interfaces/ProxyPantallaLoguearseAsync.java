@@ -17,5 +17,7 @@ public interface ProxyPantallaLoguearseAsync extends ProxyPantallaAsync {
 	 */
 	void validar_usuario(String login, String contrasena,
 			AsyncCallback<DatosAutorizacion> callback);
+
+	void obtener_nombre_maquina_local(AsyncCallback<String> asyncCallback);
 }
 

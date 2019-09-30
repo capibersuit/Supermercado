@@ -38,16 +38,7 @@ public class PantallaListaDeCompras extends PantallaInicio {
 
 	@Override
 	protected void pantalla_principal() {
-		panel.clear();
-
-//		btn_agregar_lista= new Button("Nueva Lista");
-//		panel.add(btn_agregar_lista);
-//		
-//		agregar_lista= new WidgetAgregarLista(this);
-//		agregar_handlers();
-		
-
-		
+		panel.clear();	
 		super.pantalla_principal();
 		obtener_datos_listas();
 	}

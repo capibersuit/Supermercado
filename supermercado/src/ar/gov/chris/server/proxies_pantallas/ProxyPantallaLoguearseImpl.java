@@ -1,5 +1,8 @@
 package ar.gov.chris.server.proxies_pantallas;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import ar.gov.chris.client.datos.DatosAutorizacion;
@@ -141,5 +144,24 @@ private DatosAutorizacion validar_usuario(ConexionBD con, String login, String
 //				" se logueó al sistema de soporte" +
 //				" desde "+ip.toString()+".");
   return res;
+}
+
+public String obtener_nombre_maquina_local() {
+	
+	String sHostName = null;
+	try {
+		InetAddress address = InetAddress.getLocalHost();
+		
+		
+		sHostName = address.getHostName().toLowerCase();
+		
+		
+		
+	} catch (UnknownHostException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return sHostName;
 }
 }
