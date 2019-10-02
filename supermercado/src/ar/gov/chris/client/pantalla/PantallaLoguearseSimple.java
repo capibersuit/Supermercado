@@ -1,6 +1,5 @@
 package ar.gov.chris.client.pantalla;
 
-import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
 import ar.gov.chris.client.datos.DatosAutorizacion;
 import ar.gov.chris.client.interfaces.ProxyPantallaLoguearse;
 import ar.gov.chris.client.interfaces.ProxyPantallaLoguearseAsync;
