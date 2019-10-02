@@ -97,9 +97,6 @@ public class PantallaPrecios extends PantallaInicio {
 				
 				//***************************************************************************
 				
-//				datos_precios= result;//ordenar_vemcimientos(result);
-				//armar_pantalla();			
-				//CANT_ANIOS--;
 			}
 			
 		});		
