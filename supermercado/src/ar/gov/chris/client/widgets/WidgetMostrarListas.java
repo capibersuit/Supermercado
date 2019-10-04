@@ -51,6 +51,8 @@ public class WidgetMostrarListas extends Composite {
 			"Octubre",
 			"Noviembre",
 			"Diciembre"};
+	
+	
 
 	/** Crea un {@link WidgetMostrarLineas} a partir de los par�metros.
 	 * 
@@ -121,6 +123,10 @@ public class WidgetMostrarListas extends Composite {
 		
 		int indice_mes=11;
 		
+		
+		
+		
+		
 		this.parent= parent;
 
 		principal= new FlowPanel();
@@ -170,20 +176,63 @@ public class WidgetMostrarListas extends Composite {
 		next_row= 1; 
 
 		LinkedList<DatosLista> lista_ordenada= parent.ordenar_listas(lista);
+		
+		float total_pagado_mes_actual=0;
+
 
 		for (final DatosLista list : lista_ordenada) {
+			
+			//**********************
+			
+			Label total_pagado_mes_actual_label =new Label("0");
+			
+			total_pagado_mes_actual_label.addStyleName("MesSeparador");
+
+
+			String total_pagado_mes_actua_str="0";
+			
+
+			boolean reseteador_total_listas_por_mes=false;
+			//*************************
 
 			//			this.lista= list;
+			int mes_compra_anterior=-1;
 
 			if(fecha_desde.compareTo(list.getFecha()) < 0 && fecha_hasta.compareTo(list.getFecha()) > 0) {
 				
+//				int mes_compra_anterior=-1;
+				float pagado_compra_actual= list.getPagado();
+				
 				int mes_compra_actual=list.getFecha().getMonth();
 				
-				if(!meses_ya_usados[mes_compra_actual]) {
+//				if(total_pagado_mes_actual==0)
+					total_pagado_mes_actual+= pagado_compra_actual;
 
+				
+				if(!meses_ya_usados[mes_compra_actual]) {
+					
+					
+
+//					separador_meses(mes_compra_actual, total_pagado_mes_actual_label);
 					separador_meses(mes_compra_actual);
-					meses_ya_usados[mes_compra_actual]= true;					
+
+					meses_ya_usados[mes_compra_actual]= true;	
+					
 				} 
+				
+				if(mes_compra_actual!= mes_compra_anterior) {
+					total_pagado_mes_actua_str= String.valueOf(Mate.poner_dos_decimales(total_pagado_mes_actual));
+					total_pagado_mes_actual_label.setText(total_pagado_mes_actua_str);
+					
+					listas.setWidget(next_row, 6, total_pagado_mes_actual_label );
+
+					
+					next_row++;
+
+					total_pagado_mes_actual=pagado_compra_actual;
+					mes_compra_actual= mes_compra_anterior;
+
+				}
 				Image imagen_boton_ir= new Image("imagenes/boton-ir.jpg");
 				imagen_boton_ir.setAltText(""+list.getId());
 				btn_ir = new PushButton(imagen_boton_ir);
@@ -302,7 +351,7 @@ public class WidgetMostrarListas extends Composite {
 		initWidget(principal);
 	}
 	
-	private void separador_meses(int mes) {
+	private void separador_meses(int mes/*, Label total_pagado_mes_actual_label*/) {
 		
 		Label mes_separador =new Label();
 		mes_separador.addStyleName("MesSeparador");
@@ -312,6 +361,7 @@ public class WidgetMostrarListas extends Composite {
 		mes_separador.setText(meses_str[mes]);
 
 		listas.setWidget(next_row, 5,  mes_separador);
+//		listas.setWidget(next_row, 6, total_pagado_mes_actual_label );
 
 		
 		next_row++;
