@@ -75,6 +75,56 @@ public class DatosLista implements IsSerializable {
 	public void setBotones_habilitados(boolean botones_habilitados) {
 		this.botones_habilitados = botones_habilitados;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (botones_habilitados ? 1231 : 1237);
+		result = prime * result + ((comentario == null) ? 0 : comentario.hashCode());
+		result = prime * result + Float.floatToIntBits(desc_coto);
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
+		result = prime * result + id;
+		result = prime * result + id_sucursal;
+		result = prime * result + Float.floatToIntBits(pagado);
+		result = prime * result + porcentaje_descuento;
+		result = prime * result + (ver_marcados ? 1231 : 1237);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DatosLista other = (DatosLista) obj;
+		if (botones_habilitados != other.botones_habilitados)
+			return false;
+		if (comentario == null) {
+			if (other.comentario != null)
+				return false;
+		} else if (!comentario.equals(other.comentario))
+			return false;
+		if (Float.floatToIntBits(desc_coto) != Float.floatToIntBits(other.desc_coto))
+			return false;
+		if (fecha == null) {
+			if (other.fecha != null)
+				return false;
+		} else if (!fecha.equals(other.fecha))
+			return false;
+		if (id != other.id)
+			return false;
+		if (id_sucursal != other.id_sucursal)
+			return false;
+		if (Float.floatToIntBits(pagado) != Float.floatToIntBits(other.pagado))
+			return false;
+		if (porcentaje_descuento != other.porcentaje_descuento)
+			return false;
+		if (ver_marcados != other.ver_marcados)
+			return false;
+		return true;
+	}
 	
 	
 	
