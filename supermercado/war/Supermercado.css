@@ -102,6 +102,11 @@ width: 960px; margin-left: auto; margin-right: auto;
 	font-weight: bold;
 }
 
+.TotalDelMes {
+	color: #3E3BFF;	
+	font-weight: bold;
+}
+
 .Pagado {
 	color: #3E3BFF;	
 	font-weight: bold;
