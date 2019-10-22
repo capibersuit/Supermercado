@@ -50,7 +50,7 @@ public class WidgetMostrarListas extends Composite {
 			"Noviembre",
 			"Diciembre"};
 	
-	private static final int ID_MES_VIERNES_EN_LA_LISTA = 11;
+	private static final int ID_MES_DICIEMBRE_EN_LA_LISTA = 11;
 
 
 	/** Crea un {@link WidgetMostrarLineas} a partir de los par�metros.
@@ -100,13 +100,16 @@ public class WidgetMostrarListas extends Composite {
 		
 		float total_pagado_mes_actual=0;
 
-		Date fecha_ultima_compra= lista_ordenada.getFirst().getFecha();
+		Date fecha_compra_mas_reciente= lista_ordenada.getFirst().getFecha();
 		
-		int mes_compra_anterior=-1;
+//		int mes_compra_anterior=-1;
+		int mes_compra_anterior=fecha_compra_mas_reciente.getMonth();
 				
 		//xxx: Aca obtengo la primera compra en realidad, o sea la mas antigua (actualmente 2016-01-27!)
 		// 		creo que quise decir la ultima de la lista ordenada....
-		DatosLista ultima_compra= lista_ordenada.getLast();
+		DatosLista compra_mas_antigua= lista_ordenada.getLast();
+		
+		boolean es_la_compra_mas_reciente_anio_actual= true;
 
 		for (final DatosLista list : lista_ordenada) {
 						
@@ -121,7 +124,7 @@ public class WidgetMostrarListas extends Composite {
 		
 			//XXX: No me quedó bien claro porque con este if logro que me aparezca el total de enero
 			//	   en cada año (salvo en 2016 por ser el primero)
-			if(ultima_compra.equals(list)) {
+			if(compra_mas_antigua.equals(list)) {
 				
 				total_pagado_mes_actua_str= String.valueOf(Mate.poner_dos_decimales(total_pagado_mes_actual));
 				total_pagado_mes_actual_label.setText(total_pagado_mes_actua_str);
@@ -129,19 +132,14 @@ public class WidgetMostrarListas extends Composite {
 				listas.setWidget(next_row, 6, total_pagado_mes_actual_label );
 			}
 				
-
 			if(fecha_desde.compareTo(list.getFecha()) < 0 && fecha_hasta.compareTo(list.getFecha()) > 0) {
 				
-				float pagado_compra_actual= list.getPagado();
-				
+				float pagado_compra_actual= list.getPagado();			
 				int mes_compra_actual=list.getFecha().getMonth();
-				
 				Date fecha_compra_actual= list.getFecha();
-				
 				total_pagado_mes_actual+= pagado_compra_actual;
-
 											
-				if(mes_compra_actual!= mes_compra_anterior && !fecha_compra_actual.equals(fecha_ultima_compra) && mes_compra_actual!=ID_MES_VIERNES_EN_LA_LISTA) {
+				if(mes_compra_actual!= mes_compra_anterior && !fecha_compra_actual.equals(fecha_compra_mas_reciente) && mes_compra_actual!=ID_MES_DICIEMBRE_EN_LA_LISTA) {
 
 					total_pagado_mes_actual= total_pagado_mes_actual-pagado_compra_actual;
 					
@@ -156,6 +154,9 @@ public class WidgetMostrarListas extends Composite {
 					total_pagado_mes_actual=pagado_compra_actual;
 					mes_compra_anterior=mes_compra_actual;
 				}
+				
+				if(es_la_compra_mas_reciente_anio_actual)
+					mes_compra_anterior=mes_compra_actual;
 				
 				if(!meses_ya_usados[mes_compra_actual]) {									
 					separador_meses(mes_compra_actual);
