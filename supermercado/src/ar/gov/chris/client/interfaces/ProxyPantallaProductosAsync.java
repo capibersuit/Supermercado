@@ -30,7 +30,7 @@ public interface ProxyPantallaProductosAsync {
 			AsyncCallback<Void> asyncCallback);
 
 	void actualizar_producto_a_lista(DatosProducto datos_prod,
-			String id_compra, boolean cambiar_existencia, AsyncCallback<Void> callback);
+			String id_compra, boolean cambiar_existencia, boolean es_marcar, AsyncCallback<Void> callback);
 
 	void buscar_vencimientos(boolean solo_existentes, AsyncCallback<Set<DatosProducto>> asyncCallback);
 

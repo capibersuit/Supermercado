@@ -33,6 +33,11 @@ public class WidgetMostrarProductos extends Composite {
 	
 	private static final int NUMERO_DE_COLUMNA_CANT_GRAMOS = 6;
 	
+	private static final int NUMERO_DE_COLUMNA_BOTON_MARCAR = 8;
+	private static final int NUMERO_DE_COLUMNA_BOTON_ACTUALIZAR = 9;
+	private static final int NUMERO_DE_COLUMNA_BOTON_BORRAR = 10;
+
+	
 	//***************************************************************
 	private FlowPanel principal;
 	private FlexTable lista_prod;
@@ -67,7 +72,7 @@ public class WidgetMostrarProductos extends Composite {
 	private int next_col=0;
 	private Pantalla parent;
 
-	private static int CANT_FILAS_FINAL= 4;
+	private static int CANT_FILAS_FINAL= 5;
 	
 	int cant_prod= 0;
 
@@ -416,9 +421,9 @@ public class WidgetMostrarProductos extends Composite {
 			
 //		next_row= 1;
 			if(titulo.equalsIgnoreCase("Vista de compra"))
-				next_row = next_row-CANT_FILAS_FINAL;
+				next_row = next_row-CANT_FILAS_FINAL + 1;
 			else
-			next_row++;
+				next_row++;
 		next_col= 0;
 		}
 		//**********************
@@ -698,8 +703,14 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
 	
 		int POS_COL_ID_PROD=1;
 		
-		for(int i = 1; i < filas_de_la_lista; i++) {
+		boolean filas_ya_seteadas= false;
 		
+		for(int i = 1; i < filas_de_la_lista; i++) {
+			
+			if(parent instanceof PantallaVistaDeCompra && !filas_ya_seteadas) {
+				filas_de_la_lista= filas_de_la_lista-CANT_FILAS_FINAL;
+				filas_ya_seteadas= true;
+			}
 			String id_prod= lista_prod.getText(i, POS_COL_ID_PROD);
 			
 			int fila = 0;
@@ -804,7 +815,7 @@ public void actualizar_producto(DatosProducto datos, boolean es_marcar) {
  */
 public Set<String> obtener_seleccionados(){
 	HashSet<String> res= new HashSet<String>();
-	for (int i= 1; i < lista_prod.getRowCount()-4; i++){
+	for (int i= 1; i < lista_prod.getRowCount()-CANT_FILAS_FINAL; i++){
 		CheckBox cb= (CheckBox) lista_prod.getWidget(i, 0);
 		if (cb.getValue()){
 			res.add(cb.getFormValue());
@@ -815,7 +826,7 @@ public Set<String> obtener_seleccionados(){
 
 public Set<String> marcar_todos(){
 	HashSet<String> res= new HashSet<String>();
-	for (int i= 1; i < lista_prod.getRowCount()-4; i++){
+	for (int i= 1; i < lista_prod.getRowCount()-CANT_FILAS_FINAL; i++){
 		CheckBox cb= (CheckBox) lista_prod.getWidget(i, 0);
 		if(cb_marcar_desmarcar_todos.getValue())
 			cb.setValue(true);
@@ -827,10 +838,10 @@ public Set<String> marcar_todos(){
 
 public Set<String> deshabilitar_todos_los_botones(boolean botones_habilitados){
 	HashSet<String> res= new HashSet<String>();
-	for (int i= 1; i < lista_prod.getRowCount()-5; i++){
-		PushButton btn_borrar= (PushButton) lista_prod.getWidget(i, 10);
-		PushButton btn_act= (PushButton) lista_prod.getWidget(i, 9);
-		PushButton btn_marcar= (PushButton) lista_prod.getWidget(i, 8);
+	for (int i= 1; i < lista_prod.getRowCount()-CANT_FILAS_FINAL; i++){
+		PushButton btn_borrar= (PushButton) lista_prod.getWidget(i, NUMERO_DE_COLUMNA_BOTON_BORRAR);
+		PushButton btn_act= (PushButton) lista_prod.getWidget(i, NUMERO_DE_COLUMNA_BOTON_ACTUALIZAR);
+		PushButton btn_marcar= (PushButton) lista_prod.getWidget(i, NUMERO_DE_COLUMNA_BOTON_MARCAR);
 
 		if(botones_habilitados) {
 			btn_borrar.setEnabled(true);

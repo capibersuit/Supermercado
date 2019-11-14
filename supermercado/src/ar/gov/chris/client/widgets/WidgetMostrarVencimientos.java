@@ -99,7 +99,7 @@ public class WidgetMostrarVencimientos extends Composite {
 				}
 					
 					prod.setExiste(!existe);
-					prod.setCant_en_gramos_anterior(4);
+					prod.setCant_en_gramos_anterior(4); //TODO: hoy 13/11/2019, no se bien porque puse el 4 aca.... ¿¿¿??? es mas hoy no me doy cuenta para que esta la linea de codigo siquiera....
 					((PantallaVencimientos)parent).actualizar_producto(prod);
 					
 			}});

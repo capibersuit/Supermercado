@@ -94,7 +94,7 @@ boolean tildado= true; //NO SE POR QUE SI LO DEJO EN TRUE PARA QUE DE ENTRADA ME
 	//TODO: esto esta copiado de otra pantalla... ver si se puede hacer mejor!??
 	public void actualizar_producto(final DatosProducto datos_prod) {
 
-		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(datos_prod.getId_compra()), true, new AsyncCallback<Void>(){
+		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(datos_prod.getId_compra()), true, false, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
 				MensajeAlerta.mensaje_error("Ocurrio un error al intentar cambiar " +
 						"la existencia del producto: " + caught.getMessage());

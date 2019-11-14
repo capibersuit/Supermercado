@@ -577,9 +577,9 @@ protected void tomar_base_de_compra() {
 
 	public void actualizar_producto(final DatosProducto datos_prod, final boolean es_marcar) {
 
-		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), false, new AsyncCallback<Void>(){
+		proxy_prod.actualizar_producto_a_lista(datos_prod, String.valueOf(id_compra), false, es_marcar, new AsyncCallback<Void>(){
 			public void onFailure(Throwable caught) {
-				MensajeAlerta.mensaje_error("Ocurrio un error al intentar borrar " +
+				MensajeAlerta.mensaje_error("Ocurrio un error al intentar actualizar " +
 						"el producto de la lista: " + caught.getMessage());
 			}
 			public void onSuccess(Void result) {

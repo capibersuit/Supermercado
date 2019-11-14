@@ -343,7 +343,7 @@ ProxyPantallaProductos {
 
 	@Override
 	public void actualizar_producto_a_lista(DatosProducto datos_prod, String id_compra, 
-			boolean cambiar_existencia) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
+			boolean cambiar_existencia, boolean es_marcar) throws GWT_ExcepcionBD, GWT_ExcepcionNoExiste {
 		boolean commit= false;
 		ConexionBD con = this.obtener_transaccion();
 
@@ -365,7 +365,7 @@ ProxyPantallaProductos {
 								+ datos_prod.getCant_en_gramos() + fecha_venc;
 			}
 
-			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId() +" AND cant_en_gramos= " + (cambiar_existencia ? datos_prod.getCant_en_gramos() : datos_prod.getCant_en_gramos_anterior());
+			String WHERE= " WHERE id_compra = " +id_compra+" AND id_prod= " + prod.getId() +" AND cant_en_gramos= " + ((cambiar_existencia || es_marcar) ? datos_prod.getCant_en_gramos() : datos_prod.getCant_en_gramos_anterior());
 			UPDATE+= WHERE;
 
 			con.ejecutar_sql(UPDATE);
