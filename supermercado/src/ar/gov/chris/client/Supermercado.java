@@ -76,7 +76,7 @@ public class Supermercado implements EntryPoint, ValueChangeHandler<String> {
 //		RootPanel.get("menu").add(panel_aplicacion);
 		
 		// Se cargan todos los datos comunes una sola vez.
-//		BuscadorDatosEstaticos.obtener_anios_primera_y_ultima_compra();
+		BuscadorDatosEstaticos.obtener_anios_primera_y_ultima_compra();
 		BuscadorDatosEstaticos.obtener_sucursales();
 		BuscadorDatosEstaticos.obtener_supermercados();
 		

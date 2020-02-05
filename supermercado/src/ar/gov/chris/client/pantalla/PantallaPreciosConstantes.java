@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
 
+import ar.gov.chris.client.clases.BuscadorDatosEstaticos;
 import ar.gov.chris.client.datos.DatosReprtePrecios;
 import ar.gov.chris.client.widgets.MensajeAlerta;
 import ar.gov.chris.client.widgets.WidgetMostrarPrecios;
@@ -15,7 +16,9 @@ import com.google.gwt.user.client.ui.Label;
 
 public class PantallaPreciosConstantes extends PantallaInicio {
 	
-private int CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
+	
+	
+	private int CANT_ANIOS;
 
 	protected LinkedList<DatosReprtePrecios>  datos_precios;
 	
@@ -33,6 +36,10 @@ private int CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
 
 
 		super.pantalla_principal();
+		
+		primer_anio_de_compras= BuscadorDatosEstaticos.anios_listas[0];
+		anio_actual= BuscadorDatosEstaticos.anios_listas[1];
+		CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
 		obtener_datos_precios();
 	}
 	

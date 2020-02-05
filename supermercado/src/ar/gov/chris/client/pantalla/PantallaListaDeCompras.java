@@ -87,7 +87,9 @@ public class PantallaListaDeCompras extends PantallaInicio {
 
 				@Override
 				public void onSuccess(int[] result) {
-					BuscadorDatosEstaticos.anios_listas=result;
+//					BuscadorDatosEstaticos.anios_listas=result;
+					primer_anio_de_compras= BuscadorDatosEstaticos.anios_listas[0];//result[0];
+					anio_actual= BuscadorDatosEstaticos.anios_listas[1];//result[1];
 					armar_pantalla();
 				}
 			});
