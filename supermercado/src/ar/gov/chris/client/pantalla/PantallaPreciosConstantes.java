@@ -16,8 +16,6 @@ import com.google.gwt.user.client.ui.Label;
 
 public class PantallaPreciosConstantes extends PantallaInicio {
 	
-	
-	
 	private int CANT_ANIOS;
 
 	protected LinkedList<DatosReprtePrecios>  datos_precios;
@@ -40,6 +38,7 @@ public class PantallaPreciosConstantes extends PantallaInicio {
 		primer_anio_de_compras= BuscadorDatosEstaticos.anios_listas[0];
 		anio_actual= BuscadorDatosEstaticos.anios_listas[1];
 		CANT_ANIOS=anio_actual-primer_anio_de_compras+1;
+		
 		obtener_datos_precios();
 	}
 	
